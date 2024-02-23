@@ -1,16 +1,16 @@
-package com.example.navbartest.ui.notifications;
+package com.example.navbartest.ui.ingredient;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class NotificationsViewModel extends ViewModel {
+public class IngredientViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public NotificationsViewModel() {
+    public IngredientViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("This is ingredient fragment");
     }
 
     public LiveData<String> getText() {
