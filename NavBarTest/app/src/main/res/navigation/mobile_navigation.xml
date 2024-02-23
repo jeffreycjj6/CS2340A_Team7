@@ -12,20 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.navbartest.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_input_meal"
+        android:name="com.example.navbartest.ui.inputmeal.InputMealFragment"
+        android:label="@string/title_input_meal"
+        tools:layout="@layout/fragment_input_meal" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.navbartest.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_ingredient"
+        android:name="com.example.navbartest.ui.ingredient.IngredientFragment"
+        android:label="@string/title_ingredient"
+        tools:layout="@layout/fragment_ingredient" />
 
     <fragment
-        android:id="@+id/navigation_test"
-        android:name="com.example.navbartest.ui.test.TestFragment"
-        android:label="@string/title_test"
-        tools:layout="@layout/fragment_test" />
+        android:id="@+id/navigation_recipe"
+        android:name="com.example.navbartest.ui.recipe.RecipeFragment"
+        android:label="@string/title_recipe"
+        tools:layout="@layout/fragment_recipe" />
+
+    <fragment
+        android:id="@+id/navigation_shopping_list"
+        android:name="com.example.navbartest.ui.shoppinglist.ShoppingListFragment"
+        android:label="@string/title_shopping_list"
+        tools:layout="@layout/fragment_shopping_list" />
 </navigation>
