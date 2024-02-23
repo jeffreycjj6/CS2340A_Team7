@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Nav Bar Test</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_input_meal">InputMeal</string>
     <string name="title_ingredient">Ingredient</string>
-    <string name="title_test">Test</string>
+    <string name="title_recipe">Recipe</string>
     <string name="title_shopping_list">ShoppingList</string>
 </resources>
