@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.navbartest.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.textfield.TextInputEditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -21,12 +22,16 @@ public class LoginActivity extends AppCompatActivity {
 
     //private ActivityLoginBinding binding;
 
+    private TextInputEditText usernameInput;
+    private TextInputEditText passwordInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        passwordInput = findViewById(R.id.passwordInput);
+        usernameInput = findViewById(R.id.usernameInput);
 
         setContentView(R.layout.activity_login);
 
@@ -50,16 +55,28 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //System.out.println("Clocked Login Butt9n.");
-                Intent intent = new Intent(LoginActivity.this, com.example.navbartest.MainActivity.class);
-                startActivity(intent);
+                String username = "";
+                String password = "";
+                try {
+                    username = usernameInput.getText().toString();
+                    password = passwordInput.getText().toString();
+                } catch (NullPointerException npe) {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
 
-                /*boolean checkLoginInfo = some function that checks login info with Firebase;
+                //boolean checkLoginInfo = verifyLogin(username, password);
+
+                //Intent intent = new Intent(LoginActivity.this, com.example.navbartest.MainActivity.class);
+                //startActivity(intent);
+
+                boolean checkLoginInfo = verifyLogin(username, password);
                 if (checkLoginInfo) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
                     // show popup text saying login incorrect!
-                }*/
+                }
             }
         });
 
@@ -90,6 +107,13 @@ public class LoginActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);*/
+    }
+
+
+    private boolean verifyLogin(String user, String pass) {
+
+
+        return true;
     }
 
 }
