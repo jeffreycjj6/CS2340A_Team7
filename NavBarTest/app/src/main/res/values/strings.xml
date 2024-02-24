@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">Nav Bar Test</string>
+    <string name="app_name">GreenPlate</string>
     <string name="title_home">Home</string>
 
-    <string name="title_input_meal">InputMeal</string>
-    <string name="title_ingredient">Ingredient</string>
-    <string name="title_recipe">Recipe</string>
+    <string name="title_input_meal">Input Meals</string>
+    <string name="title_ingredient">Ingredients</string>
+    <string name="title_recipe">Recipes</string>
 
-    <string name="title_shopping_list">ShoppingList</string>
+    <string name="title_shopping_list">Shop List</string>
 </resources>
