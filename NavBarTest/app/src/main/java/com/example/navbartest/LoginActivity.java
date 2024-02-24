@@ -15,11 +15,11 @@ import androidx.navigation.ui.NavigationUI;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.navbartest.databinding.ActivityLoginBinding;
+//import com.example.navbartest.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private ActivityLoginBinding binding;
+    //private ActivityLoginBinding binding;
 
 
     @Override
@@ -30,8 +30,8 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        //binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        //setContentView(binding.getRoot());
 
         Button login = findViewById(R.id.loginButton);
         Button createAccount = findViewById(R.id.createAccountButton);
