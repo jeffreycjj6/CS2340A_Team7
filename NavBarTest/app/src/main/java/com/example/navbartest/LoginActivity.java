@@ -63,16 +63,17 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         // TODO: Add Jesse's account creation code here to switch to that menu when we press log in
         // Also, enable input/send the login information through
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, AccountCreationActivity.class);
+                System.out.println("this works");
+                Intent intent = new Intent(LoginActivity.this, com.example.navbartest.AccountCreationActivity.class);
                 startActivity(intent);
             }
-        });*/
+        });
 
         /*createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
