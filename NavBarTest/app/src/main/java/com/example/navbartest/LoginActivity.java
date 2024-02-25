@@ -95,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("this works");
                 Intent intent = new Intent(LoginActivity.this, com.example.navbartest.AccountCreationActivity.class);
                 startActivity(intent);
             }
