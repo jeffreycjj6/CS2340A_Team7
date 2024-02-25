@@ -78,15 +78,11 @@
         android:id="@+id/back_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="130dp"
-        android:layout_marginTop="654dp"
-        android:layout_marginEnd="131dp"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="34dp"
         android:text="Back to Login"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="409dp"
@@ -157,6 +153,7 @@
         android:layout_height="66dp"
         android:layout_marginTop="538dp"
         android:layout_marginBottom="127dp"
+        android:textAlignment="center"
         android:textColor="#777373"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
