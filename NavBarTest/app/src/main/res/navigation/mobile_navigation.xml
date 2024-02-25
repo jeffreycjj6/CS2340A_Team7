@@ -24,10 +24,12 @@
         tools:layout="@layout/fragment_ingredient" />
 
     <fragment
+
         android:id="@+id/navigation_recipe"
         android:name="com.example.navbartest.ui.recipe.RecipeFragment"
         android:label="@string/title_recipe"
         tools:layout="@layout/fragment_recipe" />
+
 
     <fragment
         android:id="@+id/navigation_shopping_list"
