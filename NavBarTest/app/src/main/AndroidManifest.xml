@@ -13,7 +13,7 @@
         android:theme="@style/Theme.NavBarTest"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.views.LoginActivity"
             android:exported="true"
             android:label="GreenPlate">
             <intent-filter>
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.views.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AccountCreationActivity"
+            android:name=".ui.views.AccountCreationActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

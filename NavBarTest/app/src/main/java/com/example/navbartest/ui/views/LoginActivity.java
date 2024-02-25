@@ -1,16 +1,11 @@
-package com.example.navbartest;
+package com.example.navbartest.ui.views;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.navbartest.ui.home.HomeFragment;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.navbartest.R;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import android.view.View;
 import android.widget.Button;
@@ -50,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //System.out.println("Clocked Login Butt9n.");
-                Intent intent = new Intent(LoginActivity.this, com.example.navbartest.MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
 
                 /*boolean checkLoginInfo = some function that checks login info with Firebase;
@@ -70,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 System.out.println("this works");
-                Intent intent = new Intent(LoginActivity.this, com.example.navbartest.AccountCreationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, AccountCreationActivity.class);
                 startActivity(intent);
             }
         });

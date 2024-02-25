@@ -1,7 +1,8 @@
-package com.example.navbartest;
+package com.example.navbartest.ui.views;
 
 import android.os.Bundle;
 
+import com.example.navbartest.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
