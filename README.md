@@ -4,4 +4,4 @@ Jeff Chow \
 Jesse Chen \
 Rachel Kim \
 Henry Tang \
-Ignatius Djaynurdin \
+Ignatius Djaynurdin
