@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.example.navbartest.ui.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -15,6 +16,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
 
@@ -22,18 +24,19 @@ public class LoginActivity extends AppCompatActivity {
 
     //private ActivityLoginBinding binding;
 
-    private TextInputEditText usernameInput;
-    private TextInputEditText passwordInput;
+    private TextInputLayout usernameInput;
+    private TextInputLayout passwordInput;
 
+    private TextView failedLoginText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_login);
         passwordInput = findViewById(R.id.passwordInput);
         usernameInput = findViewById(R.id.usernameInput);
 
-        setContentView(R.layout.activity_login);
+        failedLoginText = findViewById(R.id.failedLogin);
 
         //binding = ActivityLoginBinding.inflate(getLayoutInflater());
         //setContentView(binding.getRoot());
@@ -57,14 +60,18 @@ public class LoginActivity extends AppCompatActivity {
                 //System.out.println("Clocked Login Butt9n.");
                 String username = "";
                 String password = "";
-                try {
-                    username = usernameInput.getText().toString();
-                    password = passwordInput.getText().toString();
+                /*try {
+                    username = usernameInput.getEditText().getText().toString();
+                    password = passwordInput.getEditText().getText().toString();
                 } catch (NullPointerException npe) {
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
+                    //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    //startActivity(intent);
+                    System.out.println("No thank you.");
+                }*/
 
+                username = usernameInput.getEditText().getText().toString();
+                password = passwordInput.getEditText().getText().toString();
+                System.out.println(username + " " + password);
                 //boolean checkLoginInfo = verifyLogin(username, password);
 
                 //Intent intent = new Intent(LoginActivity.this, com.example.navbartest.MainActivity.class);
@@ -76,6 +83,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                 } else {
                     // show popup text saying login incorrect!
+                    failedLoginText.setText("Incorrect Login, Try Again.");
+                    System.out.println("Failed Login");
                 }
             }
         });
@@ -112,7 +121,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private boolean verifyLogin(String user, String pass) {
-
+        if (user.equals("") || pass.equals("")) {
+            return false;
+        }
 
         return true;
     }
