@@ -50,9 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         if(currentUser != null){
             //this.reload();
             System.out.println("Already Logged In.");
-            //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            //startActivity(intent);
-            //finish();
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
     @Override
