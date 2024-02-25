@@ -1,2 +1,7 @@
 # CS2340A_Team7
-Jayden Causey
+Jayden Causey \
+Jeff Chow \
+Jesse Chen \
+Rachel Kim \
+Henry Tang \
+Ignatius Djaynurdin \
