@@ -34,6 +34,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
     //private ActivityLoginBinding binding;
+
+    private LoginViewModel viewModel;
     private FirebaseAuth mAuth;
 
     private TextInputLayout usernameInput;
@@ -63,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameInput = findViewById(R.id.usernameInput);
         failedLoginText = findViewById(R.id.failedLogin);
 
+        viewModel = LoginViewModel.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
         //binding = ActivityLoginBinding.inflate(getLayoutInflater());
@@ -87,29 +90,47 @@ public class LoginActivity extends AppCompatActivity {
                 //System.out.println("Clocked Login Butt9n.");
                 String username = "";
                 String password = "";
-                /*try {
-                    username = usernameInput.getEditText().getText().toString();
-                    password = passwordInput.getEditText().getText().toString();
-                    verifyLogin(username, password);
-                } catch (NullPointerException npe) {
-                    //Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    //startActivity(intent);
-                    System.out.println("No thank you.");
-                    failedLoginText.setText("Incorrect Login, Try Again.");
-                    System.out.println("Failed Login");
-                }*/
+
 
                 username = usernameInput.getEditText().getText().toString();
                 password = passwordInput.getEditText().getText().toString();
+
+
                 if (username.equals("") || password.equals("")) {
-                    System.out.println("No thank you.");
-                    //failedLoginText.setText("Incorrect Login, Try Again.");
-                    System.out.println("Failed Login");
-                    Toast.makeText(LoginActivity.this, "Empty Inputs, Try Again.",
-                            Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Empty Inputs.", Toast.LENGTH_SHORT).show();
                 } else {
-                    verifyLogin(username, password);
+
+                    //viewModel.verifyLogin(username, password, mAuth);
+                    viewModel.verifyLogin(username, password, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Toast.makeText(LoginActivity.this, "Logged In!", Toast.LENGTH_SHORT).show();
+                                finish();
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Incorrect Password or Username.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                    });
                 }
+
+                /*if (username.equals("") || password.equals("")) {
+                    Toast.makeText(LoginActivity.this, "Empty Inputs.", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    //viewModel.verifyLogin(username, password, mAuth);
+                    if (viewModel.verifyLogin(username, password, mAuth)) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Toast.makeText(LoginActivity.this, "Logged In!", Toast.LENGTH_SHORT).show();
+                        finish();
+                        startActivity(intent);
+                    }
+                    Toast.makeText(LoginActivity.this, "Incorrect Password or Username.", Toast.LENGTH_SHORT).show();
+                }*/
+
 
                 //username = usernameInput.getEditText().getText().toString();
                 //password = passwordInput.getEditText().getText().toString();
@@ -160,10 +181,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    private boolean verifyLogin(String email, String password) {
-        /*if (user.equals("") || pass.equals("")) {
+    /*private boolean verifyLogin(String email, String password) {
+        if (user.equals("") || pass.equals("")) {
             return false;
-        }*/
+        }
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -189,6 +210,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
         return true;
-    }
+    }*/
 
 }
