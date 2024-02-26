@@ -1,16 +1,16 @@
-package com.example.navbartest.ui.test;
+package com.example.navbartest.ui.ingredient;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TestViewModel extends ViewModel {
+public class IngredientViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public TestViewModel() {
+    public IngredientViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is test fragment");
+        mText.setValue("This is ingredient fragment");
     }
 
     public LiveData<String> getText() {
