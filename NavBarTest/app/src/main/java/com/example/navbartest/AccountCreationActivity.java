@@ -83,11 +83,21 @@ public class AccountCreationActivity extends AppCompatActivity {
                 // writes the new user data to the FireBase and switches to login
                 // screen.
                 if (viewModel.filterPasswords(firstNameMessage, lastNameMessage, usernameMessage, passwordMessage, password2Message)) {
+                    String finalFirstNameMessage = firstNameMessage;
+                    String finalLastNameMessage = lastNameMessage;
+                    String finalUsernameMessage = usernameMessage;
+                    String finalPasswordMessage = passwordMessage;
                     viewModel.saveAccountData(usernameMessage, passwordMessage, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(AccountCreationActivity.this, com.example.navbartest.LoginActivity.class);
+
+                                // writes data to FireBase
+                                UserDatabase user =  UserDatabase.getInstance();
+                                user.writeNewUser(finalFirstNameMessage, finalLastNameMessage, finalUsernameMessage, finalPasswordMessage);
+
+                                // switches screen
                                 Toast.makeText(AccountCreationActivity.this, "Account Created.",
                                         Toast.LENGTH_SHORT).show();
 
