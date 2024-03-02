@@ -78,7 +78,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
         android:background="#0000"
-        android:text="Don't have an account? Create on here."
+        android:text="Don't have an account? Create one here."
         android:textColor="#4CAF50"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
