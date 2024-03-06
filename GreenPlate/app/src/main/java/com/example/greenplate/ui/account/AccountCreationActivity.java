@@ -5,19 +5,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.view.textservice.TextInfo;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.greenplate.R;
+
+import com.example.greenplate.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class AccountCreationActivity extends AppCompatActivity {
@@ -80,11 +85,21 @@ public class AccountCreationActivity extends AppCompatActivity {
                 // writes the new user data to the FireBase and switches to login
                 // screen.
                 if (viewModel.filterPasswords(firstNameMessage, lastNameMessage, usernameMessage, passwordMessage, password2Message)) {
+                    String finalFirstNameMessage = firstNameMessage;
+                    String finalLastNameMessage = lastNameMessage;
+                    String finalUsernameMessage = usernameMessage;
+                    String finalPasswordMessage = passwordMessage;
                     viewModel.saveAccountData(usernameMessage, passwordMessage, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(AccountCreationActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
+
+                                // writes data to FireBase
+                                UserDatabase user =  UserDatabase.getInstance();
+                                user.writeNewUser(finalFirstNameMessage, finalLastNameMessage, finalUsernameMessage, finalPasswordMessage);
+
+                                // switches screen
                                 Toast.makeText(AccountCreationActivity.this, "Account Created.",
                                         Toast.LENGTH_SHORT).show();
 
