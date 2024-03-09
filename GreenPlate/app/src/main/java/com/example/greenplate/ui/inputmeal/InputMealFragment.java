@@ -10,12 +10,19 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.greenplate.R;
+import com.example.greenplate.databinding.FragmentIngredientsBinding;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
+import com.example.greenplate.ui.ingredient.IngredientsViewModel;
+import com.example.greenplate.ui.login.LoginViewModel;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class InputMealFragment extends Fragment {
-
+    private FirebaseAuth mAuth;
     private FragmentInputMealBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         InputMealViewModel inputMealViewModel =
@@ -24,8 +31,12 @@ public class InputMealFragment extends Fragment {
         binding = FragmentInputMealBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textInputMeal;
+        TextView textView = binding.userInfo;
         inputMealViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        String meal = Objects.requireNonNull(binding.meal.getText()).toString();
+        String calorieCount = Objects.requireNonNull(binding.calorieCount.getText()).toString();
+
         return root;
     }
 
