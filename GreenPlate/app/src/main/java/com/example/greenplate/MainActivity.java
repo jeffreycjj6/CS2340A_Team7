@@ -49,23 +49,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.bottomNavigation.setBackground(null);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            boolean fragmentSelected = false;
+            Fragment fragment = null;
+
             if (itemId == R.id.navigation_home) {
-                openFragment(new HomeFragment());
-                return true;
+                fragment = new HomeFragment();
+                fragmentSelected = true;
             } else if (itemId == R.id.navigation_input_meal) {
-                openFragment(new InputMealFragment());
-                return true;
+                fragment = new InputMealFragment();
+                fragmentSelected = true;
             } else if (itemId == R.id.navigation_ingredient) {
-                openFragment(new IngredientsFragment());
-                return true;
+                fragment = new IngredientsFragment();
+                fragmentSelected = true;
             } else if (itemId == R.id.navigation_recipe) {
-                openFragment(new RecipesFragment());
-                return true;
+                fragment = new RecipesFragment();
+                fragmentSelected = true;
             } else if (itemId == R.id.navigation_shopping_list) {
-                openFragment(new ShoppingListFragment());
-                return true;
+                fragment = new ShoppingListFragment();
+                fragmentSelected = true;
             }
-            return false;
+
+            if (fragmentSelected) {
+                openFragment(fragment);
+                int size = binding.navigationDrawer.getMenu().size();
+                for (int i = 0; i < size; i++) {
+                    MenuItem menuItem = binding.navigationDrawer.getMenu().getItem(i);
+                    if (menuItem.getItemId() == R.id.navigation_my_profile) {
+                        menuItem.setChecked(false);
+                        break;
+                    }
+                }
+            }
+
+            return fragmentSelected;
         });
 
         auth = FirebaseAuth.getInstance();
@@ -97,6 +113,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.navigation_my_profile) {
             openFragment(new ProfileFragment());
+            binding.navigationDrawer.getMenu().getItem(0).setChecked(true);
+            binding.bottomNavigation.getMenu().setGroupCheckable(0, true, false);
+            for (int i = 0; i < binding.bottomNavigation.getMenu().size(); i++) {
+                binding.bottomNavigation.getMenu().getItem(i).setChecked(false);
+            }
+            binding.bottomNavigation.getMenu().setGroupCheckable(0, true, true);
         } else if (id == R.id.navigation_sign_out) {
             Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
             FirebaseAuth.getInstance().signOut();
