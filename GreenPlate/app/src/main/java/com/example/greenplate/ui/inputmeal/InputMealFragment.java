@@ -10,18 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.greenplate.R;
-import com.example.greenplate.databinding.FragmentIngredientsBinding;
+
 import com.example.greenplate.databinding.FragmentInputMealBinding;
-import com.example.greenplate.ui.ingredient.IngredientsViewModel;
-import com.example.greenplate.ui.login.LoginViewModel;
-import com.google.android.material.textfield.TextInputLayout;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 public class InputMealFragment extends Fragment {
-    private FirebaseAuth mAuth;
     private FragmentInputMealBinding binding;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
