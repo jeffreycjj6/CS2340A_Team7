@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.inputmeal.InputMealFragment"
     android:theme="@style/ThemeOverlay.AppCompat.navTheme2"
+    tools:context=".ui.inputmeal.InputMealFragment"
     tools:layout_editor_absoluteX="48dp"
     tools:layout_editor_absoluteY="363dp">
 
@@ -92,5 +92,6 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@id/user_info"
         app:layout_constraintTop_toBottomOf="@+id/user_info" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
