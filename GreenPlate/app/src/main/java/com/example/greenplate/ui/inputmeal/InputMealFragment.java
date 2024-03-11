@@ -31,6 +31,7 @@ public class InputMealFragment extends Fragment {
         String meal = Objects.requireNonNull(binding.meal.getText()).toString();
         String calorieCount = Objects.requireNonNull(binding.calorieCount.getText()).toString();
 
+
         return root;
     }
 
