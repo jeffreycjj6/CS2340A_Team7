@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.navigationDrawer.setNavigationItemSelectedListener(this);
 
         binding.bottomNavigation.setBackground(null);
-        Button dataVisualButton = findViewById(R.id.dataButtonTest);
+        //Button dataVisualButton = findViewById(R.id.dataButtonTest);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             boolean fragmentSelected = false;
