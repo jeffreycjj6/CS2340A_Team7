@@ -7,22 +7,13 @@ import androidx.lifecycle.ViewModel;
 public class InputMealViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
-
-
-//    boolean man = false;
-//    double W = 0;
-//    double H = 0;
-//    int A = 0;
-//    double F = 0;
-//    double target = 0;
-//    if (man) {
-//        target = 10 * W + 6.25 * H - 5 * A + 5;
-//    } else {
-//        target = 10 * W + 6.25 * H - 5 * A - 161;
-//    }
+    double W = 0;
+    double H = 0;
+    double target = 370 + 21.6 * (1 - (W / (Math.pow(H, 2))) * W);
     public InputMealViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("USER INFO");
+        mText.setValue("At " + H + "meters tall and " + H + "kilograms, your goal is " + target +
+                " calories.");
     }
 
     public LiveData<String> getText() {
