@@ -10,6 +10,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.greenplate.ui.home.HomeFragment;
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ActivityMainBinding binding;
 
     private  FirebaseAuth auth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         binding.navigationDrawer.setNavigationItemSelectedListener(this);
 
         binding.bottomNavigation.setBackground(null);
+        //Button dataVisualButton = findViewById(R.id.dataButtonTest);
         binding.bottomNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             boolean fragmentSelected = false;
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             return fragmentSelected;
         });
+
 
         auth = FirebaseAuth.getInstance();
 
