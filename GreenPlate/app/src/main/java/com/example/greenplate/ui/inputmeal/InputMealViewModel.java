@@ -10,7 +10,7 @@ public class InputMealViewModel extends ViewModel {
 
     public InputMealViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is input meal fragment");
+        mText.setValue("USER INFO");
     }
 
     public LiveData<String> getText() {
