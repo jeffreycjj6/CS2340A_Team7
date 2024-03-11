@@ -35,14 +35,6 @@ public class DataVisualActivity extends AppCompatActivity {
 
     //private ActivityLoginBinding binding;
 
-    private TextInputEditText firstNameText;
-    private TextInputEditText lastNameText;
-    private TextInputEditText usernameText;
-    private TextInputEditText passwordText;
-    private TextInputEditText password2Text;
-    private TextView passwordMismatch;
-
-    private FirebaseAuth mAuth;
 
 
     @Override
