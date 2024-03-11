@@ -4,20 +4,93 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.inputmeal.InputMealFragment">
+    tools:context=".ui.inputmeal.InputMealFragment"
+    android:theme="@style/ThemeOverlay.AppCompat.navTheme2"
+    tools:layout_editor_absoluteX="48dp"
+    tools:layout_editor_absoluteY="363dp">
+
+    <Button
+        android:id="@+id/dataButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.811" />
+
+    <Button
+        android:id="@+id/track_meal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Track"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.566" />
 
     <TextView
-        android:id="@+id/text_input_meal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/user_info"
+        android:layout_width="390dp"
+        android:layout_height="53dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:text="USER INFO"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.246" />
+
+    <TextView
+        android:id="@+id/inputMealTitle"
+        android:layout_width="332dp"
+        android:layout_height="92dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="sans-serif-condensed-light"
+        android:text="Input Meal"
+        android:textAlignment="center"
+        android:textColor="#4CAF50"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/calorie_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="196dp"
+        android:hint="Calorie Count"
+        android:inputType="phone"
+        app:layout_constraintBottom_toBottomOf="@id/meal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/meal"
+        app:layout_constraintTop_toBottomOf="@+id/meal" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/meal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="24dp"
+        android:hint="Meal"
+        app:layout_constraintBottom_toTopOf="@+id/calorie_count"
+        app:layout_constraintEnd_toEndOf="@id/user_info"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@id/user_info"
+        app:layout_constraintTop_toBottomOf="@+id/user_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
