@@ -13,12 +13,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.example.greenplate.R;
+import com.example.greenplate.User;
+import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditStatsBinding;
 import com.example.greenplate.databinding.FragmentProfileBinding;
 import com.example.greenplate.ui.inputmeal.DataVisualFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class EditStatsFragment extends Fragment {
 
@@ -35,14 +39,22 @@ public class EditStatsFragment extends Fragment {
 
         Button saveButton = binding.saveStats;
         saveButton.setOnClickListener(v -> {
-            int userHeight = Integer.parseInt(binding.userHeightInput.getText().toString());
-            int userWeight = Integer.parseInt(binding.userWeightInput.getText().toString());
+            double userHeight = Double.parseDouble(binding.userHeightInput.getText().toString());
+            double userWeight = Double.parseDouble(binding.userWeightInput.getText().toString());
             String userGender = binding.userGenderInput.getText().toString();
+            User user = User.getInstance();
+            user.setHeight(userHeight);
+            user.setWeight(userWeight);
+            user.setGender(userGender);
+
+            UserDatabase database = UserDatabase.getInstance();
+            database.writeHeightWeightGender(userHeight, userWeight, userGender);
 
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
             transaction.commit();
         });
+
 
 
 

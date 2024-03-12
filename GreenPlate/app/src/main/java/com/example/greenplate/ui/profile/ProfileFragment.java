@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
+import com.example.greenplate.User;
+import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentProfileBinding;
 import com.example.greenplate.ui.inputmeal.DataVisualFragment;
 
@@ -28,14 +30,27 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
+        User user = User.getInstance();
+        String userHeight = String.valueOf(user.getHeight());
+        String userWeight = String.valueOf(user.getWeight());
+        String userGender = user.getGender();
+
+        binding.heightTag.setText(userHeight);
+        binding.weightTag.setText(userWeight);
+        binding.genderTag.setText(userGender);
+
         Button dataButton = binding.editButton;
         dataButton.setOnClickListener(v -> {
             EditStatsFragment editStatsFragment = new EditStatsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, editStatsFragment);
+
+
             transaction.addToBackStack(null);  // This line allows the user to navigate back to the ProfileFragment by pressing the back button.
             transaction.commit();
         });
+
 //        final TextView textView = binding.textProfile;
 //        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
