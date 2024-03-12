@@ -48,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             //this.reload();
+            reloadAccount(currentUser.getEmail());
             System.out.println("Already Logged In.");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
