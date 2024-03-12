@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+
 import com.example.greenplate.R;
 import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
@@ -37,7 +38,6 @@ public class InputMealFragment extends Fragment {
             String meal = binding.meal.getText().toString();
             String calorieCount = binding.calorieCount.getText().toString();
             if (!meal.equals("") && !calorieCount.equals("")) {
-                int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
                 UserDatabase database = UserDatabase.getInstance();
