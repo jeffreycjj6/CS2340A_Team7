@@ -38,6 +38,8 @@ public class DataVisualFragment extends Fragment {
 
     private View root;
 
+    private static int graphNumber = 1;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         DataVisualViewModel homeViewModel =
@@ -49,10 +51,17 @@ public class DataVisualFragment extends Fragment {
         //final TextView textView = binding.textData;
         //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        //makeDemoChart();
-        makeHorizontalChart();
+        if (graphNumber == 1) {
+            makeHorizontalChart();
+        } else {
+            makeDemoChart();
+        }
 
         return root;
+    }
+
+    public static void setGraph(int graphType) {
+        graphNumber = graphType;
     }
 
     @Override
