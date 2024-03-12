@@ -14,11 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.greenplate.R;
+import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 public class InputMealFragment extends Fragment {
     private FragmentInputMealBinding binding;
@@ -40,11 +37,12 @@ public class InputMealFragment extends Fragment {
         inputMealButton.setOnClickListener(v -> {
             String meal = binding.meal.getText().toString();
             String calorieCount = binding.calorieCount.getText().toString();
-
             if (!meal.equals("") && !calorieCount.equals("")) {
-                Double cCount = Double.parseDouble(calorieCount);
+                int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
+                UserDatabase database = UserDatabase.getInstance();
+                database.writeNewMeal(meal, Integer.parseInt(calorieCount));
             }
         });
 

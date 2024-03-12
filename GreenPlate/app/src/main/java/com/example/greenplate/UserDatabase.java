@@ -45,7 +45,7 @@ public class UserDatabase {
         user.setPassword(password);
         user.setHeight(0);
         user.setWeight(0);
-        user.setGender(null);
+        user.setGender("null");
         user.setDailyCalories(0);
         //user.setTotalCalories(0);
         //User user = new User(first, last, username, password);
@@ -132,5 +132,13 @@ public class UserDatabase {
         database.child(firstName).updateChildren(user);
 
          */
+    }
+
+    public void writeNewMeal(String name, int calories) {
+        //Meal meal = new Meal(name, calories);
+
+        DatabaseReference database = mDatabase.getReference();
+        database.child("Meals").child(name);
+        database.child("Meals").child(name).child("calories").setValue(calories);
     }
 }

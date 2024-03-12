@@ -14,7 +14,7 @@ import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
 import com.example.greenplate.User;
 import com.example.greenplate.UserDatabase;
-import com.example.greenplate.ui.Meal;
+import com.example.greenplate.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
