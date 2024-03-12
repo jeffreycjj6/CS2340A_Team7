@@ -1,5 +1,9 @@
 package com.example.greenplate;
 
+import com.example.greenplate.ui.Meal;
+
+import java.util.ArrayList;
+
 public class User {
 
     private static User user;
@@ -15,9 +19,16 @@ public class User {
 
     private int dailyCalories;
 
-    private int totalCalories;
+    //private int totalCalories;
+
+    //private int[] calorieCalendar;
+    private ArrayList<ArrayList<Meal>> mealCalendar;
 
     private User() {
+        mealCalendar = new ArrayList<ArrayList<Meal>>(30);
+        for (int i = 0; i < 30; i++) {
+            mealCalendar.add(new ArrayList<Meal>());
+        }
     }
 
     public static User getInstance() {
@@ -59,13 +70,17 @@ public class User {
         this.password = password;
     }
 
-    public int getTotalCalories() {
-        return totalCalories;
+    public ArrayList<ArrayList<Meal>> getMealCalendar() {
+        return mealCalendar;
     }
 
-    public void setTotalCalories(int totalCalories) {
-        this.totalCalories = totalCalories;
+    public void addMealToday(Meal meal) {
+        mealCalendar.get(29).add(meal);
+        // also add a check so that if it is the first day, we write into the database
     }
+
+    //public void initializeAddMeal(Meal meal)
+
 
     public double getHeight() {
         return height;
