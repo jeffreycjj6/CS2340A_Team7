@@ -42,6 +42,7 @@ public class EditStatsFragment extends Fragment {
             double userHeight = Double.parseDouble(binding.userHeightInput.getText().toString());
             double userWeight = Double.parseDouble(binding.userWeightInput.getText().toString());
             String userGender = binding.userGenderInput.getText().toString();
+
             User user = User.getInstance();
             user.setHeight(userHeight);
             user.setWeight(userWeight);
@@ -50,7 +51,10 @@ public class EditStatsFragment extends Fragment {
             UserDatabase database = UserDatabase.getInstance();
             database.writeHeightWeightGender(userHeight, userWeight, userGender);
 
+            ProfileFragment profileFragment = new ProfileFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, profileFragment);
+
             transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
             transaction.commit();
         });
