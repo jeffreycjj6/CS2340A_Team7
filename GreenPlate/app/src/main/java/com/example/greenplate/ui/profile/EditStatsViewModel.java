@@ -10,6 +10,7 @@ public class EditStatsViewModel extends ViewModel {
 //
 //    public ProfileViewModel() {
 //        mText = new MutableLiveData<>();
+
 //        mText.setValue("This is profile fragment");
 //
 //    }
