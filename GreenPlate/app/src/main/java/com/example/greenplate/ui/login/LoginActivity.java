@@ -12,12 +12,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
+import com.example.greenplate.User;
+import com.example.greenplate.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
 
@@ -91,12 +98,17 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
 
                     //viewModel.verifyLogin(username, password, mAuth);
+                    String finalUsername = username;
                     viewModel.verifyLogin(username, password, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                Toast.makeText(LoginActivity.this, "Logged In!", Toast.LENGTH_SHORT).show();
+
+                                //set account
+                                reloadAccount(finalUsername);
+
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 finish();
                                 startActivity(intent);
                             } else {
@@ -201,5 +213,61 @@ public class LoginActivity extends AppCompatActivity {
 
         return true;
     }*/
+
+    private void reloadAccount(String email) {
+        //UserDatabase database = UserDatabase.getInstance();
+        String username = email.replace(".", " ");
+
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(username);
+
+
+        database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    if (task.getResult().exists()) {
+
+                        Toast.makeText(LoginActivity.this, "Successfully Read", Toast.LENGTH_SHORT).show();
+                        DataSnapshot dataSnapshot = task.getResult();
+                        User user = User.getInstance();
+                        String firstName = String.valueOf(dataSnapshot.child("firstName").getValue());
+                        user.setFirstName(firstName);
+                        String lastName = String.valueOf(dataSnapshot.child("lastName").getValue());
+                        user.setLastName(lastName);
+                        String username = String.valueOf(dataSnapshot.child("username").getValue());
+                        user.setUsername(username);
+                        String email = String.valueOf(dataSnapshot.child("email").getValue());
+                        user.setEmail(email);
+                        String password = String.valueOf(dataSnapshot.child("password").getValue());
+                        user.setPassword(password);
+                        double height = Double.parseDouble(String.valueOf(dataSnapshot.child("height").getValue()));
+                        user.setHeight(height);
+                        double weight = Double.parseDouble(String.valueOf(dataSnapshot.child("weight").getValue()));
+                        user.setWeight(weight);
+                        String gender = String.valueOf(dataSnapshot.child("gender").getValue());
+                        user.setGender(gender);
+                        int dailyCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("dailyCalories").getValue()));
+                        user.setDailyCalories(dailyCalories);
+                        int totalCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("totalCalories").getValue()));
+                        user.setTotalCalories(totalCalories);
+
+                    }
+                }
+            }
+        });
+
+        /*user.setFirstName(database.child("firstName").toString());
+        user.setLastName(database.child("lastName").toString());
+        user.setUsername(database.child("username").toString());
+        user.setEmail(database.child("email").toString());
+        user.setPassword(database.child("password").toString());
+        user.setHeight(Double.parseDouble(height));
+        user.setWeight(Double.parseDouble(weight));
+        user.setGender(database.child("gender").toString());
+        user.setDailyCalories(Integer.parseInt(database.child("dailyCalories").toString()));
+        user.setTotalCalories(Integer.parseInt(database.child("totalCalories").toString()));
+        */
+    }
 
 }

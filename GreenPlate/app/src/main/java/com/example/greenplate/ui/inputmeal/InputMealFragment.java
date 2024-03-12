@@ -56,6 +56,17 @@ public class InputMealFragment extends Fragment {
         //data = root.findViewById(R.id.dataButton);
         Button dataButton = binding.dataButton;
         dataButton.setOnClickListener(v -> {
+            DataVisualFragment.setGraph(1);
+            DataVisualFragment chartFragment = new DataVisualFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, chartFragment);
+            transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+            transaction.commit();
+        });
+
+        Button dataButton2 = binding.dataButton2;
+        dataButton2.setOnClickListener(v -> {
+            DataVisualFragment.setGraph(2);
             DataVisualFragment chartFragment = new DataVisualFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, chartFragment);
