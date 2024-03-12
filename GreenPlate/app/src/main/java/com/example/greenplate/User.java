@@ -1,6 +1,6 @@
 package com.example.greenplate;
 
-import com.example.greenplate.ui.Meal;
+import com.example.greenplate.Meal;
 
 import java.util.ArrayList;
 
