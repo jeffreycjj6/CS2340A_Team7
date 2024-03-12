@@ -38,7 +38,6 @@ public class InputMealFragment extends Fragment {
             String meal = binding.meal.getText().toString();
             String calorieCount = binding.calorieCount.getText().toString();
             if (!meal.equals("") && !calorieCount.equals("")) {
-                int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
                 UserDatabase database = UserDatabase.getInstance();
