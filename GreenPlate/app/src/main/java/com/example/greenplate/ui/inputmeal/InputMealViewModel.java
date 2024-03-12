@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.greenplate.User;
+
 public class InputMealViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
@@ -13,9 +15,9 @@ public class InputMealViewModel extends ViewModel {
 
     public InputMealViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("At " + user.getHeight() + " meters tall and " + user.getWeight()
-                + " kilograms, your goal is " + target + " calories. You are at "
-                + user.getDailyCalories() + " calories.");
+        mText.setValue("At " + 5 + " meters tall and " + 150
+                + " kilograms, your goal is " + 1000 + " calories. You are at "
+                + 1000 + " calories.");
     }
 
     public LiveData<String> getText() {
