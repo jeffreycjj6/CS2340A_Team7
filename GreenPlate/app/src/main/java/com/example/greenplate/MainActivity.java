@@ -126,6 +126,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             binding.bottomNavigation.getMenu().setGroupCheckable(0, true, true);
         } else if (id == R.id.navigation_sign_out) {
             Toast.makeText(this, "Signed Out", Toast.LENGTH_SHORT).show();
+            //clears user
+            //User.resetUser();
+            System.out.println(User.getInstance().getFirstName());
+            System.out.println(User.getInstance().getLastName());
+            System.out.println(User.getInstance().getWeight());
+            System.out.println(User.getInstance().getGender());
+            System.out.println(User.getInstance().getPassword());
+
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
             finish();
