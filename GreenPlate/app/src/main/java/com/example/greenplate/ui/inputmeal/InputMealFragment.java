@@ -41,8 +41,17 @@ public class InputMealFragment extends Fragment {
         TextView textView = binding.userInfo;
         inputMealViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        String meal = Objects.requireNonNull(binding.meal.getText()).toString();
-        String calorieCount = Objects.requireNonNull(binding.calorieCount.getText()).toString();
+        Button inputMealButton = binding.trackMeal;
+        inputMealButton.setOnClickListener(v -> {
+            String meal = binding.meal.getText().toString();
+            String calorieCount = binding.calorieCount.getText().toString();
+
+            if (!meal.equals("") && !calorieCount.equals("")) {
+                Double cCount = Double.parseDouble(calorieCount);
+                binding.meal.setText("");
+                binding.calorieCount.setText("");
+            }
+        });
 
         //data = root.findViewById(R.id.dataButton);
         Button dataButton = binding.dataButton;
