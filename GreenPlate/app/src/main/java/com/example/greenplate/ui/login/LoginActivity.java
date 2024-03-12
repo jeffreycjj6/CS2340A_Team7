@@ -14,6 +14,7 @@ import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
 import com.example.greenplate.User;
 import com.example.greenplate.UserDatabase;
+import com.example.greenplate.ui.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
 
@@ -48,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
             //this.reload();
+            reloadAccount(currentUser.getEmail());
             System.out.println("Already Logged In.");
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -220,7 +223,6 @@ public class LoginActivity extends AppCompatActivity {
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(username);
 
-
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -249,9 +251,31 @@ public class LoginActivity extends AppCompatActivity {
                         user.setGender(gender);
                         int dailyCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("dailyCalories").getValue()));
                         user.setDailyCalories(dailyCalories);
-                        int totalCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("totalCalories").getValue()));
-                        user.setTotalCalories(totalCalories);
 
+                        // Initialize Meal 2D ArrayList
+                            // Do this by using a nested for loop and starting at the end
+                            // We subtract days going backwards and we read if that day exists
+                            // 1. Going to user's mealCalendar database section
+                            // 2. Calculating current day and assigning that to
+                            // 3.
+
+                        Calendar calendar = Calendar.getInstance();
+                        for (int day = 29; day >= 0; day--) {
+                            String currentDay = calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18);
+                            calendar.add(Calendar.DATE, -1);
+
+                            // meal num starts at index 0
+                            // note that initialization entry starts at index -1 but since we start mealnum at 0 we skip it
+                            String currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+                            int mealNum = 0;
+                            while (!currentMeal.equals("null")) {
+                                System.out.println(currentMeal);
+                                user.getMealCalendar().get(day).add(new Meal(currentMeal, 350));
+                                mealNum += 1;
+                                currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
+
+                            }
+                        }
                     }
                 }
             }

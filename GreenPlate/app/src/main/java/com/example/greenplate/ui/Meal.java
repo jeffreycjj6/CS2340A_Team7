@@ -8,4 +8,8 @@ public class Meal {
         this.name = name;
         this.calorieCount = calorieCount;
     }
+
+    public String toString() {
+        return name + ": " + calorieCount;
+    }
 }

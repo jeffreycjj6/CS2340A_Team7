@@ -133,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println(User.getInstance().getWeight());
             System.out.println(User.getInstance().getGender());
             System.out.println(User.getInstance().getPassword());
+            System.out.println(User.getInstance().getMealCalendar().get(29).size());
+            System.out.println(User.getInstance().getMealCalendar());
+
+            //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
