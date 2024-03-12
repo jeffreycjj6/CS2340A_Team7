@@ -3,6 +3,20 @@ package com.example.greenplate;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+
 public class UserDatabase {
 
     private static UserDatabase userData;
@@ -31,9 +45,9 @@ public class UserDatabase {
         user.setPassword(password);
         user.setHeight(0);
         user.setWeight(0);
-        user.setGender("null");
+        user.setGender(null);
         user.setDailyCalories(0);
-        user.setTotalCalories(0);
+        //user.setTotalCalories(0);
         //User user = new User(first, last, username, password);
         String username = email.replace(".", " ");
         user.setUsername(username);
@@ -41,6 +55,14 @@ public class UserDatabase {
         DatabaseReference database = mDatabase.getReference();
 
         database.child("Users").child(username).setValue(user);
+
+        Calendar calendar = Calendar.getInstance();
+
+        //database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("0").setValue("Eggs & Potatoes");
+        //calendar.add(Calendar.DATE, -1);
+        //database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("0").setValue("Chee Toes");
+        database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("-1").setValue("StartingDay");
+
     }
 
     // still incomplete
@@ -106,13 +128,5 @@ public class UserDatabase {
         database.child(firstName).updateChildren(user);
 
          */
-    }
-
-    public void writeNewMeal(String name, int calories) {
-        //Meal meal = new Meal(name, calories);
-
-        DatabaseReference database = mDatabase.getReference();
-        database.child("Meals").child(name);
-        database.child("Meals").child(name).child("calories").setValue(calories);
     }
 }
