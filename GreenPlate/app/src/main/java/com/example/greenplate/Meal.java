@@ -1,4 +1,4 @@
-package com.example.greenplate.ui;
+package com.example.greenplate;
 
 public class Meal {
     private String name;

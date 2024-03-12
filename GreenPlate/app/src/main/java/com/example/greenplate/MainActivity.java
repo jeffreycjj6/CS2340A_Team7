@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private ActivityMainBinding binding;
 
-    private  FirebaseAuth auth;
+    private FirebaseAuth auth;
 
 
     @Override
