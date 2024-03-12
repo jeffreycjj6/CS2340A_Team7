@@ -2,24 +2,29 @@ package com.example.greenplate;
 
 public class User {
 
-
+    private static User user;
     private String firstName;
     private String lastName;
+
+    private String username;
     private String email;
     private String password;
-    private int totalCalories;
-    private int height;
+    private double height;
     private double weight;
     private String gender;
 
-    public User() {
+    private int dailyCalories;
+
+    private int totalCalories;
+
+    private User() {
     }
 
-    public User(String firstName, String lastName, String email, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
+    public static User getInstance() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
     }
 
     public String getFirstName() {
@@ -52,5 +57,53 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getTotalCalories() {
+        return totalCalories;
+    }
+
+    public void setTotalCalories(int totalCalories) {
+        this.totalCalories = totalCalories;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getDailyCalories() {
+        return dailyCalories;
+    }
+
+    public void setDailyCalories(int dailyCalories) {
+        this.dailyCalories = dailyCalories;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

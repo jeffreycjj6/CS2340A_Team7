@@ -13,13 +13,25 @@
         android:id="@+id/dataButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Data"
+        android:text="Calories Data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.154"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.811" />
+        app:layout_constraintVertical_bias="0.859" />
+
+    <Button
+        android:id="@+id/dataButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Meals Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.859" />
 
     <Button
         android:id="@+id/track_meal"
@@ -36,7 +48,7 @@
     <TextView
         android:id="@+id/user_info"
         android:layout_width="390dp"
-        android:layout_height="53dp"
+        android:layout_height="100dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
@@ -73,7 +85,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="196dp"
         android:hint="Calorie Count"
-        android:inputType="phone"
+        android:inputType="numberPassword"
         app:layout_constraintBottom_toBottomOf="@id/meal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

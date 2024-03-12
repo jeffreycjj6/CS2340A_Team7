@@ -36,12 +36,32 @@ public class InputMealFragment extends Fragment {
         TextView textView = binding.userInfo;
         inputMealViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        String meal = Objects.requireNonNull(binding.meal.getText()).toString();
-        String calorieCount = Objects.requireNonNull(binding.calorieCount.getText()).toString();
+        Button inputMealButton = binding.trackMeal;
+        inputMealButton.setOnClickListener(v -> {
+            String meal = binding.meal.getText().toString();
+            String calorieCount = binding.calorieCount.getText().toString();
+
+            if (!meal.equals("") && !calorieCount.equals("")) {
+                Double cCount = Double.parseDouble(calorieCount);
+                binding.meal.setText("");
+                binding.calorieCount.setText("");
+            }
+        });
 
         //data = root.findViewById(R.id.dataButton);
         Button dataButton = binding.dataButton;
         dataButton.setOnClickListener(v -> {
+            DataVisualFragment.setGraph(1);
+            DataVisualFragment chartFragment = new DataVisualFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, chartFragment);
+            transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+            transaction.commit();
+        });
+
+        Button dataButton2 = binding.dataButton2;
+        dataButton2.setOnClickListener(v -> {
+            DataVisualFragment.setGraph(2);
             DataVisualFragment chartFragment = new DataVisualFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, chartFragment);
