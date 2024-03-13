@@ -1,7 +1,5 @@
 package com.example.greenplate;
 
-import com.example.greenplate.Meal;
-
 import java.util.ArrayList;
 
 public class User {
@@ -17,7 +15,10 @@ public class User {
     private double weight;
     private String gender;
 
+    private ArrayList<Integer> monthlyCalories;
+
     private int dailyCalories;
+    private double calorieGoal;
 
     //private int totalCalories;
 
@@ -26,9 +27,14 @@ public class User {
 
     private User() {
         mealCalendar = new ArrayList<ArrayList<Meal>>(30);
+        monthlyCalories = new ArrayList<Integer>(30);
         for (int i = 0; i < 30; i++) {
             mealCalendar.add(new ArrayList<Meal>());
         }
+        for (int i = 0; i < 30; i++) {
+            monthlyCalories.add(0);
+        }
+        //monthlyCalories = new ArrayList<Integer>(30);
     }
 
     public static User getInstance() {
@@ -76,11 +82,18 @@ public class User {
 
     public void addMealToday(Meal meal) {
         mealCalendar.get(29).add(meal);
+        addCaloriesToday(meal.getCalories(), 29);
         // also add a check so that if it is the first day, we write into the database
     }
 
     //public void initializeAddMeal(Meal meal)
+    public ArrayList<Integer> getMonthlyCalories() {
+        return monthlyCalories;
+    }
 
+    public void addCaloriesToday(int calories, int day) {
+        monthlyCalories.set(day, calories + monthlyCalories.get(day));
+    }
 
     public double getHeight() {
         return height;
@@ -120,5 +133,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(double calorieGoal) {
+        this.calorieGoal = calorieGoal;
     }
 }
