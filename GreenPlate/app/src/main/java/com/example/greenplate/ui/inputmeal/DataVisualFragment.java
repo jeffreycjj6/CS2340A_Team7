@@ -81,22 +81,20 @@ public class DataVisualFragment extends Fragment {
         List<DataEntry> data = new ArrayList<>();
         //input data
 
-        /*User user = User.getInstance();
-        int calorieGoal = user.getCalorieGoal();
-        Array<Integer> monthlyCalories = user.getMonthlyCalories();
+        User user = User.getInstance();
+        //int calorieGoal = user.getCalorieGoal();
+        ArrayList<Integer> monthlyCalories = user.getMonthlyCalories();
 
-        Calendar calendar =
-
-        List<DataEntry> data = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
 
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
-            CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime().toString().substring(0, ),
-                    0, 0, 0, monthlyCalories[i] - calorieGoal);
-            data.add(entry)
+            CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
+                    0, 0, 0, monthlyCalories.get(i) - 200);
+            data.add(entry);
         }
-*/
-        data.add(new CustomDataEntry2("Jan", 0, 0, 0, 8.9));
+
+        /*data.add(new CustomDataEntry2("Jan", 0, 0, 0, 8.9));
         data.add(new CustomDataEntry2("Feb", 0, 0, 0, -8.2));
         data.add(new CustomDataEntry2("Mar", 0, 0, 0, -8.1));
         data.add(new CustomDataEntry2("Apr", 0, 0, 0, 9.8));
@@ -107,7 +105,7 @@ public class DataVisualFragment extends Fragment {
         data.add(new CustomDataEntry2("Sep", 0, 0, 0, 15.3));
         data.add(new CustomDataEntry2("Oct", 0, 0, 0, 14.4));
         data.add(new CustomDataEntry2("Nov", 0, 0, 0, 10.7));
-        data.add(new CustomDataEntry2("Dec", 0, 0, 0, 11.1));
+        data.add(new CustomDataEntry2("Dec", 0, 0, 0, 11.1));*/
 
         Set set = Set.instantiate();
         set.data(data);
@@ -124,8 +122,8 @@ public class DataVisualFragment extends Fragment {
         cartesian.yAxis(true);
 
         cartesian.yScale()
-                .minimum(-12d)
-                .maximum(12d);
+                .minimum(-200d)
+                .maximum(200d);
 
         cartesian.legend(true);
 
