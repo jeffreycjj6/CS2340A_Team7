@@ -10,8 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.greenplate.ui.home.HomeFragment;
@@ -24,7 +22,8 @@ import com.example.greenplate.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
 
@@ -139,7 +138,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 
             FirebaseAuth.getInstance().signOut();
-            Intent intent = new Intent(MainActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
+            Intent intent = new Intent(MainActivity.this,
+                    com.example.greenplate.ui.login.LoginActivity.class);
             finish();
             startActivity(intent);
         }

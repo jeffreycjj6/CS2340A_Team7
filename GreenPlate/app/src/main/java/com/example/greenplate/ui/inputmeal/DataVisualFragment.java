@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,7 +28,6 @@ import com.example.greenplate.databinding.FragmentDataVisualBinding;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 
 
 public class DataVisualFragment extends Fragment {
@@ -105,8 +103,9 @@ public class DataVisualFragment extends Fragment {
 
         for (int i = 0; i < 30; i++) {
             calendar.add(Calendar.DATE, -1);
-            CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
-                    (int) (Math.random()*3000), 2000);
+            CustomDataEntry entry = new CustomDataEntry(calendar.getTime()
+                    .toString().substring(0, calendar.getTime().toString().length() - 18),
+                    (int) (Math.random() * 3000), 2000);
             data.add(entry);
         }
 
@@ -142,8 +141,6 @@ public class DataVisualFragment extends Fragment {
         data.add(new CustomDataEntry("Jan 30", 17.2, 15.5));*/
 
 
-
-
         Set set = Set.instantiate();
         set.data(data);
         Mapping barData = set.mapAs("{ x: 'x', value: 'value' }");
@@ -165,10 +162,10 @@ public class DataVisualFragment extends Fragment {
                 .displayMode(TooltipDisplayMode.UNION)
                 .positionMode(TooltipPositionMode.POINT)
                 .unionFormat(
-                        "function() {\n" +
-                                "      return 'Calorie Goal: ' + this.points[1].value + \n" +
-                                "        '\\n' + 'Calories Reached: ' + this.points[0].value ;\n" +
-                                "    }");
+                        "function() {\n"
+                                + "      return 'Calorie Goal: ' + this.points[1].value + \n"
+                                + "        '\\n' + 'Calories Reached: ' + this.points[0].value ;\n"
+                                + "    }");
 
         vertical.interactivity().hoverMode(HoverMode.BY_X);
 

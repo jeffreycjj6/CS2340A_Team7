@@ -1,7 +1,5 @@
 package com.example.greenplate;
 
-import com.example.greenplate.Meal;
-
 import java.util.ArrayList;
 
 public class User {
