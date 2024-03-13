@@ -14,8 +14,7 @@ public class InputMealViewModel extends ViewModel {
 
     public InputMealViewModel() {
         if (user.getHeight() != 0 && user.getWeight() != 0) {
-            target = 370 + 21.6 * (1 - (user.getWeight() / (Math.pow((user.getHeight()/100), 2)))
-                    * user.getWeight());
+            target = 370 + 30 * user.getWeight();
         }
 
         mText = new MutableLiveData<>();
