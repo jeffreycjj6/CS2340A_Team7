@@ -22,102 +22,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/weightTag"
-        android:layout_width="68dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="304dp"
-        android:text="Weight"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/heightTag"
-        android:layout_width="68dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="304dp"
-        android:text="Height"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
-
-    <TextView
-        android:id="@+id/genderTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="304dp"
-        android:text="Gender"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightTag" />
-
-    <TextView
-        android:id="@+id/userHeight"
-        android:layout_width="271dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="32dp"
-        android:text="User Height"
-        app:layout_constraintBottom_toTopOf="@+id/weightTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/userWeight"
-        android:layout_width="271dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="43dp"
-        android:layout_marginTop="46dp"
-        android:layout_marginEnd="98dp"
-        android:layout_marginBottom="17dp"
-        android:text="User Weight"
-        app:layout_constraintBottom_toTopOf="@+id/genderTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightTag" />
-
-    <TextView
-        android:id="@+id/userGender"
-        android:layout_width="271dp"
-        android:layout_height="37dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="29dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginBottom="130dp"
-        android:text="User Gender"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genderTag" />
-
     <Button
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="163dp"
-        android:layout_marginBottom="74dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="160dp"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userGender" />
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 
+    <TextView
+        android:id="@+id/userHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="500dp"
+        android:text="Height: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
+
+    <TextView
+        android:id="@+id/userWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="300dp"
+        android:text="Weight: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
+
+    <TextView
+        android:id="@+id/userGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="100dp"
+        android:text="Gender: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
