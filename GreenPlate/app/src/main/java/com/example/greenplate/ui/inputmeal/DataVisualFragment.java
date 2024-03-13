@@ -111,8 +111,9 @@ public class DataVisualFragment extends Fragment {
         }*/
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
-            CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
-                    User.getInstance().getMonthlyCalories().get(i), 2000);
+            CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(
+                    0, calendar.getTime().toString().length() - 18),
+                    (int) (Math.random() * 3000), 2000);
             data.add(entry);
         }
 
