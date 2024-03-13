@@ -9,6 +9,13 @@ public class Meal {
         this.calorieCount = calorieCount;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getCalories() {
+        return calorieCount;
+    }
     public String toString() {
         return name + ": " + calorieCount;
     }

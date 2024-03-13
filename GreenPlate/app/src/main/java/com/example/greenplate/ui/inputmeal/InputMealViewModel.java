@@ -20,7 +20,7 @@ public class InputMealViewModel extends ViewModel {
         mText = new MutableLiveData<>();
         mText.setValue("At " + user.getHeight() + " centimeters tall and " + user.getWeight()
                 + " kilograms, your goal is " + (int)target + " calories. You are at "
-                + 1000 + " calories.");
+                + user.getMonthlyCalories().get(29) + " calories.");
     }
 
     public LiveData<String> getText() {
