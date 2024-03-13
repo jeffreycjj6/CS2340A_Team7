@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditStatsBinding;
 import com.example.greenplate.databinding.FragmentProfileBinding;
 import com.example.greenplate.ui.inputmeal.DataVisualFragment;
+import com.example.greenplate.ui.login.LoginActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -39,24 +41,27 @@ public class EditStatsFragment extends Fragment {
 
         Button saveButton = binding.saveStats;
         saveButton.setOnClickListener(v -> {
-            double userHeight = Double.parseDouble(binding.userHeightInput.getText().toString());
-            double userWeight = Double.parseDouble(binding.userWeightInput.getText().toString());
+            String userHeight = binding.userHeightInput.getText().toString();
+            String userWeight = binding.userWeightInput.getText().toString();
             String userGender = binding.userGenderInput.getText().toString();
 
-            User user = User.getInstance();
-            user.setHeight(userHeight);
-            user.setWeight(userWeight);
-            user.setGender(userGender);
+            if (!userHeight.equals("") && !userWeight.equals("") && !userGender.equals("")){
+                User user = User.getInstance();
 
-            UserDatabase database = UserDatabase.getInstance();
-            database.writeHeightWeightGender(userHeight, userWeight, userGender);
+                user.setHeight(Double.parseDouble(userHeight));
+                user.setWeight(Double.parseDouble(userWeight));
+                user.setGender(userGender);
 
-            ProfileFragment profileFragment = new ProfileFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, profileFragment);
+                UserDatabase database = UserDatabase.getInstance();
+                database.writeHeightWeightGender(Double.parseDouble(userHeight), Double.parseDouble(userWeight), userGender);
 
-            transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
-            transaction.commit();
+                ProfileFragment profileFragment = new ProfileFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, profileFragment);
+
+                transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+                transaction.commit();
+            }
         });
 
 

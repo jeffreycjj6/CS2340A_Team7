@@ -16,7 +16,7 @@ public class InputMealViewModel extends ViewModel {
     public InputMealViewModel() {
         mText = new MutableLiveData<>();
         mText.setValue("At " + user.getHeight() + " meters tall and " + user.getWeight()
-                + " kilograms, your goal is " + target + " calories. You are at "
+                + " kilograms, your goal is " + (int)target + " calories. You are at "
                 + 1000 + " calories.");
     }
 
