@@ -22,6 +22,8 @@ import com.example.greenplate.R;
 import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
 
+import java.util.Calendar;
+
 public class InputMealFragment extends Fragment {
     private FragmentInputMealBinding binding;
     private View root;
@@ -46,8 +48,23 @@ public class InputMealFragment extends Fragment {
                 int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
-                UserDatabase database = UserDatabase.getInstance();
-                database.writeNewMeal(meal, Integer.parseInt(calorieCount));
+                UserDatabase udb = UserDatabase.getInstance();
+
+                // First check if that entry does not exist (if the entry was null in the dictionary)
+                // If it was null, we add a new entry on dictionary
+                //String mealDictionaryEntry = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+                udb.writeNewMeal(meal, Integer.parseInt(calorieCount));
+
+                // Eitherway, we always add a new meal to the User entry log
+                    // This requies the string address to get to the user entry --> meal calendary --> today's date
+                    // We also need to choose whichi index it is, we can do this by finding the size of mealCalendary 2D arraylist at that day index
+                Calendar date = Calendar.getInstance();
+                String currentDate = date.getTime().toString().substring(0, date.getTime().toString().length() - 18);
+                udb.trackNewMeal(meal, Integer.parseInt(calorieCount), currentDate);
+
+
+
+
             }
         });
 

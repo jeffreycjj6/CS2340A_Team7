@@ -17,6 +17,8 @@ public class User {
     private double weight;
     private String gender;
 
+    private int[] monthlyCalories;
+
     private int dailyCalories;
 
     //private int totalCalories;
@@ -80,6 +82,9 @@ public class User {
     }
 
     //public void initializeAddMeal(Meal meal)
+    public int[] getMonthlyCalendar() {
+        return monthlyCalories;
+    }
 
 
     public double getHeight() {

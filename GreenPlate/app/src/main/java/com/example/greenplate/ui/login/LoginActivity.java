@@ -270,12 +270,18 @@ public class LoginActivity extends AppCompatActivity {
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
                                 System.out.println(currentMeal);
-                                user.getMealCalendar().get(day).add(new Meal(currentMeal, 350));
+
+                                user.getMealCalendar().get(day).add(new Meal(currentMeal, 0));
+                                //
+                                //int[day] +=
                                 mealNum += 1;
                                 currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
 
                             }
                         }
+
+                        // initialize monthly calories
+
                     }
                 }
             }
