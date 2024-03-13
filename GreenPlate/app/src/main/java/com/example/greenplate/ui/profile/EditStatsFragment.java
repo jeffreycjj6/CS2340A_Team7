@@ -40,7 +40,7 @@ public class EditStatsFragment extends Fragment {
 
             if (!userHeight.equals("") && !userWeight.equals("") && !userGender.equals("")) {
                 User user = User.getInstance();
-
+                
                 user.setHeight(Double.parseDouble(userHeight));
                 user.setWeight(Double.parseDouble(userWeight));
                 user.setGender(userGender);

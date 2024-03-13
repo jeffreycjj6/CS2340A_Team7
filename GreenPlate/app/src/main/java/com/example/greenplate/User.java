@@ -18,6 +18,7 @@ public class User {
     private ArrayList<Integer> monthlyCalories;
 
     private int dailyCalories;
+    private double calorieGoal;
 
     //private int totalCalories;
 
@@ -132,5 +133,13 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public double getCalorieGoal() {
+        return calorieGoal;
+    }
+
+    public void setCalorieGoal(double calorieGoal) {
+        this.calorieGoal = calorieGoal;
     }
 }

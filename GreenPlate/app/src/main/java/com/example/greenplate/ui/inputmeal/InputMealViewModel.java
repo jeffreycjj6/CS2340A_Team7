@@ -16,7 +16,7 @@ public class InputMealViewModel extends ViewModel {
         if (user.getHeight() != 0 && user.getWeight() != 0) {
             target = 370 + 30 * user.getWeight();
         }
-
+        user.setCalorieGoal(target);
         mText = new MutableLiveData<>();
         mText.setValue("At " + user.getHeight() + " centimeters tall and " + user.getWeight()
                 + " kilograms, your goal is " + (int)target + " calories. You are at "
