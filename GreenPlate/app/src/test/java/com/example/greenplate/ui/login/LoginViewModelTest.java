@@ -51,4 +51,22 @@ public class LoginViewModelTest {
         assertTrue(testViewModel.getSuccess());
     }
 
+    @Test
+    public void setToastMessageMore() {
+        LoginViewModel viewModel = LoginViewModel.getInstance();
+        viewModel.setToastMessage("toast");
+
+        LoginViewModel testViewModel = LoginViewModel.getInstance();
+        testViewModel.setToastMessage("toasty");
+
+        assertEquals("toasty", viewModel.getToastMessage());
+    }
+
+    @Test
+    public void getSuccess() {
+        LoginViewModel viewModel = LoginViewModel.getInstance();
+
+        assertFalse(viewModel.getSuccess());
+    }
+
 }

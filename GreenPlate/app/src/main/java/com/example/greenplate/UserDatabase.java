@@ -4,19 +4,8 @@ import com.example.greenplate.ui.login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+
 
 public class UserDatabase {
 
@@ -59,10 +48,18 @@ public class UserDatabase {
 
         Calendar calendar = Calendar.getInstance();
 
-        //database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("0").setValue("Eggs & Potatoes");
+        //database.child("Users").child(username).child("mealCalendar")
+        // .child(calendar.getTime().toString()
+        // .substring(0, calendar.getTime().toString().length() - 18)).child("0")
+        // .setValue("Eggs & Potatoes");
         //calendar.add(Calendar.DATE, -1);
-        //database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("0").setValue("Chee Toes");
-        database.child("Users").child(username).child("mealCalendar").child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("-1").setValue("StartingDay");
+        //database.child("Users").child(username).child("mealCalendar").child
+        // (calendar.getTime().toString().substring
+        // (0, calendar.getTime().toString().length() - 18)).child("0").setValue("Chee Toes");
+        database.child("Users").child(username).child("mealCalendar")
+                .child(calendar.getTime().toString()
+                        .substring(0, calendar.getTime().toString().length() - 18))
+                .child("-1").setValue("StartingDay");
 
     }
 
@@ -81,7 +78,8 @@ public class UserDatabase {
 
         String username = email.replace(".", " ");
         //System.out.println("\nThis works\n");
-        database.child("Users").child("Jesse").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        database.child("Users").child("Jesse").get().addOnCompleteListener
+        (new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 System.out.println("\nThis works\n");
