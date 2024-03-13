@@ -12,7 +12,6 @@ public class LoginViewModel {
     private String toastMessage;
 
 
-
     private LoginViewModel() {
         success = false;
         toastMessage = "";
@@ -44,7 +43,7 @@ public class LoginViewModel {
     public Task verifyLogin(String email, String password, FirebaseAuth mAuth) {
         //success = false;
         return mAuth.signInWithEmailAndPassword(email, password);
-                /*.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        /*.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
@@ -70,7 +69,6 @@ public class LoginViewModel {
                 toastMessage = "Incorrect Username or Password.";
             }
         }*/
-
 
 
         //return success;

@@ -1,6 +1,5 @@
 package com.example.greenplate;
 
-import com.example.greenplate.ui.login.LoginActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -143,8 +142,9 @@ public class UserDatabase {
 
     public void trackNewMeal(String currentMeal, int calories, String date) {
         // Track a new meal:
-            // 1. Update our current user's meal log inside their mealCalendar in Firebase
-            // 2. Update our local snapshot/copy of the mealCalendar as well as the monthlyCalorie count
+        // 1. Update our current user's meal log inside their mealCalendar in Firebase
+        // 2. Update our local snapshot/copy
+        // of the mealCalendar as well as the monthlyCalorie count
 
         DatabaseReference db = mDatabase.getReference();
 
@@ -152,7 +152,9 @@ public class UserDatabase {
         int newMealNumber = currentUser.getMealCalendar().get(29).size();
         // The current meal index inside the meal log of a user, just use .size()
 
-        db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber)).setValue(currentMeal);
+        db.child("Users").child(currentUser.getUsername()).child(
+                "mealCalendar").child(date).child(Integer.toString(newMealNumber))
+                .setValue(currentMeal);
 
         currentUser.addMealToday(new Meal(currentMeal, calories));
 
@@ -162,7 +164,8 @@ public class UserDatabase {
     /*public int[] getMonthlyCalories() {
 
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(User.getInstance().getUsername());
+        DatabaseReference database = FirebaseDatabase.getInstance()
+        .getReference("Users").child(User.getInstance().getUsername());
 
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -176,18 +179,24 @@ public class UserDatabase {
 
                         Calendar calendar = Calendar.getInstance();
                         for (int day = 29; day >= 0; day--) {
-                            String currentDay = calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18);
+                            String currentDay = calendar.getTime()
+                            .toString().substring(0, calendar.getTime().toString().length() - 18);
                             calendar.add(Calendar.DATE, -1);
 
                             // meal num starts at index 0
-                            // note that initialization entry starts at index -1 but since we start mealnum at 0 we skip it
-                            String currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+                            // note that initialization entry starts at index -1
+                            but since we start mealnum at 0 we skip it
+                            String currentMeal = String.valueOf(
+                            dataSnapshot.child("mealCalendar").child(currentDay).child(
+                            Integer.toString(0)).getValue());
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
                                 System.out.println(currentMeal);
                                 user.getMealCalendar().get(day).add(new Meal(currentMeal, 350));
                                 mealNum += 1;
-                                currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
+                                currentMeal = String.valueOf(dataSnapshot.child(
+                                "mealCalendar").child(currentDay).child(Integer.toString(mealNum))
+                                .getValue());
 
                             }
                         }

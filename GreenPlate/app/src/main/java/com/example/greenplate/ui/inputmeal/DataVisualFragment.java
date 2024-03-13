@@ -15,7 +15,6 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Cartesian;
-import com.anychart.charts.Pie;
 import com.anychart.core.cartesian.series.Bar;
 import com.anychart.core.cartesian.series.JumpLine;
 import com.anychart.data.Mapping;
@@ -89,7 +88,8 @@ public class DataVisualFragment extends Fragment {
 
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
-            CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
+            CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime()
+                    .toString().substring(0, calendar.getTime().toString().length() - 18),
                     0, 0, 0, monthlyCalories.get(i) - calorieGoal);
             data.add(entry);
         }
@@ -162,8 +162,10 @@ public class DataVisualFragment extends Fragment {
         }*/
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
-            CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
-                    User.getInstance().getMonthlyCalories().get(i), User.getInstance().getCalorieGoal());
+            CustomDataEntry entry = new CustomDataEntry(calendar.getTime()
+                    .toString().substring(0, calendar.getTime().toString().length() - 18),
+                    User.getInstance().getMonthlyCalories().get(i),
+                    User.getInstance().getCalorieGoal());
             data.add(entry);
         }
 
@@ -243,7 +245,8 @@ public class DataVisualFragment extends Fragment {
     }
 
     private class CustomDataEntry2 extends DataEntry {
-        public CustomDataEntry2(String x, Number edinburgHigh, Number edinburgLow, Number londonHigh, Number londonLow) {
+        public CustomDataEntry2(String x, Number edinburgHigh,
+                                Number edinburgLow, Number londonHigh, Number londonLow) {
             setValue("x", x);
             setValue("edinburgHigh", edinburgHigh);
             setValue("edinburgLow", edinburgLow);
