@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.anychart.core.cartesian.series.RangeColumn;
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
@@ -24,6 +25,7 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.TooltipDisplayMode;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.greenplate.R;
+import com.example.greenplate.User;
 import com.example.greenplate.databinding.FragmentDataVisualBinding;
 
 import java.util.ArrayList;
@@ -71,18 +73,70 @@ public class DataVisualFragment extends Fragment {
     }
 
     private void makeDemoChart() {
-        Pie pie = AnyChart.pie();
+        AnyChartView anyChartView = root.findViewById(R.id.any_chart_view);
+        anyChartView.setProgressBar(root.findViewById(R.id.progress_bar));
+
+        Cartesian cartesian = AnyChart.cartesian();
+
+        cartesian.title("Calorie Offset Compared to Calorie Goal");
 
         List<DataEntry> data = new ArrayList<>();
-        data.add(new ValueDataEntry("John", 10000));
-        data.add(new ValueDataEntry("Jake", 12000));
-        data.add(new ValueDataEntry("Peter", 18000));
+        //input data
 
-        pie.data(data);
+        /*User user = User.getInstance();
+        int calorieGoal = user.getCalorieGoal();
+        Array<Integer> monthlyCalories = user.getMonthlyCalories();
 
-        AnyChartView anyChartView = (AnyChartView) root.findViewById(R.id.any_chart_view);
-        anyChartView.setChart(pie);
-        pie.draw(true);
+        Calendar calendar =
+
+        List<DataEntry> data = new ArrayList<>();
+
+        for (int i = 29; i >= 0; i--) {
+            calendar.add(Calendar.DATE, -1);
+            CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime().toString().substring(0, ),
+                    0, 0, 0, monthlyCalories[i] - calorieGoal);
+            data.add(entry)
+        }
+*/
+        data.add(new CustomDataEntry2("Jan", 0, 0, 0, 8.9));
+        data.add(new CustomDataEntry2("Feb", 0, 0, 0, -8.2));
+        data.add(new CustomDataEntry2("Mar", 0, 0, 0, -8.1));
+        data.add(new CustomDataEntry2("Apr", 0, 0, 0, 9.8));
+        data.add(new CustomDataEntry2("May", 0, 0, 0, 10.7));
+        data.add(new CustomDataEntry2("June", 0, 0, 0, 14.5));
+        data.add(new CustomDataEntry2("July", 0, 0, 0, 16.7));
+        data.add(new CustomDataEntry2("Aug", 0, 0, 0, 16.3));
+        data.add(new CustomDataEntry2("Sep", 0, 0, 0, 15.3));
+        data.add(new CustomDataEntry2("Oct", 0, 0, 0, 14.4));
+        data.add(new CustomDataEntry2("Nov", 0, 0, 0, 10.7));
+        data.add(new CustomDataEntry2("Dec", 0, 0, 0, 11.1));
+
+        Set set = Set.instantiate();
+        set.data(data);
+        Mapping londonData = set.mapAs("{ x: 'x', high: 'londonHigh', low: 'londonLow' }");
+        Mapping edinburgData = set.mapAs("{ x: 'x', high: 'edinburgHigh', low: 'edinburgLow' }");
+
+        RangeColumn columnLondon = cartesian.rangeColumn(londonData);
+        columnLondon.name("Calories");
+
+        //RangeColumn columnEdinburg = cartesian.rangeColumn(edinburgData);
+        //columnEdinburg.name("Edinburgh");
+
+        cartesian.xAxis(true);
+        cartesian.yAxis(true);
+
+        cartesian.yScale()
+                .minimum(-12d)
+                .maximum(12d);
+
+        cartesian.legend(true);
+
+        cartesian.yGrid(true)
+                .yMinorGrid(true);
+
+        cartesian.tooltip().titleFormat("{%SeriesName} ({%x})");
+
+        anyChartView.setChart(cartesian);
     }
 
     private void makeHorizontalChart() {
@@ -184,6 +238,16 @@ public class DataVisualFragment extends Fragment {
         public CustomDataEntry(String x, Number value, Number jumpLine) {
             super(x, value);
             setValue("jumpLine", jumpLine);
+        }
+    }
+
+    private class CustomDataEntry2 extends DataEntry {
+        public CustomDataEntry2(String x, Number edinburgHigh, Number edinburgLow, Number londonHigh, Number londonLow) {
+            setValue("x", x);
+            setValue("edinburgHigh", edinburgHigh);
+            setValue("edinburgLow", edinburgLow);
+            setValue("londonHigh", londonHigh);
+            setValue("londonLow", londonLow);
         }
     }
 }
