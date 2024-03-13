@@ -4,15 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/ThemeOverlay.AppCompat.navTheme2"
     tools:context=".ui.profile.ProfileFragment">
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="391dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="369dp">
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/myProfileTitle"
@@ -29,131 +22,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/text_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
-
-    <TextView
-        android:id="@+id/textView12"
+    <Button
+        android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="304dp"
-        android:layout_marginBottom="177dp"
-        android:text="Height"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle"
-        app:layout_constraintVertical_bias="0.166" />
-
-    <TextView
-        android:id="@+id/weightTag"
-        android:layout_width="64dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="51dp"
-        android:layout_marginEnd="316dp"
-        android:layout_marginBottom="12dp"
-        android:text="Weight"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="0.234" />
-
-    <TextView
-        android:id="@+id/genderTag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="33dp"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="296dp"
-        android:layout_marginBottom="5dp"
-        android:text="Gender"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightTag"
-        app:layout_constraintVertical_bias="0.181" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="391dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="254dp">
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/heightInput"
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="20dp"
-        android:hint="Input Height"
-        app:layout_constraintBottom_toTopOf="@+id/weightTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/weightInput"
-        android:layout_width="354dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="10dp"
-        android:hint="Input Weight"
-        app:layout_constraintBottom_toTopOf="@+id/genderTag"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weightTag" />
-
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="11dp"
-        android:layout_marginBottom="178dp"
-        android:orientation="vertical"
+        android:layout_marginStart="160dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="160dp"
+        android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_profile">
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 
-        <RadioButton
-            android:id="@+id/radio_pirates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Male" />
+    <TextView
+        android:id="@+id/userHeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="500dp"
+        android:text="Height: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 
-        <RadioButton
-            android:id="@+id/radio_ninjas"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Female" />
-    </RadioGroup>
+    <TextView
+        android:id="@+id/userWeight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="300dp"
+        android:text="Weight: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 
+    <TextView
+        android:id="@+id/userGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginBottom="100dp"
+        android:text="Gender: "
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myProfileTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

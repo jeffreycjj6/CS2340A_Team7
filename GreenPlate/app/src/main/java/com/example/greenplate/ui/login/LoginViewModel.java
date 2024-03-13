@@ -13,7 +13,7 @@ public class LoginViewModel {
 
 
 
-    public LoginViewModel() {
+    private LoginViewModel() {
         success = false;
         toastMessage = "";
     }

@@ -67,8 +67,12 @@ public class UserDatabase {
     }
 
     // still incomplete
-    public void writeHeightWeightGender(String firstName, double height, double weight, String gender) {
-        DatabaseReference database = mDatabase.getReference("User");
+    public void writeHeightWeightGender(double height, double weight, String gender) {
+        DatabaseReference database = mDatabase.getReference("Users");
+        User user = User.getInstance();
+        database.child(user.getUsername()).child("weight").setValue(weight);
+        database.child(user.getUsername()).child("height").setValue(height);
+        database.child(user.getUsername()).child("gender").setValue(gender);
     }
 
     /*public ArrayList<String> readData(String email) {
