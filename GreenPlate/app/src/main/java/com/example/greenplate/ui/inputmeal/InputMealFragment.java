@@ -67,7 +67,11 @@ public class InputMealFragment extends Fragment {
                 String currentDate = date.getTime().toString().substring(0, date.getTime().toString().length() - 18);
                 udb.trackNewMeal(meal, Integer.parseInt(calorieCount), currentDate);
 
-
+                InputMealFragment refresh = new InputMealFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, refresh);
+                transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+                transaction.commit();
 
 
             }
