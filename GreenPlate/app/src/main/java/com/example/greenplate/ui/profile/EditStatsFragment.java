@@ -18,6 +18,7 @@ import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditStatsBinding;
 
 
+
 public class EditStatsFragment extends Fragment {
 
     private FragmentEditStatsBinding binding;
