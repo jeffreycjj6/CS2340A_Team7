@@ -52,7 +52,8 @@ public class InputMealFragment extends Fragment {
             DataVisualFragment chartFragment = new DataVisualFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, chartFragment);
-            transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+            transaction.addToBackStack(null);  // This line allows the user to navigate back
+            // to the InputMealFragment by pressing the back button.
             transaction.commit();
         });
 
@@ -62,7 +63,8 @@ public class InputMealFragment extends Fragment {
             DataVisualFragment chartFragment = new DataVisualFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, chartFragment);
-            transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+            transaction.addToBackStack(null);  // This line allows the user to navigate back
+            // to the InputMealFragment by pressing the back button.
             transaction.commit();
         });
 

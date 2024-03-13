@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
 import com.example.greenplate.User;
-import com.example.greenplate.UserDatabase;
 import com.example.greenplate.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +24,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
@@ -48,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             //this.reload();
             reloadAccount(currentUser.getEmail());
             System.out.println("Already Logged In.");
@@ -57,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
     }
+
+    /** @noinspection checkstyle:TodoComment, checkstyle:TodoComment */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // TODO: Add login function and implement checks for failed login/null inputs
+        // TODOO: Add login function and implement checks for failed login/null inputs
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,24 +102,28 @@ public class LoginActivity extends AppCompatActivity {
 
                     //viewModel.verifyLogin(username, password, mAuth);
                     String finalUsername = username;
-                    viewModel.verifyLogin(username, password, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    viewModel.verifyLogin(username, password, mAuth).addOnCompleteListener(
+                            new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new Intent(LoginActivity.this,
+                                                MainActivity.class);
 
-                                //set account
-                                reloadAccount(finalUsername);
+                                        //set account
+                                        reloadAccount(finalUsername);
 
-                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                finish();
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(LoginActivity.this, "Incorrect Password or Username.", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                    });
+                                        Toast.makeText(LoginActivity.this, "Login Successful",
+                                                Toast.LENGTH_SHORT).show();
+                                        finish();
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(LoginActivity.this,
+                                                "Incorrect Password or Username.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
 
                 /*if (username.equals("") || password.equals("")) {
@@ -133,7 +137,8 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                         startActivity(intent);
                     }
-                    Toast.makeText(LoginActivity.this, "Incorrect Password or Username.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Incorrect Password or Username.",
+                    Toast.LENGTH_SHORT).show();
                 }*/
 
 
@@ -142,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                 //System.out.println(username + " " + password);
                 //boolean checkLoginInfo = verifyLogin(username, password);
 
-                //Intent intent = new Intent(LoginActivity.this, com.example.navbartest.MainActivity.class);
+                //Intent intent = new Intent(LoginActivity.this, com.example.navbartest.
+                // MainActivity.class);
                 //startActivity(intent);
                 /*if (checkLoginInfo) {
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -156,13 +162,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        // TODO: Add Jesse's account creation code here to switch to that menu when we press log in
+        // TODOO: Add Jesse's account creation code here to switch to that menu when we press log in
         // Also, enable input/send the login information through
         createAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                Intent intent = new Intent(LoginActivity.this, com.example.greenplate.ui.account.AccountCreationActivity.class);
+                Intent intent = new Intent(LoginActivity.this, com.example.
+                        greenplate.ui.account.AccountCreationActivity.class);
                 startActivity(intent);
             }
         });
@@ -180,7 +187,8 @@ public class LoginActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_dashboard,
                 R.id.navigation_notifications, R.id.navigation_test)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        NavController navController = Navigation.findNavController(this,
+        R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);*/
     }
@@ -221,7 +229,8 @@ public class LoginActivity extends AppCompatActivity {
         //UserDatabase database = UserDatabase.getInstance();
         String username = email.replace(".", " ");
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(username);
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users")
+                .child(username);
 
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -230,49 +239,66 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.getResult().exists()) {
 
-                        Toast.makeText(LoginActivity.this, "Successfully Read", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Successfully Read",
+                                Toast.LENGTH_SHORT).show();
                         DataSnapshot dataSnapshot = task.getResult();
                         User user = User.getInstance();
-                        String firstName = String.valueOf(dataSnapshot.child("firstName").getValue());
+                        String firstName = String.valueOf(dataSnapshot.child(
+                                "firstName").getValue());
                         user.setFirstName(firstName);
-                        String lastName = String.valueOf(dataSnapshot.child("lastName").getValue());
+                        String lastName = String.valueOf(dataSnapshot.child(
+                                "lastName").getValue());
                         user.setLastName(lastName);
-                        String username = String.valueOf(dataSnapshot.child("username").getValue());
+                        String username = String.valueOf(dataSnapshot.child(
+                                "username").getValue());
                         user.setUsername(username);
-                        String email = String.valueOf(dataSnapshot.child("email").getValue());
+                        String email = String.valueOf(dataSnapshot.child(
+                                "email").getValue());
                         user.setEmail(email);
-                        String password = String.valueOf(dataSnapshot.child("password").getValue());
+                        String password = String.valueOf(dataSnapshot.child(
+                                "password").getValue());
                         user.setPassword(password);
-                        double height = Double.parseDouble(String.valueOf(dataSnapshot.child("height").getValue()));
+                        double height = Double.parseDouble(String.valueOf(dataSnapshot.child(
+                                "height").getValue()));
                         user.setHeight(height);
-                        double weight = Double.parseDouble(String.valueOf(dataSnapshot.child("weight").getValue()));
+                        double weight = Double.parseDouble(String.valueOf(dataSnapshot.child(
+                                "weight").getValue()));
                         user.setWeight(weight);
-                        String gender = String.valueOf(dataSnapshot.child("gender").getValue());
+                        String gender = String.valueOf(dataSnapshot.child(
+                                "gender").getValue());
                         user.setGender(gender);
-                        int dailyCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("dailyCalories").getValue()));
+                        int dailyCalories = Integer.parseInt(String.valueOf(dataSnapshot.child(
+                                "dailyCalories").getValue()));
                         user.setDailyCalories(dailyCalories);
 
                         // Initialize Meal 2D ArrayList
-                            // Do this by using a nested for loop and starting at the end
-                            // We subtract days going backwards and we read if that day exists
-                            // 1. Going to user's mealCalendar database section
-                            // 2. Calculating current day and assigning that to
-                            // 3.
+                        // Do this by using a nested for loop and starting at the end
+                        // We subtract days going backwards and we read if that day exists
+                        // 1. Going to user's mealCalendar database section
+                        // 2. Calculating current day and assigning that to
+                        // 3.
 
                         Calendar calendar = Calendar.getInstance();
                         for (int day = 29; day >= 0; day--) {
-                            String currentDay = calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18);
+                            String currentDay = calendar.getTime().toString().substring(0,
+                                    calendar.getTime().toString().length() - 18);
                             calendar.add(Calendar.DATE, -1);
 
                             // meal num starts at index 0
-                            // note that initialization entry starts at index -1 but since we start mealnum at 0 we skip it
-                            String currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+                            // note that initialization entry starts at index -1 but since we start
+                            // mealnum at 0 we skip it
+                            String currentMeal = String.valueOf(dataSnapshot.child(
+                                    "mealCalendar").child(currentDay).child(
+                                            Integer.toString(0)).getValue());
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
                                 System.out.println(currentMeal);
-                                user.getMealCalendar().get(day).add(new Meal(currentMeal, 350));
+                                user.getMealCalendar().get(day).add(new Meal(currentMeal,
+                                        350));
                                 mealNum += 1;
-                                currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
+                                currentMeal = String.valueOf(dataSnapshot.child("mealCalendar")
+                                        .child(currentDay).child(Integer.toString(mealNum))
+                                        .getValue());
 
                             }
                         }
