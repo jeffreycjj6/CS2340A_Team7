@@ -23,6 +23,7 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.TooltipDisplayMode;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.greenplate.R;
+import com.example.greenplate.User;
 import com.example.greenplate.databinding.FragmentDataVisualBinding;
 
 import java.util.ArrayList;
@@ -101,7 +102,14 @@ public class DataVisualFragment extends Fragment {
         //System.out.println("Updated Date = " + calendar.getTime());
 
 
-        for (int i = 0; i < 30; i++) {
+        /*for (int i = 0; i < 30; i++) {
+            calendar.add(Calendar.DATE, -1);
+            CustomDataEntry entry = new CustomDataEntry(calendar.getTime()
+                    .toString().substring(0, calendar.getTime().toString().length() - 18),
+                    (int) (Math.random() * 3000), 2000);
+            data.add(entry);
+        }*/
+        for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
             CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(
                     0, calendar.getTime().toString().length() - 18),

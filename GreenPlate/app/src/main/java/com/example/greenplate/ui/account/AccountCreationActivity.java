@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
+
 public class AccountCreationActivity extends AppCompatActivity {
 
     //private ActivityLoginBinding binding;

@@ -27,4 +27,22 @@ public class AccountCreationViewModelTest {
         boolean result = test.filterPasswords("First", "Last", "firstlast", "password", "password123");
         assertFalse("Return false when passwords do not match", result);
     }
+
+    @Test
+    public void passwordTestUsername() {
+        AccountCreationViewModel test = new AccountCreationViewModel();
+
+        // Test for space in username
+        boolean result = test.filterPasswords("First", "Last", "first last", "password", "password");
+        assertFalse("Return false when username contains space", result);
+    }
+
+    @Test
+    public void passwordTestPassword() {
+        AccountCreationViewModel test = new AccountCreationViewModel();
+
+        // Test for space in password
+        boolean result = test.filterPasswords("First", "Last", "firstlast", "pass word", "pass word");
+        assertFalse("Return false when password contains space", result);
+    }
 }

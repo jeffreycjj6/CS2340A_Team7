@@ -14,14 +14,13 @@ public class InputMealViewModel extends ViewModel {
 
     public InputMealViewModel() {
         if (user.getHeight() != 0 && user.getWeight() != 0) {
-            target = 370 + 21.6 * (1 - (user.getWeight() / (Math.pow((user.getHeight() / 100), 2)))
-                    * user.getWeight());
+            target = 370 + 30 * user.getWeight();
         }
-
+        user.setCalorieGoal(target);
         mText = new MutableLiveData<>();
         mText.setValue("At " + user.getHeight() + " centimeters tall and " + user.getWeight()
                 + " kilograms, your goal is " + (int) target + " calories. You are at "
-                + 1000 + " calories.");
+                + user.getMonthlyCalories().get(29) + " calories.");
     }
 
     public LiveData<String> getText() {

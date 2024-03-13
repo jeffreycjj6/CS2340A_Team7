@@ -194,44 +194,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /*private boolean verifyLogin(String email, String password) {
-        if (user.equals("") || pass.equals("")) {
-            return false;
-        }
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithEmail:success");
-                            //FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                            Toast.makeText(LoginActivity.this, "Logged In!",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            finish();
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication Failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //(null);
-                        }
-                    }
-                });
-
-        return true;
-    }*/
 
     private void reloadAccount(String email) {
         //UserDatabase database = UserDatabase.getInstance();
         String username = email.replace(".", " ");
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users")
-                .child(username);
-
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -292,7 +260,7 @@ public class LoginActivity extends AppCompatActivity {
                                             Integer.toString(0)).getValue());
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
-                                System.out.println(currentMeal);
+                                int currentMealCalories = Integer.parseInt(String.valueOf(mealDict.child(currentMeal).child("calories").getValue()));
                                 user.getMealCalendar().get(day).add(new Meal(currentMeal,
                                         350));
                                 mealNum += 1;
@@ -302,6 +270,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         }
+
+                        // initialize monthly calories
+
                     }
                 }
             }

@@ -39,7 +39,7 @@ public class EditStatsFragment extends Fragment {
 
             if (!userHeight.equals("") && !userWeight.equals("") && !userGender.equals("")) {
                 User user = User.getInstance();
-
+                
                 user.setHeight(Double.parseDouble(userHeight));
                 user.setWeight(Double.parseDouble(userWeight));
                 user.setGender(userGender);
@@ -52,15 +52,11 @@ public class EditStatsFragment extends Fragment {
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, profileFragment);
 
-                transaction.addToBackStack(null);  // This line allows the user to navigate
-                // back to the InputMealFragment by pressing the back button.
+                transaction.addToBackStack(null);
                 transaction.commit();
             }
         });
 
-
-        // final TextView textView = binding.textProfile;
-        // profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

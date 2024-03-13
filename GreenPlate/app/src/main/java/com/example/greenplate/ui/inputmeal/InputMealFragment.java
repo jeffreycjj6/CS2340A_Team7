@@ -13,9 +13,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.anychart.AnyChart;
+import com.anychart.AnyChartView;
+import com.anychart.chart.common.dataentry.DataEntry;
+import com.anychart.chart.common.dataentry.ValueDataEntry;
+import com.anychart.charts.Pie;
 import com.example.greenplate.R;
+import com.example.greenplate.User;
 import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
+
+import java.util.Calendar;
 
 public class InputMealFragment extends Fragment {
     private FragmentInputMealBinding binding;
@@ -38,10 +46,34 @@ public class InputMealFragment extends Fragment {
             String meal = binding.meal.getText().toString();
             String calorieCount = binding.calorieCount.getText().toString();
             if (!meal.equals("") && !calorieCount.equals("")) {
+                // When meal tracking button is pressed...
+                int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
-                UserDatabase database = UserDatabase.getInstance();
-                database.writeNewMeal(meal, Integer.parseInt(calorieCount));
+                UserDatabase udb = UserDatabase.getInstance();
+
+                // First check if that entry does not exist (if the entry was null in the dictionary)
+                // If it was null, we add a new entry on dictionary
+                //String mealDictionaryEntry = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+
+                // First write a new meal in the meal dictionary to store information about that specific meal
+                // This is a function in the User Database that takes in a meal name and calorie count
+                udb.writeNewMeal(meal, Integer.parseInt(calorieCount));
+
+                // Next, we need to add that meal to the User 2D log of meals
+                // And increment the total calorie count for today (which is done inside track new meal)
+
+                Calendar date = Calendar.getInstance();
+                String currentDate = date.getTime().toString().substring(0, date.getTime().toString().length() - 18);
+                udb.trackNewMeal(meal, Integer.parseInt(calorieCount), currentDate);
+
+                InputMealFragment refresh = new InputMealFragment();
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, refresh);
+                transaction.addToBackStack(null);  // This line allows the user to navigate back to the InputMealFragment by pressing the back button.
+                transaction.commit();
+
+
             }
         });
 
