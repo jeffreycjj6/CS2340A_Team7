@@ -186,43 +186,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    /*private boolean verifyLogin(String email, String password) {
-        if (user.equals("") || pass.equals("")) {
-            return false;
-        }
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithEmail:success");
-                            //FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                            Toast.makeText(LoginActivity.this, "Logged In!",
-                                    Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            finish();
-                            startActivity(intent);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication Failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //(null);
-                        }
-                    }
-                });
-
-        return true;
-    }*/
 
     private void reloadAccount(String email) {
         //UserDatabase database = UserDatabase.getInstance();
         String username = email.replace(".", " ");
 
-        DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(username);
+        //DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users").child(username);
 
+        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -230,26 +201,28 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.getResult().exists()) {
 
+                        DataSnapshot userPart = task.getResult().child("Users").child(username);
+                        DataSnapshot mealDict = task.getResult().child("Meals");
+
                         Toast.makeText(LoginActivity.this, "Successfully Read", Toast.LENGTH_SHORT).show();
-                        DataSnapshot dataSnapshot = task.getResult();
                         User user = User.getInstance();
-                        String firstName = String.valueOf(dataSnapshot.child("firstName").getValue());
+                        String firstName = String.valueOf(userPart.child("firstName").getValue());
                         user.setFirstName(firstName);
-                        String lastName = String.valueOf(dataSnapshot.child("lastName").getValue());
+                        String lastName = String.valueOf(userPart.child("lastName").getValue());
                         user.setLastName(lastName);
-                        String username = String.valueOf(dataSnapshot.child("username").getValue());
+                        String username = String.valueOf(userPart.child("username").getValue());
                         user.setUsername(username);
-                        String email = String.valueOf(dataSnapshot.child("email").getValue());
+                        String email = String.valueOf(userPart.child("email").getValue());
                         user.setEmail(email);
-                        String password = String.valueOf(dataSnapshot.child("password").getValue());
+                        String password = String.valueOf(userPart.child("password").getValue());
                         user.setPassword(password);
-                        double height = Double.parseDouble(String.valueOf(dataSnapshot.child("height").getValue()));
+                        double height = Double.parseDouble(String.valueOf(userPart.child("height").getValue()));
                         user.setHeight(height);
-                        double weight = Double.parseDouble(String.valueOf(dataSnapshot.child("weight").getValue()));
+                        double weight = Double.parseDouble(String.valueOf(userPart.child("weight").getValue()));
                         user.setWeight(weight);
-                        String gender = String.valueOf(dataSnapshot.child("gender").getValue());
+                        String gender = String.valueOf(userPart.child("gender").getValue());
                         user.setGender(gender);
-                        int dailyCalories = Integer.parseInt(String.valueOf(dataSnapshot.child("dailyCalories").getValue()));
+                        int dailyCalories = Integer.parseInt(String.valueOf(userPart.child("dailyCalories").getValue()));
                         user.setDailyCalories(dailyCalories);
 
                         // Initialize Meal 2D ArrayList
@@ -266,16 +239,17 @@ public class LoginActivity extends AppCompatActivity {
 
                             // meal num starts at index 0
                             // note that initialization entry starts at index -1 but since we start mealnum at 0 we skip it
-                            String currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+                            String currentMeal = String.valueOf(userPart.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
+                                int currentMealCalories = Integer.parseInt(String.valueOf(mealDict.child(currentMeal).child("calories").getValue()));
                                 System.out.println(currentMeal);
 
                                 user.getMealCalendar().get(day).add(new Meal(currentMeal, 0));
-                                //
-                                //int[day] +=
+                                user.addCaloriesToday(currentMealCalories, day);
+
                                 mealNum += 1;
-                                currentMeal = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
+                                currentMeal = String.valueOf(userPart.child("mealCalendar").child(currentDay).child(Integer.toString(mealNum)).getValue());
 
                             }
                         }

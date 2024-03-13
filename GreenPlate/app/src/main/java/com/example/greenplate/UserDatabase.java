@@ -140,14 +140,20 @@ public class UserDatabase {
     }
 
     public void trackNewMeal(String currentMeal, int calories, String date) {
+        // Track a new meal:
+            // 1. Update our current user's meal log inside their mealCalendar in Firebase
+            // 2. Update our local snapshot/copy of the mealCalendar as well as the monthlyCalorie count
+
         DatabaseReference db = mDatabase.getReference();
 
         User currentUser = User.getInstance();
         int newMealNumber = currentUser.getMealCalendar().get(29).size();
+        // The current meal index inside the meal log of a user, just use .size()
 
         db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber)).setValue(currentMeal);
-        // This should write into the database and also modify the current 2D meal arraylist
+
         currentUser.addMealToday(new Meal(currentMeal, calories));
+
 
     }
 

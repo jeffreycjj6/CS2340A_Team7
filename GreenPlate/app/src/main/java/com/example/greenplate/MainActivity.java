@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             System.out.println(User.getInstance().getPassword());
             System.out.println(User.getInstance().getMealCalendar().get(29).size());
             System.out.println(User.getInstance().getMealCalendar());
+            System.out.println(User.getInstance().getMonthlyCalories());
 
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 

@@ -19,6 +19,7 @@ import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.Pie;
 import com.example.greenplate.R;
+import com.example.greenplate.User;
 import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
 
@@ -45,6 +46,7 @@ public class InputMealFragment extends Fragment {
             String meal = binding.meal.getText().toString();
             String calorieCount = binding.calorieCount.getText().toString();
             if (!meal.equals("") && !calorieCount.equals("")) {
+                // When meal tracking button is pressed...
                 int cCount = Integer.parseInt(calorieCount);
                 binding.meal.setText("");
                 binding.calorieCount.setText("");
@@ -53,11 +55,14 @@ public class InputMealFragment extends Fragment {
                 // First check if that entry does not exist (if the entry was null in the dictionary)
                 // If it was null, we add a new entry on dictionary
                 //String mealDictionaryEntry = String.valueOf(dataSnapshot.child("mealCalendar").child(currentDay).child(Integer.toString(0)).getValue());
+
+                // First write a new meal in the meal dictionary to store information about that specific meal
+                // This is a function in the User Database that takes in a meal name and calorie count
                 udb.writeNewMeal(meal, Integer.parseInt(calorieCount));
 
-                // Eitherway, we always add a new meal to the User entry log
-                    // This requies the string address to get to the user entry --> meal calendary --> today's date
-                    // We also need to choose whichi index it is, we can do this by finding the size of mealCalendary 2D arraylist at that day index
+                // Next, we need to add that meal to the User 2D log of meals
+                // And increment the total calorie count for today (which is done inside track new meal)
+
                 Calendar date = Calendar.getInstance();
                 String currentDate = date.getTime().toString().substring(0, date.getTime().toString().length() - 18);
                 udb.trackNewMeal(meal, Integer.parseInt(calorieCount), currentDate);
