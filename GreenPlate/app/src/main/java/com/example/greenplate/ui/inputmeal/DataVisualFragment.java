@@ -82,7 +82,7 @@ public class DataVisualFragment extends Fragment {
         //input data
 
         User user = User.getInstance();
-        //int calorieGoal = user.getCalorieGoal();
+        double calorieGoal = user.getCalorieGoal();
         ArrayList<Integer> monthlyCalories = user.getMonthlyCalories();
 
         Calendar calendar = Calendar.getInstance();
@@ -90,7 +90,7 @@ public class DataVisualFragment extends Fragment {
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
             CustomDataEntry2 entry = new CustomDataEntry2(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
-                    0, 0, 0, monthlyCalories.get(i) - 200);
+                    0, 0, 0, monthlyCalories.get(i) - calorieGoal);
             data.add(entry);
         }
 
@@ -122,8 +122,8 @@ public class DataVisualFragment extends Fragment {
         cartesian.yAxis(true);
 
         cartesian.yScale()
-                .minimum(-200d)
-                .maximum(200d);
+                .minimum(-2000d)
+                .maximum(2000d);
 
         cartesian.legend(true);
 
@@ -157,13 +157,13 @@ public class DataVisualFragment extends Fragment {
             calendar.add(Calendar.DATE, -1);
             CustomDataEntry entry = new CustomDataEntry(calendar.getTime()
                     .toString().substring(0, calendar.getTime().toString().length() - 18),
-                    (int) (Math.random() * 3000), 2000);
+                    (int) (Math.random() * 3000), User.getInstance().getCalorieGoal());
             data.add(entry);
         }*/
         for (int i = 29; i >= 0; i--) {
             calendar.add(Calendar.DATE, -1);
             CustomDataEntry entry = new CustomDataEntry(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18),
-                    User.getInstance().getMonthlyCalories().get(i), 2000);
+                    User.getInstance().getMonthlyCalories().get(i), User.getInstance().getCalorieGoal());
             data.add(entry);
         }
 
