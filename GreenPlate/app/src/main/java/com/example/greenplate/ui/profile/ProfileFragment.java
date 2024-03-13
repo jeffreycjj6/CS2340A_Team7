@@ -36,9 +36,9 @@ public class ProfileFragment extends Fragment {
         String userWeight = String.valueOf(user.getWeight());
         String userGender = user.getGender();
 
-        binding.heightTag.setText(userHeight);
-        binding.weightTag.setText(userWeight);
-        binding.genderTag.setText(userGender);
+        binding.userHeight.setText("Height: " + userHeight + " centimeters");
+        binding.userWeight.setText("Weight: " + userWeight + " kilograms");
+        binding.userGender.setText("Gender: " + userGender);
 
         Button dataButton = binding.editButton;
         dataButton.setOnClickListener(v -> {
