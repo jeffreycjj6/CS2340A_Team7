@@ -10,7 +10,7 @@ public class AccountCreationViewModel {
     private String errorMessage;
 
     public AccountCreationViewModel() {
-        errorMessage  = "";
+        errorMessage = "";
     }
 
     public String getPasswordMismatch() {
@@ -24,8 +24,9 @@ public class AccountCreationViewModel {
         return instance;
     }
 
-    public boolean filterPasswords(String firstNameMessage, String lastNameMessage, String usernameMessage
-            , String passwordMessage, String password2Message) {
+    public boolean filterPasswords(String firstNameMessage,
+                                   String lastNameMessage, String usernameMessage,
+                                   String passwordMessage, String password2Message) {
         if (firstNameMessage.equals("") || lastNameMessage.equals("") || usernameMessage.equals("")
                 || passwordMessage.equals("") || password2Message.equals("")) {
             errorMessage = "Fill in all blanks!";

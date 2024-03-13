@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.greenplate.R;
 
 import com.example.greenplate.UserDatabase;
@@ -19,7 +20,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 
 
 public class AccountCreationActivity extends AppCompatActivity {
@@ -57,7 +57,8 @@ public class AccountCreationActivity extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AccountCreationActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
+                Intent intent = new Intent(AccountCreationActivity.this,
+                        com.example.greenplate.ui.login.LoginActivity.class);
                 finish();
                 startActivity(intent);
             }
@@ -81,34 +82,43 @@ public class AccountCreationActivity extends AppCompatActivity {
                 // IF none of the inputs are null and the passwords match, THEN
                 // writes the new user data to the FireBase and switches to login
                 // screen.
-                if (viewModel.filterPasswords(firstNameMessage, lastNameMessage, usernameMessage, passwordMessage, password2Message)) {
+                if (viewModel.filterPasswords(firstNameMessage, lastNameMessage,
+                        usernameMessage, passwordMessage, password2Message)) {
                     String finalFirstNameMessage = firstNameMessage;
                     String finalLastNameMessage = lastNameMessage;
                     String finalUsernameMessage = usernameMessage;
                     String finalPasswordMessage = passwordMessage;
-                    viewModel.saveAccountData(usernameMessage, passwordMessage, mAuth).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Intent intent = new Intent(AccountCreationActivity.this, com.example.greenplate.ui.login.LoginActivity.class);
+                    viewModel.saveAccountData(usernameMessage, passwordMessage, mAuth)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        Intent intent = new
+                                                Intent(AccountCreationActivity.this,
+                                                com.example.greenplate.ui.
+                                                        login.LoginActivity.class);
 
-                                // writes data to FireBase
-                                UserDatabase user =  UserDatabase.getInstance();
-                                user.writeNewUser(finalFirstNameMessage, finalLastNameMessage, finalUsernameMessage, finalPasswordMessage);
+                                        // writes data to FireBase
+                                        UserDatabase user = UserDatabase.getInstance();
+                                        user.writeNewUser(finalFirstNameMessage,
+                                                finalLastNameMessage, finalUsernameMessage,
+                                                finalPasswordMessage);
 
-                                // switches screen
-                                Toast.makeText(AccountCreationActivity.this, "Account Created.",
-                                        Toast.LENGTH_SHORT).show();
+                                        // switches screen
+                                        Toast.makeText(AccountCreationActivity.this,
+                                                "Account Created.",
+                                                Toast.LENGTH_SHORT).show();
 
-                                finish();
-                                startActivity(intent);
+                                        finish();
+                                        startActivity(intent);
 
-                            } else {
-                                Toast.makeText(AccountCreationActivity.this, "Invalid Account Details, Try Again.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+                                    } else {
+                                        Toast.makeText(AccountCreationActivity.this,
+                                                "Invalid Account Details, Try Again.",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 } else {
                     passwordMismatch.setText(viewModel.getPasswordMismatch());
                 }
