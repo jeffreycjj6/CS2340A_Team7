@@ -28,8 +28,8 @@ public class IngredientsFragment extends Fragment {
         View root = binding.getRoot();
 
 
-        Button dataButton = binding.inputIngredientButton;
-        dataButton.setOnClickListener(v -> {
+        Button inputIngredientButton = binding.inputIngredientButton;
+        inputIngredientButton.setOnClickListener(v -> {
             InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, inputIngredientFragment);
