@@ -14,8 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.databinding.FragmentIngredientsBinding;
+import com.example.greenplate.ui.profile.EditStatsFragment;
 
-public class IngredientsFragment extends Fragment {
+public class InputIngredientFragment extends Fragment {
 
     private FragmentIngredientsBinding binding;
 
@@ -29,16 +30,6 @@ public class IngredientsFragment extends Fragment {
 
         final TextView textView = binding.textIngredients;
         ingredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        Button dataButton = binding.inputIngredientButton;
-        dataButton.setOnClickListener(v -> {
-            InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, inputIngredientFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
 
         return root;
     }
