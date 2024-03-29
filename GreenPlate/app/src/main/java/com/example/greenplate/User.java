@@ -44,6 +44,10 @@ public class User {
         return user;
     }
 
+    public static void resetInstance() {
+        user = null;
+    }
+
     public String getFirstName() {
         return firstName;
     }

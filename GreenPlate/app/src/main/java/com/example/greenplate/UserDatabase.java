@@ -47,18 +47,17 @@ public class UserDatabase {
 
         Calendar calendar = Calendar.getInstance();
 
-        //database.child("Users").child(username).child("mealCalendar")
-        // .child(calendar.getTime().toString()
-        // .substring(0, calendar.getTime().toString().length() - 18)).child("0")
-        // .setValue("Eggs & Potatoes");
-        //calendar.add(Calendar.DATE, -1);
-        //database.child("Users").child(username).child("mealCalendar").child
-        // (calendar.getTime().toString().substring
-        // (0, calendar.getTime().toString().length() - 18)).child("0").setValue("Chee Toes");
+        // Next create a new entry/tag inside the Meals Database itself so that we have a meals
+        // dictionary personalized to a given current user
+        database.child("Meals").child(username).child("EMPTY-MEAL").setValue(0);
+        //database.child("Meals").child(username).child("EMPTY-MEAL").child("calories").setValue(0);
+
+        System.out.println("Created EMPTY MEAL");
+
+        // Create the Meal Calendar and initialize it with a -1 to prevent it counting as a meal day
         database.child("Users").child(username).child("mealCalendar")
-                .child(calendar.getTime().toString()
-                        .substring(0, calendar.getTime().toString().length() - 18))
-                .child("-1").setValue("StartingDay");
+                .child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("-1").setValue("StartingDay");
+        System.out.println("Created Meal Calendar");
 
     }
 
@@ -132,14 +131,16 @@ public class UserDatabase {
          */
     }
 
-    public void writeNewMeal(String name, int calories) {
-        //Meal meal = new Meal(name, calories);
+    public void writeNewMeal(String mealName, int calories) {
 
         DatabaseReference database = mDatabase.getReference();
-        database.child("Meals").child(name);
-        database.child("Meals").child(name).child("calories").setValue(calories);
-    }
 
+        // Pull the user's username to make a user specific entry inside the meal database
+        User curr = User.getInstance();
+
+        database.child("Meals").child(curr.getUsername()).child(mealName);
+        database.child("Meals").child(curr.getUsername()).child(mealName).child("calories").setValue(calories);
+    }
     public void trackNewMeal(String currentMeal, int calories, String date) {
         // Track a new meal:
         // 1. Update our current user's meal log inside their mealCalendar in Firebase
@@ -152,8 +153,7 @@ public class UserDatabase {
         int newMealNumber = currentUser.getMealCalendar().get(29).size();
         // The current meal index inside the meal log of a user, just use .size()
 
-        db.child("Users").child(currentUser.getUsername()).child(
-                "mealCalendar").child(date).child(Integer.toString(newMealNumber))
+        db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber))
                 .setValue(currentMeal);
 
         currentUser.addMealToday(new Meal(currentMeal, calories));

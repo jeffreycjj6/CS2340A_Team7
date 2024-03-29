@@ -56,17 +56,21 @@ public class InputMealFragment extends Fragment {
                 // dictionary to store information about that specific meal
                 // This is a function in the User
                 // Database that takes in a meal name and calorie count
-                udb.writeNewMeal(meal, Integer.parseInt(calorieCount));
+                udb.writeNewMeal(meal, Integer.parseInt(calorieCount)); // Write a new meal in the meal dictionary
 
                 // Next, we need to add that meal to the User 2D log of meals
                 // And increment the total calorie
                 // count for today (which is done inside track new meal)
 
+
                 Calendar date = Calendar.getInstance();
                 String currentDate = date.getTime().toString()
-                        .substring(0, date.getTime().toString().length() - 18);
+                        .substring(0, date.getTime().toString().length() - 18); // Pull the current date
+
+                // Add the meal to the current day of the User's meal calendar
                 udb.trackNewMeal(meal, Integer.parseInt(calorieCount), currentDate);
 
+                // Refresh the fragment to update the
                 InputMealFragment refresh = new InputMealFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, refresh);

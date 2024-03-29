@@ -208,7 +208,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     if (task.getResult().exists()) {
-
+                        System.out.println("Reloaded Account");
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
 
@@ -260,9 +260,16 @@ public class LoginActivity extends AppCompatActivity {
                                     "mealCalendar").child(currentDay)
                                     .child(Integer.toString(0)).getValue());
                             int mealNum = 0;
+
+                            // Add the calorie sum by:
+                                // 1. Iterating through the meal calendar day and its indecies until we get null
+                                // 2. Pull out the current meal name's corresponding data by going into Meals --> "username" --> mealName --> calories
+                                // 3.
+
                             while (!currentMeal.equals("null")) {
+                                //
                                 int currentMealCalories = Integer.parseInt(String.valueOf(
-                                        mealDict.child(currentMeal).child("calories")
+                                        mealDict.child(username).child(currentMeal).child("calories")
                                                 .getValue()));
                                 System.out.println(currentMeal);
 
@@ -276,9 +283,6 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         }
-
-                        // initialize monthly calories
-
                     }
                 }
             }
