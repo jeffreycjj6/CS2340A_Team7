@@ -99,6 +99,7 @@ public class AccountCreationActivity extends AppCompatActivity {
                                                         login.LoginActivity.class);
 
                                         // writes data to FireBase
+                                        System.out.println("Creating New Account");
                                         UserDatabase user = UserDatabase.getInstance();
                                         user.writeNewUser(finalFirstNameMessage,
                                                 finalLastNameMessage, finalUsernameMessage,

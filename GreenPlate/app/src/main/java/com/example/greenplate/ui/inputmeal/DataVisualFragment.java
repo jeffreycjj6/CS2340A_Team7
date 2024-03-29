@@ -169,37 +169,6 @@ public class DataVisualFragment extends Fragment {
             data.add(entry);
         }
 
-        /*data.add(new CustomDataEntry("Jan 1", 11.5, 9.3));
-        data.add(new CustomDataEntry("Jan 2", 12, 10.5));
-        data.add(new CustomDataEntry("Jan 3", 11.7, 11.2));
-        data.add(new CustomDataEntry("Jan 4", 12.4, 11.2));
-        data.add(new CustomDataEntry("Jan 5", 13.5, 12.7));
-        data.add(new CustomDataEntry("Jan 6", 11.9, 13.1));
-        data.add(new CustomDataEntry("Jan 7", 14.6, 12.2));
-        data.add(new CustomDataEntry("Jan 8", 17.2, 12.2));
-        data.add(new CustomDataEntry("Jan 9", 16.9, 10.1));
-        data.add(new CustomDataEntry("Jan 10", 15.4, 14.5));
-        data.add(new CustomDataEntry("Jan 11", 16.9, 14.5));
-        data.add(new CustomDataEntry("Jan 12", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 13", 11.5, 9.3));
-        data.add(new CustomDataEntry("Jan 14", 12, 10.5));
-        data.add(new CustomDataEntry("Jan 15", 11.7, 11.2));
-        data.add(new CustomDataEntry("Jan 16", 12.4, 11.2));
-        data.add(new CustomDataEntry("Jan 17", 13.5, 12.7));
-        data.add(new CustomDataEntry("Jan 18", 11.9, 13.1));
-        data.add(new CustomDataEntry("Jan 19", 14.6, 12.2));
-        data.add(new CustomDataEntry("Jan 20", 17.2, 12.2));
-        data.add(new CustomDataEntry("Jan 21", 16.9, 10.1));
-        data.add(new CustomDataEntry("Jan 22", 15.4, 14.5));
-        data.add(new CustomDataEntry("Jan 23", 16.9, 14.5));
-        data.add(new CustomDataEntry("Jan 24", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 25", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 26", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 27", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 28", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 28", 17.2, 15.5));
-        data.add(new CustomDataEntry("Jan 30", 17.2, 15.5));*/
-
 
         Set set = Set.instantiate();
         set.data(data);
