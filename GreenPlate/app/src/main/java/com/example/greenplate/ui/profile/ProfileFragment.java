@@ -42,8 +42,6 @@ public class ProfileFragment extends Fragment {
             EditStatsFragment editStatsFragment = new EditStatsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, editStatsFragment);
-
-
             transaction.addToBackStack(null);
             transaction.commit();
         });
