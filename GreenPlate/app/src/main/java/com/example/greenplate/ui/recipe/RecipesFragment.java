@@ -4,12 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.greenplate.R;
 import com.example.greenplate.databinding.FragmentRecipesBinding;
 
 public class RecipesFragment extends Fragment {
@@ -24,8 +27,15 @@ public class RecipesFragment extends Fragment {
         binding = FragmentRecipesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textRecipes;
-        recipeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        Button inputRecipeButton = binding.inputRecipeButton;
+        inputRecipeButton.setOnClickListener(v -> {
+            InputRecipeFragment inputRecipeFragment = new InputRecipeFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, inputRecipeFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
         return root;
     }
 
