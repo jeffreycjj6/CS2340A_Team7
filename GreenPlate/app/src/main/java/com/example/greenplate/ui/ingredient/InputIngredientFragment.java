@@ -31,19 +31,6 @@ public class InputIngredientFragment extends Fragment {
         final TextView textView = binding.textIngredients;
         ingredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-
-        Button dataButton = binding.inputIngredientButton;
-        dataButton.setOnClickListener(v -> {
-            InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
-            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, inputIngredientFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
-        });
-
-
-
-
         return root;
     }
 
