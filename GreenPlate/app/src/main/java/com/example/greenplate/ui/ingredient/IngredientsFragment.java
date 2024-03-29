@@ -27,8 +27,6 @@ public class IngredientsFragment extends Fragment {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textIngredients;
-        ingredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         Button dataButton = binding.inputIngredientButton;
         dataButton.setOnClickListener(v -> {
