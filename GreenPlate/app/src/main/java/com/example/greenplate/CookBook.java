@@ -1,5 +1,6 @@
 package com.example.greenplate;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CookBook {
@@ -7,11 +8,13 @@ public class CookBook {
 
     // Cookbook Info:
 
-    private ArrayList<Recipe> recipeList;
+    private ArrayList<Recipe> globalRecipeList;
 
     public static CookBook instance;
 
-    private CookBook() {}
+    private CookBook() {
+        globalRecipeList = new ArrayList<Recipe>();
+    }
 
     public static CookBook getInstance() {
         if (instance == null) {
@@ -20,13 +23,20 @@ public class CookBook {
         return instance;
     }
 
-    public void addRecipe(Recipe newRecipe) {
 
+
+    public ArrayList<Recipe> getGlobalRecipeList() {
+        return globalRecipeList;
+    }
+
+
+    public void addRecipe(Recipe newRecipe) {
+        globalRecipeList.add(newRecipe);
     }
 
     // This function reads from the database and uses a for loop to initialize all recipes
     public void copyGlobalRecipesToPhoneCookBook() {
-
+        // NOTE THAT THIS FUNTION SHOULD ACTUALLY EXIST IN LOGIN ACTIVITY SINCE ALL READS SHOULD BE DONE IN LOGIN
     }
 
     public void sortByName() {
