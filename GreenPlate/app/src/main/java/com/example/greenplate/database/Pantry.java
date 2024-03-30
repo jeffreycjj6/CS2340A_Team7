@@ -15,12 +15,7 @@ public class Pantry {
             Ingredient currIngredient = pantryList.get(i);
             if (currIngredient.getName().equals(name)){
                 pantryList.remove(currIngredient);
-
             }
         }
-    }
-
-    public ArrayList<Ingredient> getPantryList(){
-        return pantryList;
     }
 }

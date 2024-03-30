@@ -33,12 +33,11 @@ public class RecipesFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        RecipesViewModel recipeViewModel =
-                new ViewModelProvider(this).get(RecipesViewModel.class);
 
         binding = FragmentRecipesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        // Toolbar for sorting features
         Toolbar toolbar = root.findViewById(R.id.toolbar);
         toolbar.inflateMenu(R.menu.toolbar_menu);
         toolbar.setOnMenuItemClickListener(item -> {
@@ -54,6 +53,7 @@ public class RecipesFragment extends Fragment {
             return true;
         });
 
+        // Button to create a recipe, go to new fragment
         TextView CreateRecipeButton = root.findViewById(R.id.createRecipeButton);
         CreateRecipeButton.setOnClickListener(v -> {
             Fragment newFragment = new InputRecipeFragment();
@@ -63,7 +63,7 @@ public class RecipesFragment extends Fragment {
             transaction.commit();
         });
 
-
+        // Create and populate the list
         ListView recipesListView = binding.recipesListView;
         recipeItems = new ArrayList<>();
         // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
@@ -72,6 +72,7 @@ public class RecipesFragment extends Fragment {
             //recipeItems.add("Recipe " + (i + 1) + ": " + CookBook.getInstance().getGlobalRecipeList().get(i).getName());
         }
 
+        // Adapter for converting each data item from the data source into a view
         adapter = new ArrayAdapter<Pair<String, Integer>>(
                 getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, recipeItems) {
             @NonNull
@@ -81,30 +82,30 @@ public class RecipesFragment extends Fragment {
                 Pair<String, Integer> item = getItem(position);
                 if (item != null) {
                     ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText(String.valueOf(item.second));
+                    ((TextView) view.findViewById(android.R.id.text2)).setText(String.valueOf(item.second) + " Calories");
                 }
                 return view;
             }
         };
 
+        // On click listener to go to new fragment
         recipesListView.setAdapter(adapter);
-
         recipesListView.setOnItemClickListener((parent, view, position, id) -> {
             Fragment selectedFragment = new EachRecipeFragment();
 
-                // Pass data to the new fragment
-                Bundle args = new Bundle();
-                Pair<String, Integer> recipe = recipeItems.get(position);
-                args.putString("RECIPE_NAME", recipe.first);
-                args.putInt("RECIPE_CALORIES", recipe.second);
-                selectedFragment.setArguments(args);
+            // Pass data to the new fragment
+            Bundle args = new Bundle();
+            Pair<String, Integer> recipe = recipeItems.get(position);
+
+            args.putString("RECIPE_NAME", recipe.first);
+            args.putInt("RECIPE_CALORIES", recipe.second);
+            selectedFragment.setArguments(args);
 
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, selectedFragment);
             transaction.addToBackStack(null);
             transaction.commit();
         });
-
 
         return root;
     }

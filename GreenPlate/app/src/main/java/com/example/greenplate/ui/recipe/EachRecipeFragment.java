@@ -11,8 +11,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.greenplate.R;
+
+import java.util.Locale;
 
 public class EachRecipeFragment extends Fragment {
 
@@ -25,14 +28,22 @@ public class EachRecipeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_each_recipe, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_each_recipe, container, false);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(EachRecipeViewModel.class);
-        // TODO: Use the ViewModel
-    }
+        // Retrieve arguments
+        if (getArguments() != null) {
+            String recipeName = getArguments().getString("RECIPE_NAME");
+            int calories = getArguments().getInt("RECIPE_CALORIES");
 
+            // Finding the TextView in xml file
+            TextView recipeNameTextView = view.findViewById(R.id.recipe_name_text_view);
+            TextView caloriesTextView = view.findViewById(R.id.calories_text_view);
+
+            // Set the values for the TextViews
+            recipeNameTextView.setText(recipeName);
+            caloriesTextView.setText(String.format(Locale.getDefault(), "%d Calories", calories));
+        }
+
+        return view;
+    }
 }
