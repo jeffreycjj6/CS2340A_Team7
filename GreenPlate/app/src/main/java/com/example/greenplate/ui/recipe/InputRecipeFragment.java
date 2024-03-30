@@ -13,9 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.greenplate.CookBook;
-import com.example.greenplate.Ingredient;
 import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.CookBook;
+//import com.example.greenplate.Ingredient;
+//import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.R;
 import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputRecipeBinding;

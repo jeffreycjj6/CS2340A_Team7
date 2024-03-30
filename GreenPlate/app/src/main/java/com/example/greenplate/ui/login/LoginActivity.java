@@ -10,13 +10,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.greenplate.CookBook;
-import com.example.greenplate.Ingredient;
+import com.example.greenplate.database.CookBook;
+import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
-import com.example.greenplate.Recipe;
-import com.example.greenplate.User;
-import com.example.greenplate.Meal;
+import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.User;
+import com.example.greenplate.database.Meal;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
