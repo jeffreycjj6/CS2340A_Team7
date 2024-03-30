@@ -50,7 +50,7 @@ public class Ingredient {
     }
 
     public String toString(){
-        
+
         return (name + " " + Integer.toString(quantity) + " " +Integer.toString(caloriePerServing) + " " + expirationDate);
     }
 
