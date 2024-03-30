@@ -1,4 +1,4 @@
-package com.example.greenplate.ui.inputmeal;
+package com.example.greenplate.ui.classtests;
 
 
 import static org.junit.Assert.*;
@@ -8,9 +8,7 @@ import com.example.greenplate.database.Pantry;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-
-public class InputMealViewModelTest {
+public class ClassTests {
 
     @Test
     public void inputMealTest() {
