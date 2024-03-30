@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/recipe_name_text_view"
-        android:layout_width="332dp"
-        android:layout_height="92dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:fontFamily="sans-serif-condensed-light"
         android:text="Recipes"
@@ -17,15 +17,14 @@
         android:textColor="#4CAF50"
         android:textSize="50sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/calories_text_view"
-        android:layout_width="332dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="156dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:fontFamily="sans-serif-condensed-light"
         android:text="Calories"
         android:textAlignment="center"
@@ -34,6 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/recipe_name_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

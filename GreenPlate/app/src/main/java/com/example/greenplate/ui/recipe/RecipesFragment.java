@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.CookBook;
-import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.database.Recipe;
 import com.example.greenplate.databinding.FragmentRecipesBinding;
 import com.example.greenplate.sortingStrategy.SortByCaloriesAscending;
@@ -66,12 +65,7 @@ public class RecipesFragment extends Fragment {
         });
 
         // Populating
-        recipeItems = new ArrayList<>();
-        int k = CookBook.getInstance().getGlobalRecipeList().size();
-        for (int i = 0; i < k; i++) {
-            Recipe recipe = CookBook.getInstance().getGlobalRecipeList().get(i);
-            recipeItems.add(recipe); // Add the Recipe object to the list
-        }
+        recipeItems = new ArrayList<>(CookBook.getInstance().getGlobalRecipeList());
 
         // Create and populate the list
         ListView recipesListView = binding.recipesListView;
@@ -108,14 +102,13 @@ public class RecipesFragment extends Fragment {
 
         // On click listener to go to new fragment
         recipesListView.setOnItemClickListener((parent, view, position, id) -> {
-            Recipe selectedRecipe = CookBook.getInstance().getGlobalRecipeList().get(position);
+            Recipe selectedRecipe = recipeItems.get(position);
 
             Fragment selectedFragment = new EachRecipeFragment();
 
-            // Parse data into EachRecipeFragment.
+            // Put the Recipe object into the Bundle
             Bundle args = new Bundle();
-            args.putString("RECIPE_NAME", selectedRecipe.getName());
-            args.putInt("RECIPE_CALORIES", selectedRecipe.getCalories());
+            args.putParcelable("SELECTED_RECIPE", selectedRecipe);
             selectedFragment.setArguments(args);
 
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
