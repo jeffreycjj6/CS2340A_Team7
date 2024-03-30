@@ -139,6 +139,24 @@ public class UserDatabase {
 
 
 
+    // Pantry Database Functions:
+
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                caloriesPerServing);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+    }
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
+                                   String expirationDate) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                caloriesPerServing, expirationDate);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+    }
+
 
     /*public void sendData(String first, String last, String username, String password) {
         //writeNewUser(first, last, username, password);
