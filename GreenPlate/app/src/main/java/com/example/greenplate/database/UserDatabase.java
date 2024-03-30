@@ -146,20 +146,32 @@ public class UserDatabase {
 
     // Pantry Database Functions:
 
+    //Pantry.getInstance().getPantryList().size()
+
     public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
+
         DatabaseReference database = mDatabase.getReference("Pantry");
+        Pantry pantry = Pantry.getInstance();
         User user = User.getInstance();
         Ingredient ingredient = new Ingredient(ingredientName, quantity,
                 caloriesPerServing);
-        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+        pantry.getPantryList().add(ingredient);
+        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
+        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
+        //database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
+
     }
     public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
                                    String expirationDate) {
         DatabaseReference database = mDatabase.getReference("Pantry");
+        Pantry pantry = Pantry.getInstance();
         User user = User.getInstance();
         Ingredient ingredient = new Ingredient(ingredientName, quantity,
                 caloriesPerServing, expirationDate);
-        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+        pantry.getPantryList().add(ingredient);
+        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
+        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
+        //database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
     }
 
 }
