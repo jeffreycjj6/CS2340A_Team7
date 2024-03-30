@@ -11,15 +11,10 @@ public class Pantry {
         pantryList.add(ingredient);
     }
     public void removeIngredient(String name) {
-        for (int i = 0; i < pantryList.size(); i++){
-            Ingredient currIngredient = pantryList.get(i);
-            if (currIngredient.getName().equals(name)){
-                pantryList.remove(currIngredient);
+        for (Ingredient ingredient: pantryList) {
+            if (ingredient.getName().equals(name)) {
+                pantryList.remove(ingredient);
             }
         }
-    }
-
-    public ArrayList<Ingredient> getPantryList(){
-        return pantryList;
     }
 }
