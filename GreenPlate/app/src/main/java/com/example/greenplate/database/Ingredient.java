@@ -39,9 +39,9 @@ public class Ingredient implements Parcelable {
     };
 
     public Ingredient(String ingredientName, int quantity, int caloriesPerServing) {
-        this.name = name;
+        this.name = ingredientName;
         this.quantity = quantity;
-        this.caloriePerServing = caloriePerServing;
+        this.caloriePerServing = caloriesPerServing;
     }
 
     @Override
