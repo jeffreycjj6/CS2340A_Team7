@@ -17,6 +17,8 @@ import com.example.greenplate.R;
 import com.example.greenplate.Recipe;
 import com.example.greenplate.User;
 import com.example.greenplate.Meal;
+import com.example.greenplate.database.User;
+import com.example.greenplate.database.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;

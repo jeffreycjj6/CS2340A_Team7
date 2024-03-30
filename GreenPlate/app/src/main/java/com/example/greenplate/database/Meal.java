@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 public class Meal {
     private String name;

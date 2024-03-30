@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 
 import com.example.greenplate.R;
-import com.example.greenplate.User;
-import com.example.greenplate.UserDatabase;
+import com.example.greenplate.database.User;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditStatsBinding;
 
 
