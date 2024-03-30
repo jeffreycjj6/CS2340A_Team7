@@ -16,6 +16,7 @@ import android.widget.Button;
 
 import com.example.greenplate.Ingredient;
 import com.example.greenplate.R;
+import com.example.greenplate.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputRecipeBinding;
 import com.example.greenplate.ui.recipe.InputRecipeFragment;
 import com.example.greenplate.ui.recipe.RecipesFragment;
@@ -72,6 +73,9 @@ public class InputRecipeFragment extends Fragment {
         submit.setOnClickListener(v -> {
             String recipeName = binding.recipeName.getText().toString();
             if (!list.isEmpty() && !recipeName.equals("")) {
+                UserDatabase userDatabase = UserDatabase.getInstance();
+
+
 
                 binding.recipeIngredientName.setText("");
                 binding.recipeQuantity.setText("");
