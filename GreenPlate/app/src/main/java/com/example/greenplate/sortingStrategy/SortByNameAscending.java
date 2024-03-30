@@ -1,12 +1,12 @@
 package com.example.greenplate.sortingStrategy;
 
-import android.util.Pair;
+import com.example.greenplate.database.Recipe;
 import java.util.Collections;
 import java.util.List;
 
 public class SortByNameAscending implements SortingStrategy {
     @Override
-    public void sort(List<Pair<String, Integer>> list) {
-        Collections.sort(list, (p1, p2) -> p1.first.compareTo(p2.first));
+    public void sort(List<Recipe> list) {
+        Collections.sort(list, (r1, r2) -> r1.getName().compareTo(r2.getName()));
     }
 }

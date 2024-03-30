@@ -13,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
+import com.example.greenplate.database.CookBook;
+import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Recipe;
 import com.example.greenplate.databinding.FragmentRecipesBinding;
 import com.example.greenplate.sortingStrategy.SortByCaloriesAscending;
 import com.example.greenplate.sortingStrategy.SortByCaloriesDescending;
@@ -28,8 +30,8 @@ import java.util.ArrayList;
 public class RecipesFragment extends Fragment {
 
     private FragmentRecipesBinding binding;
-    private ArrayList<Pair<String, Integer>> recipeItems; // Changed to Integer for calories
-    private ArrayAdapter<Pair<String, Integer>> adapter; // Updated adapter type
+    private ArrayList<Recipe> recipeItems; // A list to hold Recipe objects
+    private ArrayAdapter<Recipe> adapter; // An adapter for Recipe objects
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,42 +65,57 @@ public class RecipesFragment extends Fragment {
             transaction.commit();
         });
 
-        // Create and populate the list
-        ListView recipesListView = binding.recipesListView;
+        // Populating
         recipeItems = new ArrayList<>();
-        // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
-        for (int i = 1; i <= 10; i++) {
-            recipeItems.add(new Pair<>("Recipe " + i, i * 10)); // Try populating array just for example
-            //recipeItems.add("Recipe " + (i + 1) + ": " + CookBook.getInstance().getGlobalRecipeList().get(i).getName());
+        int k = CookBook.getInstance().getGlobalRecipeList().size();
+        for (int i = 0; i < k; i++) {
+            Recipe recipe = CookBook.getInstance().getGlobalRecipeList().get(i);
+            recipeItems.add(recipe); // Add the Recipe object to the list
         }
 
+        // Create and populate the list
+        ListView recipesListView = binding.recipesListView;
+
         // Adapter for converting each data item from the data source into a view
-        adapter = new ArrayAdapter<Pair<String, Integer>>(
-                getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, recipeItems) {
+        adapter = new ArrayAdapter<Recipe>(
+                getActivity(),
+                android.R.layout.simple_list_item_2,
+                android.R.id.text1,
+                recipeItems) { // Assume recipeItems is already populated with Recipe objects
+
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
-                Pair<String, Integer> item = getItem(position);
-                if (item != null) {
-                    ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText(String.valueOf(item.second) + " Calories");
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext())
+                            .inflate(android.R.layout.simple_list_item_2,
+                                    parent, false);
                 }
-                return view;
+
+                Recipe recipe = getItem(position);
+
+                TextView tvName = (TextView) convertView.findViewById(android.R.id.text1);
+                TextView tvCalories = (TextView) convertView.findViewById(android.R.id.text2);
+
+                if (recipe != null) {
+                    tvName.setText(recipe.getName());
+                    tvCalories.setText(recipe.getCalories() + " Calories");
+                }
+                return convertView;
             }
         };
+        recipesListView.setAdapter(adapter);
 
         // On click listener to go to new fragment
-        recipesListView.setAdapter(adapter);
         recipesListView.setOnItemClickListener((parent, view, position, id) -> {
+            Recipe selectedRecipe = CookBook.getInstance().getGlobalRecipeList().get(position);
+
             Fragment selectedFragment = new EachRecipeFragment();
 
-            // Pass data to the new fragment
+            // Parse data into EachRecipeFragment.
             Bundle args = new Bundle();
-            Pair<String, Integer> recipe = recipeItems.get(position);
-
-            args.putString("RECIPE_NAME", recipe.first);
-            args.putInt("RECIPE_CALORIES", recipe.second);
+            args.putString("RECIPE_NAME", selectedRecipe.getName());
+            args.putInt("RECIPE_CALORIES", selectedRecipe.getCalories());
             selectedFragment.setArguments(args);
 
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -107,6 +124,8 @@ public class RecipesFragment extends Fragment {
             transaction.commit();
         });
 
+        // Default sorting by name ascending.
+        sortRecipes(new SortByNameAscending());
         return root;
     }
 
