@@ -77,8 +77,6 @@ public class Recipe implements Parcelable {
         this.ingredients = ingredients;
     }
 
-    // toString for easy viewing of Recipe details
-
     @Override
     public String toString() {
         return name + ": " + calorieCount + " calories";
