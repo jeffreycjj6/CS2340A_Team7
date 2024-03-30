@@ -26,6 +26,16 @@ public class Pantry {
     public ArrayList<Ingredient> getPantryList() {
         return pantryList;
     }
+    public Ingredient getIngredient(String name) {
+        Ingredient ret = null;
+        for (int i = 0; i < pantryList.size(); i++){
+            Ingredient currIngredient = pantryList.get(i);
+            if (currIngredient.getName().equals(name)){
+                ret = currIngredient;
+            }
+        }
+        return ret;
+    }
     public void addIngredient(Ingredient ingredient) {
         pantryList.add(ingredient);
     }
