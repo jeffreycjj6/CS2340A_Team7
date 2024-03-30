@@ -78,12 +78,13 @@
         android:id="@+id/createAccountButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="540dp"
         android:background="#0000"
         android:text="Don't have an account? Create one here."
         android:textColor="#4CAF50"
         android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

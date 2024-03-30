@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.greenplate.database.User;
 import com.example.greenplate.ui.home.HomeFragment;
 import com.example.greenplate.ui.ingredient.IngredientsFragment;
 import com.example.greenplate.ui.inputmeal.InputMealFragment;

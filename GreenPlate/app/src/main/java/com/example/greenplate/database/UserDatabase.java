@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
