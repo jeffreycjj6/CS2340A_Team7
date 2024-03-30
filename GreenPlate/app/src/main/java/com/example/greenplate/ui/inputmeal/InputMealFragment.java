@@ -13,7 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
-import com.example.greenplate.UserDatabase;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputMealBinding;
 
 import java.util.Calendar;

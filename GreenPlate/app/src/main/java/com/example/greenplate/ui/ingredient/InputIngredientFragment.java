@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -13,11 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
-import com.example.greenplate.User;
-import com.example.greenplate.UserDatabase;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentInputIngredientBinding;
-import com.example.greenplate.ui.ingredient.InputIngredientFragment;
-import com.example.greenplate.ui.profile.ProfileFragment;
 
 public class InputIngredientFragment extends Fragment {
 
