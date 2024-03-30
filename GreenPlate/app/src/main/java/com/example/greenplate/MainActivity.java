@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity
             System.out.println(User.getInstance().getMealCalendar());
             System.out.println(User.getInstance().getMonthlyCalories());
             User.resetInstance();
+            Pantry.resetInstance();
 
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 

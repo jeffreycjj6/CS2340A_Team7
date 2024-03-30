@@ -10,7 +10,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.Ingredient;
 import com.example.greenplate.MainActivity;
+import com.example.greenplate.Pantry;
 import com.example.greenplate.R;
 import com.example.greenplate.User;
 import com.example.greenplate.Meal;
@@ -211,6 +213,7 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("Reloaded Account");
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
+                        DataSnapshot pantryPart = task.getResult().child("Pantry");
 
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
@@ -286,13 +289,43 @@ public class LoginActivity extends AppCompatActivity {
 
                         // Note: This section is simply for loading all of our database data into their respective arraylists in each object
                         //TODO: Add ArrayList initialization for Pantry ArrayList (use while loop)
+                        int index = 1;
 
+                        String currentIngredient = String.valueOf(pantryPart.child(
+                                        username).getValue());
+                        boolean hasChild = pantryPart.child(username).hasChild(Integer.toString(index));
+                        Pantry pantry = Pantry.getInstance();
 
+                        while (hasChild) {
 
+                            String ingredientName = String.valueOf(pantryPart.child(username)
+                                    .child(Integer.toString(index))
+                                    .child("name").getValue());
+                            System.out.println(ingredientName);
 
+                            String ingredientQuantity = String.valueOf(pantryPart.child(username)
+                                    .child(Integer.toString(index))
+                                    .child("quantity").getValue());
+                            System.out.println(ingredientQuantity);
 
+                            String ingredientCalorie = String.valueOf(pantryPart.child(username)
+                                    .child(Integer.toString(index))
+                                    .child("caloriePerServing").getValue());
+                            System.out.println(ingredientCalorie);
 
+                            //pantry.addIngredient(newIngredient);
+                            pantry.getPantryList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie)));
 
+                            index++;
+                            hasChild = pantryPart.child(username).hasChild(Integer.toString(index));
+                        }
+
+                        System.out.println(pantry.getPantryList().size());
+                        /*for (Ingredient i: pantry.getPantryList()) {
+                            System.out.println(i.getName());
+                        }*/
 
                         //TODO: Add ArrayList initialization for GlobalRecipeCookBook
 
