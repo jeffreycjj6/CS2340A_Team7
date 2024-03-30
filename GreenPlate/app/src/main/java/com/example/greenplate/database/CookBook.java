@@ -1,6 +1,5 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class CookBook {

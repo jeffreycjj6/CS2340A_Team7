@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 import java.util.ArrayList;
 
