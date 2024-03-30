@@ -23,6 +23,9 @@ public class CookBook {
         return instance;
     }
 
+    public static void resetCookBook() {
+        instance = null;
+    }
 
 
     public ArrayList<Recipe> getGlobalRecipeList() {
@@ -47,5 +50,14 @@ public class CookBook {
 
     }
 
+
+    public void printGlobalRecipeList() {
+        for (int i = 0; i < globalRecipeList.size(); i++) {
+            System.out.println("Recipe Number " + i + ": " + globalRecipeList.get(i).getName());
+            System.out.println("Required Ingredients: " + globalRecipeList.get(i).getIngredients());
+        }
+
+
+    }
 
 }

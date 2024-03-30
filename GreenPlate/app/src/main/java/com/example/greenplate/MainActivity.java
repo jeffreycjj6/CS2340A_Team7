@@ -139,6 +139,10 @@ public class MainActivity extends AppCompatActivity
 
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 
+            CookBook.getInstance().printGlobalRecipeList();
+            CookBook.resetCookBook();
+
+
             FirebaseAuth.getInstance().signOut();
             Intent intent = new Intent(MainActivity.this,
                     com.example.greenplate.ui.login.LoginActivity.class);

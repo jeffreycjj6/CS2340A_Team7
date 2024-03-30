@@ -10,8 +10,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.CookBook;
+import com.example.greenplate.Ingredient;
 import com.example.greenplate.MainActivity;
 import com.example.greenplate.R;
+import com.example.greenplate.Recipe;
 import com.example.greenplate.User;
 import com.example.greenplate.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
@@ -295,7 +299,41 @@ public class LoginActivity extends AppCompatActivity {
 
 
                         //TODO: Add ArrayList initialization for GlobalRecipeCookBook
+                        CookBook THECookBook = CookBook.getInstance();
+                        DataSnapshot cookbook = task.getResult().child("CookBook");
 
+                        int recipeNum = 0; // Holds the global recipe id index number
+
+                        // Keep iterating through all recipe numbers until we reach a recipe number that doesn't exist yet
+                        while (cookbook.hasChild(String.valueOf(recipeNum))) {
+
+
+                            // Pull out a current recipe's name and calories
+                            String currRecipeName = String.valueOf(cookbook.child(String.valueOf(recipeNum)).child("recipeName").getValue());
+                            int totalCalories = Integer.parseInt(String.valueOf(cookbook.child(String.valueOf(recipeNum)).child("totalCalories").getValue()));
+
+                            // Create a recipe object and add it into the cookbook arrayList (though ingredits will be uninitialized)
+                            THECookBook.getGlobalRecipeList().add(new Recipe(currRecipeName, totalCalories));
+
+                            // Now initialize the list of ingredients by iterating through each ingredient index and adding it to the recipe in the 2d ArrayList
+                            ArrayList<Ingredient> currRecipeIngredientsList = THECookBook.getGlobalRecipeList().get(recipeNum).getIngredients();
+
+
+                            // For each ingredient in the database of a recipe, pull out the calorie, serving and name info and add it to the ingredient list of the current recipe
+                            int ingredientNum = 0;
+                            while (cookbook.child(String.valueOf(recipeNum)).hasChild(String.valueOf(ingredientNum))) {
+                                int currCalsPerServing = Integer.parseInt(String.valueOf(cookbook.child(String.valueOf(recipeNum)).child(String.valueOf(ingredientNum)).child("caloriesPerServing").getValue()));
+                                int currRequiredServing = Integer.parseInt(String.valueOf(cookbook.child(String.valueOf(recipeNum)).child(String.valueOf(ingredientNum)).child("requiredServing").getValue()));
+                                String currIngredientName = String.valueOf(cookbook.child(String.valueOf(recipeNum)).child(String.valueOf(ingredientNum)).child("ingredientName").getValue());
+
+                                currRecipeIngredientsList.add(new Ingredient(currIngredientName, currRequiredServing, currCalsPerServing));
+
+                                ingredientNum++;
+                            }
+
+                            recipeNum++;
+                        }
+                        THECookBook.printGlobalRecipeList(); // Print the global recipes
 
                     }
                 }
