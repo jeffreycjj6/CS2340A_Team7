@@ -45,6 +45,8 @@ public class UserDatabase {
 
         database.child("Users").child(username).setValue(user);
 
+        database.child("Pantry").child(username).setValue(email);
+
         Calendar calendar = Calendar.getInstance();
 
         // Next create a new entry/tag inside the Meals Database itself so that we have a meals
@@ -159,6 +161,21 @@ public class UserDatabase {
         currentUser.addMealToday(new Meal(currentMeal, calories));
 
 
+    }
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+        caloriesPerServing);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+    }
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
+                                  String expirationDate) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                caloriesPerServing, expirationDate);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
     }
 
     /*public int[] getMonthlyCalories() {

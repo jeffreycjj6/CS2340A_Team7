@@ -14,11 +14,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.greenplate.Ingredient;
 import com.example.greenplate.R;
-import com.example.greenplate.databinding.FragmentInputIngredientBinding;
 import com.example.greenplate.databinding.FragmentInputRecipeBinding;
-import com.example.greenplate.ui.ingredient.IngredientsFragment;
-import com.example.greenplate.ui.ingredient.InputIngredientViewModel;
+import com.example.greenplate.ui.recipe.InputRecipeFragment;
+import com.example.greenplate.ui.recipe.RecipesFragment;
+
+import java.util.ArrayList;
 
 public class InputRecipeFragment extends Fragment {
 
@@ -32,26 +34,49 @@ public class InputRecipeFragment extends Fragment {
         binding = FragmentInputRecipeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        ArrayList<Ingredient> list = new ArrayList<Ingredient>();
+
 //        final TextView textView = binding.textInputIngredient;
 //        inputIngredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        Button saveButton = binding.submitRecipeButton;
-        saveButton.setOnClickListener(v -> {
+        Button submitIngredient = binding.submitIngredient;
+        submitIngredient.setOnClickListener(v -> {
+            String ingredientName = binding.recipeIngredientName.getText().toString();
+            String quantityStr = binding.recipeQuantity.getText().toString();
+            String caloriesPerServingStr = binding.recipeCaloriesPerServing.getText().toString();
+            String expirationDate = binding.recipeExpirationDate.getText().toString();
+
+            if (!ingredientName.equals("") && !quantityStr.equals("") &&
+                    !caloriesPerServingStr.equals("")) {
+
+                int quantity = Integer.parseInt(quantityStr);
+                int caloriesPerServing = Integer.parseInt(caloriesPerServingStr);
+
+                Ingredient ingredient = null;
+                if (expirationDate.equals("")) {
+                    ingredient = new Ingredient(ingredientName, quantity, caloriesPerServing);
+                } else {
+                    ingredient = new Ingredient(ingredientName, quantity, caloriesPerServing,
+                            expirationDate);
+                }
+                list.add(ingredient);
+
+                binding.recipeIngredientName.setText("");
+                binding.recipeQuantity.setText("");
+                binding.recipeCaloriesPerServing.setText("");
+                binding.recipeExpirationDate.setText("");
+
+            }
+        });
+        Button submit = binding.submitRecipeButton;
+        submit.setOnClickListener(v -> {
             String recipeName = binding.recipeName.getText().toString();
+            if (!list.isEmpty() && !recipeName.equals("")) {
 
-            if (!recipeName.equals("") ) {
-
-                binding.recipeName.setText("");
-
-//                User user = User.getInstance();
-//
-//                user.setHeight(Double.parseDouble(userHeight));
-//                user.setWeight(Double.parseDouble(userWeight));
-//                user.setGender(userGender);
-//
-//                UserDatabase database = UserDatabase.getInstance();
-//                database.writeHeightWeightGender(Double.parseDouble(userHeight),
-//                        Double.parseDouble(userWeight), userGender);
+                binding.recipeIngredientName.setText("");
+                binding.recipeQuantity.setText("");
+                binding.recipeCaloriesPerServing.setText("");
+                binding.recipeExpirationDate.setText("");
 
                 RecipesFragment recipesFragment = new RecipesFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -61,7 +86,6 @@ public class InputRecipeFragment extends Fragment {
                 transaction.commit();
             }
         });
-
         return root;
     }
 

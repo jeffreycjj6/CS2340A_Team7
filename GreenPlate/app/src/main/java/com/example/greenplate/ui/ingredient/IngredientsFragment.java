@@ -14,6 +14,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.databinding.FragmentIngredientsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class IngredientsFragment extends Fragment {
 
@@ -27,8 +32,16 @@ public class IngredientsFragment extends Fragment {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+//        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+//        database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//                                                 @Override
+//                                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
+//
+//                                                 }
+//                                             }
 
-        Button inputIngredientButton = binding.inputIngredientButton;
+
+                Button inputIngredientButton = binding.inputIngredientButton;
         inputIngredientButton.setOnClickListener(v -> {
             InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

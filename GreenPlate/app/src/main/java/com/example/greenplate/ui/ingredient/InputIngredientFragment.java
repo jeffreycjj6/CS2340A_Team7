@@ -34,22 +34,33 @@ public class InputIngredientFragment extends Fragment {
 //        final TextView textView = binding.textInputIngredient;
 //        inputIngredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        Button saveButton = binding.submitIngredientButton;
-        saveButton.setOnClickListener(v -> {
+        Button submit = binding.submitIngredientButton;
+        submit.setOnClickListener(v -> {
             String ingredientName = binding.ingredientName.getText().toString();
-            String quanitity = binding.quantity.getText().toString();
-            String caloriesPerServing = binding.caloriesPerServing.getText().toString();
+            String quantityStr = binding.quantity.getText().toString();
+            String caloriesPerServingStr = binding.caloriesPerServing.getText().toString();
             String expirationDate = binding.expirationDate.getText().toString();
 
-            if (!ingredientName.equals("") && !quanitity.equals("") &&
-                    !caloriesPerServing.equals("")) {
+            if (!ingredientName.equals("") && !quantityStr.equals("") &&
+                    !caloriesPerServingStr.equals("")) {
+
+                int quantity = Integer.parseInt(quantityStr);
+                int caloriesPerServing = Integer.parseInt(caloriesPerServingStr);
 
                 binding.ingredientName.setText("");
                 binding.quantity.setText("");
                 binding.caloriesPerServing.setText("");
                 binding.expirationDate.setText("");
 
-//                User user = User.getInstance();
+                UserDatabase userDatabase = UserDatabase.getInstance();
+
+                if (expirationDate.equals("")) {
+                    userDatabase.writeNewIngredient(ingredientName, quantity, caloriesPerServing);
+                } else {
+                    userDatabase.writeNewIngredient(ingredientName, quantity, caloriesPerServing,
+                            expirationDate);
+                }
+
 //
 //                user.setHeight(Double.parseDouble(userHeight));
 //                user.setWeight(Double.parseDouble(userWeight));
