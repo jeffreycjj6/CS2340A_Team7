@@ -283,6 +283,20 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         }
+
+                        // Note: This section is simply for loading all of our database data into their respective arraylists in each object
+                        //TODO: Add ArrayList initialization for Pantry ArrayList (use while loop)
+
+
+
+
+
+
+
+
+                        //TODO: Add ArrayList initialization for GlobalRecipeCookBook
+
+
                     }
                 }
             }
