@@ -8,6 +8,12 @@ public class Recipe {
 
     private ArrayList<Ingredient> ingredients;
 
+    public Recipe(String name, int calorieCount) {
+        this.name = name;
+        this.calorieCount = calorieCount;
+        ingredients = new ArrayList<Ingredient>();
+    }
+
     public Recipe(String name, int calorieCount, ArrayList<Ingredient> ingredients) {
         this.name = name;
         this.calorieCount = calorieCount;
@@ -22,10 +28,12 @@ public class Recipe {
         return ingredients;
     }
 
+
     public int getCalories() {
         return calorieCount;
     }
     public String toString() {
         return name + ": " + calorieCount;
     }
+
 }
