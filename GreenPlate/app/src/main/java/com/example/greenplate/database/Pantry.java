@@ -1,4 +1,6 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
+
+
 
 import java.util.ArrayList;
 
@@ -28,9 +30,10 @@ public class Pantry {
         pantryList.add(ingredient);
     }
     public void removeIngredient(String name) {
-        for (Ingredient ingredient: pantryList) {
-            if (ingredient.getName().equals(name)) {
-                pantryList.remove(ingredient);
+        for (int i = 0; i < pantryList.size(); i++){
+            Ingredient currIngredient = pantryList.get(i);
+            if (currIngredient.getName().equals(name)){
+                pantryList.remove(currIngredient);
             }
         }
     }

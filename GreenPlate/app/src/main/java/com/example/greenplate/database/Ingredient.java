@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 public class Ingredient {
     private String name;
@@ -48,4 +48,10 @@ public class Ingredient {
     public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
+
+    public String toString(){
+
+        return (name + " " + Integer.toString(quantity) + " " +Integer.toString(caloriePerServing) + " " + expirationDate);
+    }
+
 }

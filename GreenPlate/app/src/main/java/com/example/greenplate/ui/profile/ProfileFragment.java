@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
-import com.example.greenplate.User;
+import com.example.greenplate.database.User;
 import com.example.greenplate.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {

@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -107,31 +107,36 @@ public class UserDatabase {
     // This function should usually only be called on write
     // It also returns a recipe!
     public void writeRecipeInCookBook(String recipeName, ArrayList<Ingredient> requirements) {
-
         DatabaseReference database = mDatabase.getReference();
 
         // Pull the user's username to make a user specific entry inside the meal database
         User curr = User.getInstance();
         int totalCalories = 0;
 
+        // Pull out the next possible id for global cook book recipes
         CookBook globalCookBook = CookBook.getInstance();
         String globalRecipeCount = String.valueOf(globalCookBook.getGlobalRecipeList().size());
 
+        // Set the recipe names and calorie counts, also increment the global recipe count id
+        int totalGlobalRecipeCount = globalCookBook.getGlobalRecipeList().size() + 1;
+        database.child("CookBook").child("totalGlobalRecipeCount").setValue(totalGlobalRecipeCount);
+        database.child("CookBook").child(globalRecipeCount).child("totalCalories").setValue(totalCalories);
+        database.child("CookBook").child(globalRecipeCount).child("recipeName").setValue(recipeName);
+
+        // Use a for loop to write in all the required ingredients into the database
         for (int i = 0; i < requirements.size(); i++) {
             Ingredient currIngredient = requirements.get(i);
 
-            // Set the ingredient index and also set the current ingredient in question to that index\
-            database.child(globalRecipeCount).setValue(recipeName);
-            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).setValue(currIngredient.getName());
+            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("ingredientName").setValue(currIngredient.getName());
             database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("caloriesPerServing").setValue(currIngredient.getCaloriePerServing());
-            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("quantity").setValue(currIngredient.getQuantity());
+            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("requiredServing").setValue(currIngredient.getQuantity());
 
             // Sum up the calories for each ingredient:
             totalCalories += currIngredient.getCaloriePerServing() * currIngredient.getQuantity();
         }
 
-        // Set the total count to index -1 (so it is inaccessible by normal loops) but is still there
-        database.child("CookBook").child(String.valueOf(-1)).setValue(totalCalories);
+        // Update the calorie count since it was initialized to be zero at the top
+        database.child("CookBook").child(globalRecipeCount).child("totalCalories").setValue(totalCalories);
 
         // Finally, add the new recipe to the globalRecipeList stored on the local machine so that the local copy matches the database
         globalCookBook.addRecipe(new Recipe(recipeName, totalCalories, requirements));

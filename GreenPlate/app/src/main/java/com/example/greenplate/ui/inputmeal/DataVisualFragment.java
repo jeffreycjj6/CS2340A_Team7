@@ -23,7 +23,7 @@ import com.anychart.enums.HoverMode;
 import com.anychart.enums.TooltipDisplayMode;
 import com.anychart.enums.TooltipPositionMode;
 import com.example.greenplate.R;
-import com.example.greenplate.User;
+import com.example.greenplate.database.User;
 import com.example.greenplate.databinding.FragmentDataVisualBinding;
 
 import java.util.ArrayList;
