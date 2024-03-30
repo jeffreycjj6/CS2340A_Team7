@@ -3,6 +3,7 @@ package com.example.greenplate;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -22,9 +23,7 @@ public class UserDatabase {
         return userData;
     }
 
-    public void sendData(String first, String last, String username, String password) {
-        //writeNewUser(first, last, username, password);
-    }
+    // Writing User Data Functions
 
     public void writeNewUser(String first, String last, String email, String password) {
         User user = User.getInstance();
@@ -45,8 +44,6 @@ public class UserDatabase {
 
         database.child("Users").child(username).setValue(user);
 
-        database.child("Pantry").child(username).setValue(email);
-
         Calendar calendar = Calendar.getInstance();
 
         // Next create a new entry/tag inside the Meals Database itself so that we have a meals
@@ -63,7 +60,6 @@ public class UserDatabase {
 
     }
 
-    // still incomplete
     public void writeHeightWeightGender(double height, double weight, String gender) {
         DatabaseReference database = mDatabase.getReference("Users");
         User user = User.getInstance();
@@ -71,6 +67,100 @@ public class UserDatabase {
         database.child(user.getUsername()).child("height").setValue(height);
         database.child(user.getUsername()).child("gender").setValue(gender);
     }
+
+    // Writing and Tracking Meals
+
+    public void writeNewMeal(String mealName, int calories) {
+
+        DatabaseReference database = mDatabase.getReference();
+
+        // Pull the user's username to make a user specific entry inside the meal database
+        User curr = User.getInstance();
+
+        database.child("Meals").child(curr.getUsername()).child(mealName);
+        database.child("Meals").child(curr.getUsername()).child(mealName).child("calories").setValue(calories);
+    }
+
+    // Note: This function tracks a new meal into the User instance
+    // Maybe we can move this into the User class to reduce coupling
+    public void trackNewMeal(String currentMeal, int calories, String date) {
+        // Track a new meal:
+        // 1. Update our current user's meal log inside their mealCalendar in Firebase
+        // 2. Update our local snapshot/copy
+        // of the mealCalendar as well as the monthlyCalorie count
+
+        DatabaseReference db = mDatabase.getReference();
+
+        User currentUser = User.getInstance();
+        int newMealNumber = currentUser.getMealCalendar().get(29).size();
+        // The current meal index inside the meal log of a user, just use .size()
+
+        db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber))
+                .setValue(currentMeal);
+
+        currentUser.addMealToday(new Meal(currentMeal, calories));
+    }
+
+    // Cookbook Database Functions
+    // 1. Write CookBook
+
+    // This function should usually only be called on write
+    // It also returns a recipe!
+    public void writeRecipeInCookBook(String recipeName, ArrayList<Ingredient> requirements) {
+
+        DatabaseReference database = mDatabase.getReference();
+
+        // Pull the user's username to make a user specific entry inside the meal database
+        User curr = User.getInstance();
+        int totalCalories = 0;
+
+        CookBook globalCookBook = CookBook.getInstance();
+        String globalRecipeCount = String.valueOf(globalCookBook.getGlobalRecipeList().size());
+
+        for (int i = 0; i < requirements.size(); i++) {
+            Ingredient currIngredient = requirements.get(i);
+
+            // Set the ingredient index and also set the current ingredient in question to that index\
+            database.child(globalRecipeCount).setValue(recipeName);
+            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).setValue(currIngredient.getName());
+            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("caloriesPerServing").setValue(currIngredient.getCaloriePerServing());
+            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("quantity").setValue(currIngredient.getQuantity());
+
+            // Sum up the calories for each ingredient:
+            totalCalories += currIngredient.getCaloriePerServing() * currIngredient.getQuantity();
+        }
+
+        // Set the total count to index -1 (so it is inaccessible by normal loops) but is still there
+        database.child("CookBook").child(String.valueOf(-1)).setValue(totalCalories);
+
+        // Finally, add the new recipe to the globalRecipeList stored on the local machine so that the local copy matches the database
+        globalCookBook.addRecipe(new Recipe(recipeName, totalCalories, requirements));
+    }
+
+
+
+    // Pantry Database Functions:
+
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                caloriesPerServing);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+    }
+    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
+                                   String expirationDate) {
+        DatabaseReference database = mDatabase.getReference("Pantry");
+        User user = User.getInstance();
+        Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                caloriesPerServing, expirationDate);
+        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+    }
+
+
+    /*public void sendData(String first, String last, String username, String password) {
+        //writeNewUser(first, last, username, password);
+    }*/
 
     /*public ArrayList<String> readData(String email) {
         DatabaseReference database = mDatabase.getReference();
@@ -113,113 +203,4 @@ public class UserDatabase {
         return data;
     }*/
 
-    public void updateData(String firstName, String lastName, String username, String password,
-                           double height, double weight, String gender) {
-        /*
-
-        DatabaseReference database = mDatabase.getReference("User");
-
-        HashMap user = new HashMap<>();
-        user.put("firstName", firstName);
-        user.put("lastName", lastName);
-        user.put("username", username);
-        user.put("password", password);
-        user.put("height", height);
-        user.put("weight", weight);
-        user.put("gender", gender);
-
-        database.child(firstName).updateChildren(user);
-
-         */
-    }
-
-    public void writeNewMeal(String mealName, int calories) {
-
-        DatabaseReference database = mDatabase.getReference();
-
-        // Pull the user's username to make a user specific entry inside the meal database
-        User curr = User.getInstance();
-
-        database.child("Meals").child(curr.getUsername()).child(mealName);
-        database.child("Meals").child(curr.getUsername()).child(mealName).child("calories").setValue(calories);
-    }
-    public void trackNewMeal(String currentMeal, int calories, String date) {
-        // Track a new meal:
-        // 1. Update our current user's meal log inside their mealCalendar in Firebase
-        // 2. Update our local snapshot/copy
-        // of the mealCalendar as well as the monthlyCalorie count
-
-        DatabaseReference db = mDatabase.getReference();
-
-        User currentUser = User.getInstance();
-        int newMealNumber = currentUser.getMealCalendar().get(29).size();
-        // The current meal index inside the meal log of a user, just use .size()
-
-        db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber))
-                .setValue(currentMeal);
-
-        currentUser.addMealToday(new Meal(currentMeal, calories));
-
-
-    }
-    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
-        DatabaseReference database = mDatabase.getReference("Pantry");
-        User user = User.getInstance();
-        Ingredient ingredient = new Ingredient(ingredientName, quantity,
-        caloriesPerServing);
-        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
-    }
-    public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
-                                  String expirationDate) {
-        DatabaseReference database = mDatabase.getReference("Pantry");
-        User user = User.getInstance();
-        Ingredient ingredient = new Ingredient(ingredientName, quantity,
-                caloriesPerServing, expirationDate);
-        database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
-    }
-
-    /*public int[] getMonthlyCalories() {
-
-
-        DatabaseReference database = FirebaseDatabase.getInstance()
-        .getReference("Users").child(User.getInstance().getUsername());
-
-        database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (task.isSuccessful()) {
-
-                    if (task.getResult().exists()) {
-
-                        DataSnapshot dataSnapshot = task.getResult();
-                        User user = User.getInstance();
-
-                        Calendar calendar = Calendar.getInstance();
-                        for (int day = 29; day >= 0; day--) {
-                            String currentDay = calendar.getTime()
-                            .toString().substring(0, calendar.getTime().toString().length() - 18);
-                            calendar.add(Calendar.DATE, -1);
-
-                            // meal num starts at index 0
-                            // note that initialization entry starts at index -1
-                            but since we start mealnum at 0 we skip it
-                            String currentMeal = String.valueOf(
-                            dataSnapshot.child("mealCalendar").child(currentDay).child(
-                            Integer.toString(0)).getValue());
-                            int mealNum = 0;
-                            while (!currentMeal.equals("null")) {
-                                System.out.println(currentMeal);
-                                user.getMealCalendar().get(day).add(new Meal(currentMeal, 350));
-                                mealNum += 1;
-                                currentMeal = String.valueOf(dataSnapshot.child(
-                                "mealCalendar").child(currentDay).child(Integer.toString(mealNum))
-                                .getValue());
-
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    }*/
 }
