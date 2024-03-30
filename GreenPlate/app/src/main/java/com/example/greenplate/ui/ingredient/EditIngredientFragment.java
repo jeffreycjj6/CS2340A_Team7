@@ -61,8 +61,24 @@ public class EditIngredientFragment extends Fragment {
                 int changeQuantity = Integer.parseInt(changeQuantityStr);
                 if (changeQuantity == 0) {
 
+                } else {
+
                 }
             }
+
+            binding.newQuantity.setText("");
+
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, ingredientsFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+        Button remove = binding.removeIngredient;
+        remove.setOnClickListener(v -> {
+
+
 
             binding.newQuantity.setText("");
 
