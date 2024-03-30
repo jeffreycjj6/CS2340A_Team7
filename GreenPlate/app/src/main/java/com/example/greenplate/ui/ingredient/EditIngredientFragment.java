@@ -1,6 +1,7 @@
 package com.example.greenplate.ui.ingredient;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.databinding.FragmentEditIngredientBinding;
 import com.example.greenplate.ui.recipe.EachRecipeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,35 +41,55 @@ public class EditIngredientFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-//        binding = FragmentEditIngredientBinding.inflate(inflater, container, false);
-//        View root = binding.getRoot();
-        View view = inflater.inflate(R.layout.fragment_edit_ingredient, container, false);
+        binding = FragmentEditIngredientBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
         if (getArguments() != null) {
             String ingredientName = getArguments().getString("INGREDIENT");
             int quantity = getArguments().getInt("QUANTITY");
 
-            // Assuming you have TextViews in your layout to display the recipe name and calories
-            TextView ingredientNameTextView = view.findViewById(R.id.ingredient_name_text_view);
-            TextView quantityTextView = view.findViewById(R.id.quantity_text_view);
-
-            // Set the retrieved data on the TextViews
-            ingredientNameTextView.setText(ingredientName);
-            quantityTextView.setText(String.format(Locale.getDefault(), "%d", quantity));
+            binding.ingredientNameTextView.setText(ingredientName);
+            binding.quantityTextView.setText(String.format(Locale.getDefault(), "%d", quantity));
         }
 
+        Button change = binding.changeQuantity;
+        change.setOnClickListener(v -> {
 
-//        Button inputIngredientButton = binding.inputIngredientButton;
-//        inputIngredientButton.setOnClickListener(v -> {
-//            InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
-//            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fragment_container, inputIngredientFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-//        });
+            String changeQuantityStr = binding.newQuantity.getText().toString();
 
-//        return root;
-        return view;
+            if (!changeQuantityStr.equals("")) {
+                int changeQuantity = Integer.parseInt(changeQuantityStr);
+                if (changeQuantity == 0) {
+
+                } else {
+
+                }
+            }
+
+            binding.newQuantity.setText("");
+
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, ingredientsFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+        Button remove = binding.removeIngredient;
+        remove.setOnClickListener(v -> {
+
+
+
+            binding.newQuantity.setText("");
+
+            IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, ingredientsFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
+        return root;
     }
 
     @Override

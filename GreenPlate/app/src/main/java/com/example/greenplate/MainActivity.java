@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.greenplate.database.CookBook;
 import com.example.greenplate.database.User;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.ui.home.HomeFragment;
 import com.example.greenplate.ui.ingredient.IngredientsFragment;
 import com.example.greenplate.ui.inputmeal.InputMealFragment;
@@ -138,6 +139,7 @@ public class MainActivity extends AppCompatActivity
             System.out.println(User.getInstance().getMealCalendar());
             System.out.println(User.getInstance().getMonthlyCalories());
             User.resetInstance();
+            Pantry.resetInstance();
 
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 

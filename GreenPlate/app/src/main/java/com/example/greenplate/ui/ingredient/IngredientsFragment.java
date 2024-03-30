@@ -1,6 +1,7 @@
 package com.example.greenplate.ui.ingredient;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +59,8 @@ public class IngredientsFragment extends Fragment {
 
 
         });
+
+
         ListView pantryListView = binding.pantryListView;
         pantryItems = new ArrayList<>();
         // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
