@@ -18,13 +18,17 @@ import android.widget.TextView;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.Recipe;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class EachRecipeFragment extends Fragment {
 
     private EachRecipeViewModel mViewModel;
+
+    private ArrayList<Ingredient> userPantry = Pantry.getInstance().getPantryList();
 
     public static EachRecipeFragment newInstance() {
         return new EachRecipeFragment();
@@ -58,6 +62,26 @@ public class EachRecipeFragment extends Fragment {
                     ingredientQuantity.setText(String.format(Locale.getDefault(), "%d", ingredient.getQuantity()));
                     ingredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     tableRow.addView(ingredientQuantity);
+
+                    TextView pantryIngredientName = new TextView(getContext());
+                    pantryIngredientName.setText(ingredient.getName());
+                    pantryIngredientName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    tableRow.addView(pantryIngredientName);
+
+                    TextView pantryIngredientQuantity = new TextView(getContext());
+                    if (userPantry.contains(ingredient)) {
+                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", userPantry.get(userPantry.indexOf(ingredient))));
+                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        tableRow.addView(pantryIngredientQuantity);
+                    } else {
+                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", 0));
+                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        tableRow.addView(pantryIngredientQuantity);
+                    }
+                    //IngredientQuantity.setText(String.format(Locale.getDefault(), "%d", ingredient.getQuantity()));
+                    //IngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    //tableRow.addView(ingredientQuantity);
+
 
                     ingredientsTable.addView(tableRow);
                 }
