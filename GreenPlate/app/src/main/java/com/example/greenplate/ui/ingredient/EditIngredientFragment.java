@@ -1,33 +1,21 @@
 package com.example.greenplate.ui.ingredient;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditIngredientBinding;
-import com.example.greenplate.ui.recipe.EachRecipeFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
+
 import java.util.Locale;
 
 public class EditIngredientFragment extends Fragment {

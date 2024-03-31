@@ -1,7 +1,6 @@
 package com.example.greenplate.ui.ingredient;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +19,6 @@ import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.databinding.FragmentIngredientsBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -43,7 +37,7 @@ public class IngredientsFragment extends Fragment {
         View root = binding.getRoot();
 
 
-                Button inputIngredientButton = binding.inputIngredientButton;
+        Button inputIngredientButton = binding.inputIngredientButton;
         inputIngredientButton.setOnClickListener(v -> {
             InputIngredientFragment inputIngredientFragment = new InputIngredientFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
@@ -58,13 +52,16 @@ public class IngredientsFragment extends Fragment {
         ListView pantryListView = binding.pantryListView;
         Pantry pantry = Pantry.getInstance();
         pantryItems = new ArrayList<>();
-        // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
+        // CookBook.getInstance().getGlobalRecipeList()
+        // .size() --> this returns total number of global recipes
         for (Ingredient i: pantry.getPantryList()) {
-            pantryItems.add(new Pair<>(i.getName(), i.getQuantity())); // Try populating array just for example
+            pantryItems.add(new Pair<>(i.getName(), i.getQuantity()));
+            // Try populating array just for example
         }
 
         adapter = new ArrayAdapter<Pair<String, Integer>>(
-                getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, pantryItems) {
+                getActivity(), android.R.layout.simple_list_item_2,
+                android.R.id.text1, pantryItems) {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {

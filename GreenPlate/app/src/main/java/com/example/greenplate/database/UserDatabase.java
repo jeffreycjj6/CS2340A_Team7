@@ -55,7 +55,8 @@ public class UserDatabase {
 
         // Create the Meal Calendar and initialize it with a -1 to prevent it counting as a meal day
         database.child("Users").child(username).child("mealCalendar")
-                .child(calendar.getTime().toString().substring(0, calendar.getTime().toString().length() - 18)).child("-1").setValue("StartingDay");
+                .child(calendar.getTime().toString().substring(0, calendar.getTime()
+                        .toString().length() - 18)).child("-1").setValue("StartingDay");
         System.out.println("Created Meal Calendar");
 
     }
@@ -78,7 +79,8 @@ public class UserDatabase {
         User curr = User.getInstance();
 
         database.child("Meals").child(curr.getUsername()).child(mealName);
-        database.child("Meals").child(curr.getUsername()).child(mealName).child("calories").setValue(calories);
+        database.child("Meals").child(curr.getUsername())
+                .child(mealName).child("calories").setValue(calories);
     }
 
     // Note: This function tracks a new meal into the User instance
@@ -95,7 +97,8 @@ public class UserDatabase {
         int newMealNumber = currentUser.getMealCalendar().get(29).size();
         // The current meal index inside the meal log of a user, just use .size()
 
-        db.child("Users").child(currentUser.getUsername()).child("mealCalendar").child(date).child(Integer.toString(newMealNumber))
+        db.child("Users").child(currentUser.getUsername())
+                .child("mealCalendar").child(date).child(Integer.toString(newMealNumber))
                 .setValue(currentMeal);
 
         currentUser.addMealToday(new Meal(currentMeal, calories));
@@ -119,26 +122,37 @@ public class UserDatabase {
 
         // Set the recipe names and calorie counts, also increment the global recipe count id
         int totalGlobalRecipeCount = globalCookBook.getGlobalRecipeList().size() + 1;
-        database.child("CookBook").child("totalGlobalRecipeCount").setValue(totalGlobalRecipeCount);
-        database.child("CookBook").child(globalRecipeCount).child("totalCalories").setValue(totalCalories);
-        database.child("CookBook").child(globalRecipeCount).child("recipeName").setValue(recipeName);
+        database.child("CookBook")
+                .child("totalGlobalRecipeCount").setValue(totalGlobalRecipeCount);
+        database.child("CookBook")
+                .child(globalRecipeCount).child("totalCalories").setValue(totalCalories);
+        database.child("CookBook")
+                .child(globalRecipeCount).child("recipeName").setValue(recipeName);
 
         // Use a for loop to write in all the required ingredients into the database
         for (int i = 0; i < requirements.size(); i++) {
             Ingredient currIngredient = requirements.get(i);
 
-            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("ingredientName").setValue(currIngredient.getName());
-            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("caloriesPerServing").setValue(currIngredient.getCaloriePerServing());
-            database.child("CookBook").child(globalRecipeCount).child(String.valueOf(i)).child("requiredServing").setValue(currIngredient.getQuantity());
+            database.child("CookBook").child(globalRecipeCount)
+                    .child(String.valueOf(i)).child("ingredientName")
+                    .setValue(currIngredient.getName());
+            database.child("CookBook").child(globalRecipeCount)
+                    .child(String.valueOf(i)).child("caloriesPerServing")
+                    .setValue(currIngredient.getCaloriePerServing());
+            database.child("CookBook").child(globalRecipeCount)
+                    .child(String.valueOf(i)).child("requiredServing")
+                    .setValue(currIngredient.getQuantity());
 
             // Sum up the calories for each ingredient:
             totalCalories += currIngredient.getCaloriePerServing() * currIngredient.getQuantity();
         }
 
         // Update the calorie count since it was initialized to be zero at the top
-        database.child("CookBook").child(globalRecipeCount).child("totalCalories").setValue(totalCalories);
+        database.child("CookBook").child(globalRecipeCount)
+                .child("totalCalories").setValue(totalCalories);
 
-        // Finally, add the new recipe to the globalRecipeList stored on the local machine so that the local copy matches the database
+        // Finally, add the new recipe to the globalRecipeList
+        // stored on the local machine so that the local copy matches the database
         globalCookBook.addRecipe(new Recipe(recipeName, totalCalories, requirements));
     }
 
@@ -164,7 +178,8 @@ public class UserDatabase {
         database.child(user.getUsername()).child(ingredientName);
         database.child(user.getUsername()).child(ingredientName).setValue(ingredient);
         /*database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
-        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);*/
+        database.child(user.getUsername())
+        .child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);*/
     }
 
     public void removeIngredient(String ingredientName) {

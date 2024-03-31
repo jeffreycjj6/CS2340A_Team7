@@ -1,7 +1,5 @@
 package com.example.greenplate.ui.recipe;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,7 +9,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -50,39 +47,53 @@ public class EachRecipeFragment extends Fragment {
                 TableLayout ingredientsTable = view.findViewById(R.id.ingredients_table);
 
                 recipeNameTextView.setText(recipe.getName());
-                caloriesTextView.setText(String.format(Locale.getDefault(), "%d Calories", recipe.getCalories()));
+                caloriesTextView.setText(String.format(Locale.getDefault(),
+                        "%d Calories", recipe.getCalories()));
 
                 for (Ingredient ingredient : recipe.getIngredients()) {
                     TableRow tableRow = new TableRow(getContext());
-                    tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                    tableRow.setLayoutParams(new TableRow.LayoutParams(
+                            TableRow.LayoutParams.MATCH_PARENT,
+                                    TableRow.LayoutParams.WRAP_CONTENT));
 
                     TextView ingredientName = new TextView(getContext());
                     ingredientName.setText(ingredient.getName());
-                    ingredientName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    ingredientName.setLayoutParams(new TableRow.LayoutParams(
+                            0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     tableRow.addView(ingredientName);
 
                     TextView ingredientQuantity = new TextView(getContext());
-                    ingredientQuantity.setText(String.format(Locale.getDefault(), "%d", ingredient.getQuantity()));
-                    ingredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    ingredientQuantity.setText(String.format(Locale.getDefault(),
+                            "%d", ingredient.getQuantity()));
+                    ingredientQuantity.setLayoutParams(new TableRow.LayoutParams(
+                            0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     tableRow.addView(ingredientQuantity);
 
                     TextView pantryIngredientName = new TextView(getContext());
                     pantryIngredientName.setText(ingredient.getName());
-                    pantryIngredientName.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    pantryIngredientName.setLayoutParams(new TableRow.LayoutParams(
+                            0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     tableRow.addView(pantryIngredientName);
 
                     TextView pantryIngredientQuantity = new TextView(getContext());
                     if (stringPantry.contains(ingredient.getName())) {
-                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", userPantry.get(stringPantry.indexOf(ingredient.getName())).getQuantity()));
-                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(),
+                                "%d", userPantry.get(stringPantry.indexOf(
+                                        ingredient.getName())).getQuantity()));
+                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(
+                                0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         tableRow.addView(pantryIngredientQuantity);
                     } else {
-                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", 0));
-                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(),
+                                "%d", 0));
+                        pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0,
+                                TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         tableRow.addView(pantryIngredientQuantity);
                     }
-                    //IngredientQuantity.setText(String.format(Locale.getDefault(), "%d", ingredient.getQuantity()));
-                    //IngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
+                    //IngredientQuantity.setText(String.format(Locale.getDefault(),
+                    // "%d", ingredient.getQuantity()));
+                    //IngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0,
+                    // TableRow.LayoutParams.WRAP_CONTENT, 1f));
                     //tableRow.addView(ingredientQuantity);
 
 
@@ -94,7 +105,8 @@ public class EachRecipeFragment extends Fragment {
         return view;
     }
 
-    // This function converts the user's pantry of ingredients into names of each ingredient so comparison is possible
+    // This function converts the user's pantry of ingredients into
+    // names of each ingredient so comparison is possible
     public void createStringPantry() {
         for (int i = 0; i < userPantry.size(); i++) {
             stringPantry.add(userPantry.get(i).getName());

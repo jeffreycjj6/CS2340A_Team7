@@ -27,8 +27,8 @@ public class InputIngredientFragment extends Fragment {
         binding = FragmentInputIngredientBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.textInputIngredient;
-//        inputIngredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //final TextView textView = binding.textInputIngredient;
+        //inputIngredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         Button submit = binding.submitIngredientButton;
         submit.setOnClickListener(v -> {
@@ -37,8 +37,8 @@ public class InputIngredientFragment extends Fragment {
             String caloriesPerServingStr = binding.caloriesPerServing.getText().toString();
             String expirationDate = binding.expirationDate.getText().toString();
 
-            if (!ingredientName.equals("") && !quantityStr.equals("") &&
-                    !caloriesPerServingStr.equals("")) {
+            if (!ingredientName.equals("") && !quantityStr.equals("")
+                    && !caloriesPerServingStr.equals("")) {
 
                 int quantity = Integer.parseInt(quantityStr);
                 int caloriesPerServing = Integer.parseInt(caloriesPerServingStr);
@@ -57,14 +57,13 @@ public class InputIngredientFragment extends Fragment {
                             expirationDate);
                 }
 
-//
-//                user.setHeight(Double.parseDouble(userHeight));
-//                user.setWeight(Double.parseDouble(userWeight));
-//                user.setGender(userGender);
-//
-//                UserDatabase database = UserDatabase.getInstance();
-//                database.writeHeightWeightGender(Double.parseDouble(userHeight),
-//                        Double.parseDouble(userWeight), userGender);
+                //user.setHeight(Double.parseDouble(userHeight));
+                //user.setWeight(Double.parseDouble(userWeight));
+                //user.setGender(userGender);
+                //
+                //UserDatabase database = UserDatabase.getInstance();
+                //database.writeHeightWeightGender(Double.parseDouble(userHeight),
+                //Double.parseDouble(userWeight), userGender);
 
                 IngredientsFragment ingredientsFragment = new IngredientsFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

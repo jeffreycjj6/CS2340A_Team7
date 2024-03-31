@@ -9,7 +9,7 @@ public class CookBook {
 
     private ArrayList<Recipe> globalRecipeList;
 
-    public static CookBook instance;
+    private static CookBook instance;
 
     private CookBook() {
         globalRecipeList = new ArrayList<Recipe>();
@@ -38,7 +38,8 @@ public class CookBook {
 
     // This function reads from the database and uses a for loop to initialize all recipes
     public void copyGlobalRecipesToPhoneCookBook() {
-        // NOTE THAT THIS FUNTION SHOULD ACTUALLY EXIST IN LOGIN ACTIVITY SINCE ALL READS SHOULD BE DONE IN LOGIN
+        // NOTE THAT THIS FUNTION SHOULD ACTUALLY EXIST IN LOGIN
+        // ACTIVITY SINCE ALL READS SHOULD BE DONE IN LOGIN
     }
 
     public void sortByName() {
