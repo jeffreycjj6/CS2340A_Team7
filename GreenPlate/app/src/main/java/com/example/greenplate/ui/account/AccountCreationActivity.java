@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.greenplate.R;
 
-import com.example.greenplate.UserDatabase;
+import com.example.greenplate.database.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
@@ -99,6 +99,7 @@ public class AccountCreationActivity extends AppCompatActivity {
                                                         login.LoginActivity.class);
 
                                         // writes data to FireBase
+                                        System.out.println("Creating New Account");
                                         UserDatabase user = UserDatabase.getInstance();
                                         user.writeNewUser(finalFirstNameMessage,
                                                 finalLastNameMessage, finalUsernameMessage,

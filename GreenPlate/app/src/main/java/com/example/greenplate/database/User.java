@@ -1,4 +1,4 @@
-package com.example.greenplate;
+package com.example.greenplate.database;
 
 import java.util.ArrayList;
 
@@ -42,6 +42,10 @@ public class User {
             user = new User();
         }
         return user;
+    }
+
+    public static void resetInstance() {
+        user = null;
     }
 
     public String getFirstName() {

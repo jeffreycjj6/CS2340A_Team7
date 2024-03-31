@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
-import com.example.greenplate.User;
+import com.example.greenplate.database.User;
 import com.example.greenplate.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -42,8 +42,6 @@ public class ProfileFragment extends Fragment {
             EditStatsFragment editStatsFragment = new EditStatsFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, editStatsFragment);
-
-
             transaction.addToBackStack(null);
             transaction.commit();
         });

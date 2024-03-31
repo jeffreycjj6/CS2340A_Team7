@@ -10,10 +10,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.greenplate.database.CookBook;
+import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.MainActivity;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.R;
-import com.example.greenplate.User;
-import com.example.greenplate.Meal;
+import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.User;
+import com.example.greenplate.database.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,9 +28,8 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Calendar;
-
-//import com.example.navbartest.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -195,12 +198,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void reloadAccount(String email) {
-        //UserDatabase database = UserDatabase.getInstance();
         String username = email.replace(".", " ");
-
-        //DatabaseReference database = FirebaseDatabase.getInstance().getReference("Users")
-        // .child(username);
-
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
@@ -208,10 +206,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     if (task.getResult().exists()) {
-
+                        System.out.println("Reloaded Account");
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
-
+                        //DataSnapshot pantryPart = task.getResult().child("Pantry");
+                        Iterable<DataSnapshot> pantryList = task.getResult()
+                                .child("Pantry").child(username).getChildren();
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
@@ -238,14 +238,6 @@ public class LoginActivity extends AppCompatActivity {
                         int dailyCalories = Integer.parseInt(
                                 String.valueOf(userPart.child("dailyCalories").getValue()));
                         user.setDailyCalories(dailyCalories);
-
-                        // Initialize Meal 2D ArrayList
-                        // Do this by using a nested for loop and starting at the end
-                        // We subtract days going backwards and we read if that day exists
-                        // 1. Going to user's mealCalendar database section
-                        // 2. Calculating current day and assigning that to
-                        // 3.
-
                         Calendar calendar = Calendar.getInstance();
                         for (int day = 29; day >= 0; day--) {
                             String currentDay = calendar.getTime()
@@ -253,22 +245,19 @@ public class LoginActivity extends AppCompatActivity {
                                             .toString().length() - 18);
                             calendar.add(Calendar.DATE, -1);
 
-                            // meal num starts at index 0
-                            // note that initialization entry starts at index -1
-                            // but since we start mealnum at 0 we skip it
                             String currentMeal = String.valueOf(userPart.child(
                                     "mealCalendar").child(currentDay)
                                     .child(Integer.toString(0)).getValue());
                             int mealNum = 0;
                             while (!currentMeal.equals("null")) {
+                                //
                                 int currentMealCalories = Integer.parseInt(String.valueOf(
-                                        mealDict.child(currentMeal).child("calories")
+                                        mealDict.child(username)
+                                                .child(currentMeal).child("calories")
                                                 .getValue()));
                                 System.out.println(currentMeal);
-
                                 user.getMealCalendar().get(day).add(new Meal(currentMeal, 0));
                                 user.addCaloriesToday(currentMealCalories, day);
-
                                 mealNum += 1;
                                 currentMeal = String.valueOf(userPart.child(
                                         "mealCalendar").child(currentDay).child(
@@ -276,8 +265,68 @@ public class LoginActivity extends AppCompatActivity {
 
                             }
                         }
+                        Pantry pantry = Pantry.getInstance();
+                        for (DataSnapshot i: pantryList) {
+                            String ingredientName = String.valueOf(
+                                    i.child("name").getValue());
+                            String ingredientQuantity = String.valueOf(
+                                    i.child("quantity").getValue());
+                            String ingredientCalorie = String.valueOf(
+                                    i.child("caloriePerServing").getValue());
+                            String expirationDate = String.valueOf(
+                                    i.child("expirationDate").getValue());
 
-                        // initialize monthly calories
+                            pantry.getPantryList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
+                                    expirationDate));
+                        }
+                        System.out.println(pantry.getPantryList().size());
+
+                        CookBook theCookBook = CookBook.getInstance();
+                        DataSnapshot cookbook = task.getResult().child("CookBook");
+
+                        int recipeNum = 0; // Holds the global recipe id index number
+                        while (cookbook.hasChild(String.valueOf(recipeNum))) {
+
+                            // Pull out a current recipe's name and calories
+                            String currRecipeName = String.valueOf(cookbook.child(
+                                    String.valueOf(recipeNum)).child("recipeName").getValue());
+                            int totalCalories = Integer.parseInt(String.valueOf(
+                                    cookbook.child(String.valueOf(recipeNum)).child(
+                                            "totalCalories").getValue()));
+
+                            theCookBook.getGlobalRecipeList().add(new Recipe(
+                                    currRecipeName, totalCalories));
+
+                            ArrayList<Ingredient> currRecipeIngredientsList = theCookBook
+                                    .getGlobalRecipeList().get(recipeNum).getIngredients();
+
+                            int ingredientNum = 0;
+                            while (cookbook.child(String.valueOf(recipeNum))
+                                    .hasChild(String.valueOf(ingredientNum))) {
+                                int currCalsPerServing = Integer.parseInt(
+                                        String.valueOf(cookbook.child(String.valueOf(recipeNum))
+                                                .child(String.valueOf(ingredientNum)).child(
+                                                        "caloriesPerServing").getValue()));
+                                int currRequiredServing = Integer.parseInt(String.valueOf(
+                                        cookbook.child(String.valueOf(recipeNum)).child(String
+                                                .valueOf(ingredientNum)).child(
+                                                        "requiredServing").getValue()));
+                                String currIngredientName = String.valueOf(
+                                        cookbook.child(String.valueOf(recipeNum)).child(
+                                                String.valueOf(ingredientNum)).child(
+                                                        "ingredientName").getValue());
+
+                                currRecipeIngredientsList.add(new Ingredient(
+                                        currIngredientName, currRequiredServing,
+                                        currCalsPerServing));
+
+                                ingredientNum++;
+                            }
+                            recipeNum++;
+                        }
+                        theCookBook.printGlobalRecipeList(); // Print the global recipes
 
                     }
                 }

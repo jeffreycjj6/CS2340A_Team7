@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.greenplate.User;
+import com.example.greenplate.database.User;
 
 public class InputMealViewModel extends ViewModel {
 
