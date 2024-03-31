@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Pantry;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditIngredientBinding;
 import com.example.greenplate.ui.recipe.EachRecipeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,6 +55,7 @@ public class EditIngredientFragment extends Fragment {
         } else {
             ingredientName = "";
         }
+        UserDatabase database = UserDatabase.getInstance();
         Pantry pantry = Pantry.getInstance();
         Button change = binding.changeQuantity;
         change.setOnClickListener(v -> {
@@ -64,8 +66,10 @@ public class EditIngredientFragment extends Fragment {
                 int changeQuantity = Integer.parseInt(changeQuantityStr);
                 if (changeQuantity == 0) {
                     pantry.removeIngredient(ingredientName);
+                    database.removeIngredient(ingredientName);
                 } else {
                     pantry.getIngredient(ingredientName).setQuantity(changeQuantity);
+                    database.changeQuantity(ingredientName, changeQuantity);
                 }
             }
 
@@ -82,6 +86,7 @@ public class EditIngredientFragment extends Fragment {
         remove.setOnClickListener(v -> {
 
             pantry.removeIngredient(ingredientName);
+            database.removeIngredient(ingredientName);
 
             binding.newQuantity.setText("");
 
