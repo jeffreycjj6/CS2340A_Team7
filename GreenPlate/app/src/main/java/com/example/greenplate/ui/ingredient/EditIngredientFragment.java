@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Pantry;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentEditIngredientBinding;
 import com.example.greenplate.ui.recipe.EachRecipeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,14 +45,18 @@ public class EditIngredientFragment extends Fragment {
         binding = FragmentEditIngredientBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        String ingredientName;
         if (getArguments() != null) {
-            String ingredientName = getArguments().getString("INGREDIENT");
+            ingredientName = getArguments().getString("INGREDIENT");
             int quantity = getArguments().getInt("QUANTITY");
 
             binding.ingredientNameTextView.setText(ingredientName);
             binding.quantityTextView.setText(String.format(Locale.getDefault(), "%d", quantity));
+        } else {
+            ingredientName = "";
         }
-
+        UserDatabase database = UserDatabase.getInstance();
+        Pantry pantry = Pantry.getInstance();
         Button change = binding.changeQuantity;
         change.setOnClickListener(v -> {
 
@@ -60,9 +65,11 @@ public class EditIngredientFragment extends Fragment {
             if (!changeQuantityStr.equals("")) {
                 int changeQuantity = Integer.parseInt(changeQuantityStr);
                 if (changeQuantity == 0) {
-
+                    pantry.removeIngredient(ingredientName);
+                    database.removeIngredient(ingredientName);
                 } else {
-
+                    pantry.getIngredient(ingredientName).setQuantity(changeQuantity);
+                    database.changeQuantity(ingredientName, changeQuantity);
                 }
             }
 
@@ -78,7 +85,8 @@ public class EditIngredientFragment extends Fragment {
         Button remove = binding.removeIngredient;
         remove.setOnClickListener(v -> {
 
-
+            pantry.removeIngredient(ingredientName);
+            database.removeIngredient(ingredientName);
 
             binding.newQuantity.setText("");
 

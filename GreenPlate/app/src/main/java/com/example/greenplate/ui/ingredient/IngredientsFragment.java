@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
+import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.databinding.FragmentIngredientsBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,14 +42,6 @@ public class IngredientsFragment extends Fragment {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-//        database.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//                                                 @Override
-//                                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-//
-//                                                 }
-//                                             }
-
 
                 Button inputIngredientButton = binding.inputIngredientButton;
         inputIngredientButton.setOnClickListener(v -> {
@@ -62,11 +56,11 @@ public class IngredientsFragment extends Fragment {
 
 
         ListView pantryListView = binding.pantryListView;
+        Pantry pantry = Pantry.getInstance();
         pantryItems = new ArrayList<>();
         // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
-        for (int i = 1; i <= 10; i++) {
-            pantryItems.add(new Pair<>("Ingredient " + i, i * 10)); // Try populating array just for example
-            //recipeItems.add("Recipe " + (i + 1) + ": " + CookBook.getInstance().getGlobalRecipeList().get(i).getName());
+        for (Ingredient i: pantry.getPantryList()) {
+            pantryItems.add(new Pair<>(i.getName(), i.getQuantity())); // Try populating array just for example
         }
 
         adapter = new ArrayAdapter<Pair<String, Integer>>(
@@ -76,9 +70,14 @@ public class IngredientsFragment extends Fragment {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 Pair<String, Integer> item = getItem(position);
+                Ingredient ingredient = pantry.getIngredient(item.first);
                 if (item != null) {
                     ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText(String.valueOf(item.second));
+                    ((TextView) view.findViewById(android.R.id.text2)).setText("Quantity: "
+                            + item.second + ", Calories: "
+                            + ingredient.getCaloriePerServing()
+                            + ", Expiration Date: "
+                            + ingredient.getExpirationDate());
                 }
                 return view;
             }
