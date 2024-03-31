@@ -61,7 +61,6 @@ public class IngredientsFragment extends Fragment {
         // CookBook.getInstance().getGlobalRecipeList().size() --> this returns total number of global recipes
         for (Ingredient i: pantry.getPantryList()) {
             pantryItems.add(new Pair<>(i.getName(), i.getQuantity())); // Try populating array just for example
-            //recipeItems.add("Recipe " + (i + 1) + ": " + CookBook.getInstance().getGlobalRecipeList().get(i).getName());
         }
 
         adapter = new ArrayAdapter<Pair<String, Integer>>(
@@ -71,9 +70,14 @@ public class IngredientsFragment extends Fragment {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 Pair<String, Integer> item = getItem(position);
+                Ingredient ingredient = pantry.getIngredient(item.first);
                 if (item != null) {
                     ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText(String.valueOf(item.second));
+                    ((TextView) view.findViewById(android.R.id.text2)).setText("Quantity: "
+                            + String.valueOf(item.second) + " Calories Per Serving: "
+                            + ingredient.getCaloriePerServing()
+                            + " Expiration Date: "
+                            + ingredient.getExpirationDate());
                 }
                 return view;
             }
