@@ -74,9 +74,9 @@ public class IngredientsFragment extends Fragment {
                 if (item != null) {
                     ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
                     ((TextView) view.findViewById(android.R.id.text2)).setText("Quantity: "
-                            + item.second + " Calories Per Serving: "
+                            + item.second + ", Calories: "
                             + ingredient.getCaloriePerServing()
-                            + " Expiration Date: "
+                            + ", Expiration Date: "
                             + ingredient.getExpirationDate());
                 }
                 return view;
