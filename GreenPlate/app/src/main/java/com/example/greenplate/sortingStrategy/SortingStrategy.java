@@ -1,9 +1,8 @@
 package com.example.greenplate.sortingStrategy;
 
-import android.util.Pair;
-
+import com.example.greenplate.database.Recipe;
 import java.util.List;
 
 public interface SortingStrategy {
-    void sort(List<Pair<String, Integer>> list);
+    void sort(List<Recipe> list);
 }

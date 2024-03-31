@@ -1,12 +1,12 @@
 package com.example.greenplate.sortingStrategy;
 
-import android.util.Pair;
+import com.example.greenplate.database.Recipe;
 import java.util.Collections;
 import java.util.List;
 
 public class SortByCaloriesAscending implements SortingStrategy {
     @Override
-    public void sort(List<Pair<String, Integer>> list) {
-        Collections.sort(list, (p1, p2) -> p1.second.compareTo(p2.second));
+    public void sort(List<Recipe> list) {
+        Collections.sort(list, (r1, r2) -> Integer.compare(r1.getCalories(), r2.getCalories()));
     }
 }
