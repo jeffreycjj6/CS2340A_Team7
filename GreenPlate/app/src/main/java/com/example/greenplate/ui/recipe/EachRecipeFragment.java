@@ -42,7 +42,7 @@ public class EachRecipeFragment extends Fragment {
                 TextView caloriesTextView = view.findViewById(R.id.calories_text_view);
                 TableLayout ingredientsTable = view.findViewById(R.id.ingredients_table);
 
-                recipeNameTextView.setText(recipe.getIngredients().toString());
+                recipeNameTextView.setText(recipe.getName());
                 caloriesTextView.setText(String.format(Locale.getDefault(), "%d Calories", recipe.getCalories()));
 
                 for (Ingredient ingredient : recipe.getIngredients()) {
