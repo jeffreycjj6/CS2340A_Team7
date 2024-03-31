@@ -1,7 +1,6 @@
 package com.example.greenplate.database;
 
 
-
 import java.util.ArrayList;
 
 public class Pantry {
@@ -12,6 +11,7 @@ public class Pantry {
     private Pantry() {
         pantryList = new ArrayList<>();
     }
+
     public static Pantry getInstance() {
         if (pantry == null) {
             pantry = new Pantry();
@@ -26,23 +26,26 @@ public class Pantry {
     public ArrayList<Ingredient> getPantryList() {
         return pantryList;
     }
+
     public Ingredient getIngredient(String name) {
         Ingredient ret = null;
-        for (int i = 0; i < pantryList.size(); i++){
+        for (int i = 0; i < pantryList.size(); i++) {
             Ingredient currIngredient = pantryList.get(i);
-            if (currIngredient.getName().equals(name)){
+            if (currIngredient.getName().equals(name)) {
                 ret = currIngredient;
             }
         }
         return ret;
     }
+
     public void addIngredient(Ingredient ingredient) {
         pantryList.add(ingredient);
     }
+
     public void removeIngredient(String name) {
-        for (int i = 0; i < pantryList.size(); i++){
+        for (int i = 0; i < pantryList.size(); i++) {
             Ingredient currIngredient = pantryList.get(i);
-            if (currIngredient.getName().equals(name)){
+            if (currIngredient.getName().equals(name)) {
                 pantryList.remove(currIngredient);
             }
         }

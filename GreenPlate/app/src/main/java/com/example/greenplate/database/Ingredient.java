@@ -94,11 +94,11 @@ public class Ingredient implements Parcelable {
     // ToString method for debugging
     @Override
     public String toString() {
-        return "Ingredient{" +
-                "name='" + name + '\'' +
-                ", quantity=" + quantity +
-                ", caloriePerServing=" + caloriePerServing +
-                ", expirationDate='" + expirationDate + '\'' +
-                '}';
+        return "Ingredient{"
+                + "name='" + name + '\''
+                + ", quantity=" + quantity
+                + ", caloriePerServing=" + caloriePerServing
+                + ", expirationDate='" + expirationDate + '\''
+                + '}';
     }
 }

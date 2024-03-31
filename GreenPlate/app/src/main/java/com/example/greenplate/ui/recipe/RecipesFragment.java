@@ -1,7 +1,6 @@
 package com.example.greenplate.ui.recipe;
 
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,8 +58,8 @@ public class RecipesFragment extends Fragment {
         });
 
         // Button to create a recipe, go to new fragment
-        TextView CreateRecipeButton = root.findViewById(R.id.createRecipeButton);
-        CreateRecipeButton.setOnClickListener(v -> {
+        TextView createRecipeButton = root.findViewById(R.id.createRecipeButton);
+        createRecipeButton.setOnClickListener(v -> {
             Fragment newFragment = new InputRecipeFragment();
             FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
             transaction.replace(R.id.fragment_container, newFragment);
