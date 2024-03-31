@@ -20,6 +20,7 @@ import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
+import com.example.greenplate.database.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -32,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 
 //import com.example.navbartest.databinding.ActivityLoginBinding;
 
@@ -218,7 +220,8 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("Reloaded Account");
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
-                        DataSnapshot pantryPart = task.getResult().child("Pantry");
+                        //DataSnapshot pantryPart = task.getResult().child("Pantry");
+                        Iterable<DataSnapshot> pantryList = task.getResult().child("Pantry").child(username).getChildren();
 
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
@@ -294,7 +297,21 @@ public class LoginActivity extends AppCompatActivity {
 
                         // Note: This section is simply for loading all of our database data into their respective arraylists in each object
                         //TODO: Add ArrayList initialization for Pantry ArrayList (use while loop)
-                        int index = 1;
+                        Pantry pantry = Pantry.getInstance();
+
+                        for (DataSnapshot i: pantryList) {
+                            String ingredientName = String.valueOf(i.child("name").getValue());
+                            String ingredientQuantity = String.valueOf(i.child("quantity").getValue());
+                            String ingredientCalorie = String.valueOf(i.child("caloriePerServing").getValue());
+                            String expirationDate = String.valueOf(i.child("expirationDate").getValue());
+
+                            pantry.getPantryList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientCalorie),
+                                    Integer.parseInt(ingredientQuantity),
+                                    expirationDate));
+                        }
+
+                        /*int index = 1;
 
                         String currentIngredient = String.valueOf(pantryPart.child(
                                         username).getValue());
@@ -325,7 +342,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             index++;
                             hasChild = pantryPart.child(username).hasChild(Integer.toString(index));
-                        }
+                        }*/
 
                         System.out.println(pantry.getPantryList().size());
                         /*for (Ingredient i: pantry.getPantryList()) {
