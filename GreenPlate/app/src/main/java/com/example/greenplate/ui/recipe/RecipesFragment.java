@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.CookBook;
+import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.Recipe;
 import com.example.greenplate.databinding.FragmentRecipesBinding;
 import com.example.greenplate.sortingStrategy.SortByCaloriesAscending;
@@ -31,6 +33,8 @@ public class RecipesFragment extends Fragment {
     private FragmentRecipesBinding binding;
     private ArrayList<Recipe> recipeItems; // A list to hold Recipe objects
     private ArrayAdapter<Recipe> adapter; // An adapter for Recipe objects
+    private ArrayList<String> stringPantry = new ArrayList<String>();
+    private ArrayList<Ingredient> userPantry = Pantry.getInstance().getPantryList();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -91,9 +95,23 @@ public class RecipesFragment extends Fragment {
                 TextView tvName = (TextView) convertView.findViewById(android.R.id.text1);
                 TextView tvCalories = (TextView) convertView.findViewById(android.R.id.text2);
 
+                createStringPantry();
+                String make = "Can make: True";
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    if (stringPantry.contains(ingredient.getName())) {
+                        int quantity = userPantry.get(stringPantry.indexOf(ingredient.getName()))
+                                .getQuantity();
+                        if (quantity < ingredient.getQuantity()) {
+                            make = "Can make: False";
+                        }
+                    } else {
+                        make = "Can make: False";
+                    }
+                }
+
                 if (recipe != null) {
                     tvName.setText(recipe.getName());
-                    tvCalories.setText(recipe.getCalories() + " Calories");
+                    tvCalories.setText(recipe.getCalories() + " Calories, " + make);
                 }
                 return convertView;
             }
@@ -126,6 +144,11 @@ public class RecipesFragment extends Fragment {
         if (strategy != null) {
             strategy.sort(recipeItems);
             adapter.notifyDataSetChanged();
+        }
+    }
+    public void createStringPantry() {
+        for (int i = 0; i < userPantry.size(); i++) {
+            stringPantry.add(userPantry.get(i).getName());
         }
     }
 
