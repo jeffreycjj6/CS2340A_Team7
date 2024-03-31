@@ -30,6 +30,8 @@ public class EachRecipeFragment extends Fragment {
 
     private ArrayList<Ingredient> userPantry = Pantry.getInstance().getPantryList();
 
+    private ArrayList<String> stringPantry = new ArrayList<String>();
+
     public static EachRecipeFragment newInstance() {
         return new EachRecipeFragment();
     }
@@ -42,6 +44,7 @@ public class EachRecipeFragment extends Fragment {
         if (getArguments() != null) {
             Recipe recipe = getArguments().getParcelable("SELECTED_RECIPE");
             if (recipe != null) {
+                createStringPantry();
                 TextView recipeNameTextView = view.findViewById(R.id.recipe_name_text_view);
                 TextView caloriesTextView = view.findViewById(R.id.calories_text_view);
                 TableLayout ingredientsTable = view.findViewById(R.id.ingredients_table);
@@ -69,8 +72,8 @@ public class EachRecipeFragment extends Fragment {
                     tableRow.addView(pantryIngredientName);
 
                     TextView pantryIngredientQuantity = new TextView(getContext());
-                    if (userPantry.contains(ingredient)) {
-                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", userPantry.get(userPantry.indexOf(ingredient))));
+                    if (stringPantry.contains(ingredient.getName())) {
+                        pantryIngredientQuantity.setText(String.format(Locale.getDefault(), "%d", userPantry.get(stringPantry.indexOf(ingredient.getName())).getQuantity()));
                         pantryIngredientQuantity.setLayoutParams(new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1f));
                         tableRow.addView(pantryIngredientQuantity);
                     } else {
@@ -91,5 +94,11 @@ public class EachRecipeFragment extends Fragment {
         return view;
     }
 
+    // This function converts the user's pantry of ingredients into names of each ingredient so comparison is possible
+    public void createStringPantry() {
+        for (int i = 0; i < userPantry.size(); i++) {
+            stringPantry.add(userPantry.get(i).getName());
+        }
+    }
 
 }
