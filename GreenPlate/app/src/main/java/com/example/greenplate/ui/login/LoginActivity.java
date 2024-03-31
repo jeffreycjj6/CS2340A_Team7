@@ -306,8 +306,8 @@ public class LoginActivity extends AppCompatActivity {
                             String expirationDate = String.valueOf(i.child("expirationDate").getValue());
 
                             pantry.getPantryList().add(new Ingredient(ingredientName,
-                                    Integer.parseInt(ingredientCalorie),
                                     Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
                                     expirationDate));
                         }
 
