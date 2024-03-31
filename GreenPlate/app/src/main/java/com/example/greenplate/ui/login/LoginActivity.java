@@ -277,8 +277,8 @@ public class LoginActivity extends AppCompatActivity {
                                     i.child("expirationDate").getValue());
 
                             pantry.getPantryList().add(new Ingredient(ingredientName,
-                                    Integer.parseInt(ingredientCalorie),
                                     Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
                                     expirationDate));
                         }
                         System.out.println(pantry.getPantryList().size());
