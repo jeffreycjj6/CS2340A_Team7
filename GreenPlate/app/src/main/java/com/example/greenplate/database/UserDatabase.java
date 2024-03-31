@@ -150,15 +150,7 @@ public class UserDatabase {
 
     public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing) {
 
-        DatabaseReference database = mDatabase.getReference("Pantry");
-        Pantry pantry = Pantry.getInstance();
-        User user = User.getInstance();
-        Ingredient ingredient = new Ingredient(ingredientName, quantity,
-                caloriesPerServing);
-        pantry.getPantryList().add(ingredient);
-        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
-        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
-        //database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
+        writeNewIngredient(ingredientName, quantity, caloriesPerServing, "null");
 
     }
     public void writeNewIngredient(String ingredientName, int quantity, int caloriesPerServing,
@@ -169,9 +161,26 @@ public class UserDatabase {
         Ingredient ingredient = new Ingredient(ingredientName, quantity,
                 caloriesPerServing, expirationDate);
         pantry.getPantryList().add(ingredient);
-        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
-        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);
-        //database.child(user.getUsername()).child(ingredient.getName()).setValue(ingredient);
+        database.child(user.getUsername()).child(ingredientName);
+        database.child(user.getUsername()).child(ingredientName).setValue(ingredient);
+        /*database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
+        database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);*/
+    }
+
+    public void removeIngredient(String ingredientName) {
+        User user = User.getInstance();
+        DatabaseReference database = mDatabase.getReference("Pantry").child(user.getUsername())
+                .child(ingredientName);
+
+        database.removeValue();
+    }
+
+    public void changeQuantity(String ingredientName, int newQuantity) {
+        User user = User.getInstance();
+        DatabaseReference database = mDatabase.getReference("Pantry").child(user.getUsername())
+                .child(ingredientName).child("quantity");
+
+        database.setValue(String.valueOf(newQuantity));
     }
 
 }
