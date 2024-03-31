@@ -177,6 +177,7 @@ public class ClassTests {
         test.addRecipe(testRecipe);
 
         assertEquals("monitor: 300 calories", test.getGlobalRecipeList().get(0).toString());
+        CookBook.resetCookBook();
     }
 
     @Test
@@ -216,6 +217,7 @@ public class ClassTests {
                     ", expirationDate='" + "p" + Integer.toString(i) + '\'' +
                     '}', test.getGlobalRecipeList().get(1).getIngredients().get(i).toString());
         }
+        CookBook.resetCookBook();
     }
 
     @Test
@@ -249,6 +251,7 @@ public class ClassTests {
         CookBook test2 = CookBook.getInstance();
 
         assertEquals(new ArrayList<Ingredient>(), test2.getGlobalRecipeList());
+        CookBook.resetCookBook();
     }
 
 
