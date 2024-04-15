@@ -172,11 +172,20 @@ public class UserDatabase {
         DatabaseReference database = mDatabase.getReference("Pantry");
         Pantry pantry = Pantry.getInstance();
         User user = User.getInstance();
-        Ingredient ingredient = new Ingredient(ingredientName, quantity,
-                caloriesPerServing, expirationDate);
-        pantry.getPantryList().add(ingredient);
-        database.child(user.getUsername()).child(ingredientName);
-        database.child(user.getUsername()).child(ingredientName).setValue(ingredient);
+        Ingredient duplicate = pantry.getIngredient(ingredientName);
+        if (duplicate != null) {
+            int q = duplicate.getQuantity() + quantity;
+            duplicate.setQuantity(q);
+            database = mDatabase.getReference("Pantry").child(user.getUsername())
+                    .child(ingredientName).child("quantity");
+            database.setValue(String.valueOf(q));
+        } else {
+            Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                    caloriesPerServing, expirationDate);
+            pantry.getPantryList().add(ingredient);
+            database.child(user.getUsername()).child(ingredientName);
+            database.child(user.getUsername()).child(ingredientName).setValue(ingredient);
+        }
         /*database.child(user.getUsername()).child(String.valueOf(pantry.getPantryList().size()));
         database.child(user.getUsername())
         .child(String.valueOf(pantry.getPantryList().size())).setValue(ingredient);*/
