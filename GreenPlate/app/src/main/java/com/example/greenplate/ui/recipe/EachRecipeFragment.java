@@ -105,23 +105,33 @@ public class EachRecipeFragment extends Fragment {
 
                     ingredientsTable.addView(tableRow);
                 }
+                ArrayList<Ingredient> shop = new ArrayList<Ingredient>();
+                boolean make = true;
+                for (Ingredient ingredient : recipe.getIngredients()) {
+                    if (stringPantry.contains(ingredient.getName())) {
+                        int quantity = userPantry.get(stringPantry.indexOf(ingredient.getName()))
+                                .getQuantity();
+                        if (quantity < ingredient.getQuantity()) {
+                            make = false;
+                            shop.add(new Ingredient(ingredient.getName(),
+                                    ingredient.getQuantity() - quantity,
+                                    ingredient.getCaloriePerServing(),
+                                    ingredient.getExpirationDate()));
+                        }
+                    } else {
+                        make = false;
+                        shop.add(ingredient);
+                    }
+                }
                 Button cook = view.findViewById(R.id.cook);
+                if (make == false) {
+                    cook.setText("Shop");
+                }
+                boolean finalMake = make;
                 cook.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        boolean make = true;
-                        for (Ingredient ingredient : recipe.getIngredients()) {
-                            if (stringPantry.contains(ingredient.getName())) {
-                                int quantity = userPantry.get(stringPantry.indexOf(ingredient.getName()))
-                                        .getQuantity();
-                                if (quantity < ingredient.getQuantity()) {
-                                    make = false;
-                                }
-                            } else {
-                                make = false;
-                            }
-                        }
-                        if (make) {
+                        if (finalMake) {
                             Pantry pantry = Pantry.getInstance();
                             UserDatabase database = UserDatabase.getInstance();
                             for (Ingredient i : recipe.getIngredients()) {
@@ -135,14 +145,15 @@ public class EachRecipeFragment extends Fragment {
                                     database.removeIngredient(i.getName());
                                 }
                             }
-                            RecipesFragment recipesFragment = new RecipesFragment();
-                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_container, recipesFragment);
-
-                            transaction.addToBackStack(null);
-                            transaction.commit();
+                        } else {
+                            //add to shopping list
                         }
+                        RecipesFragment recipesFragment = new RecipesFragment();
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, recipesFragment);
 
+                        transaction.addToBackStack(null);
+                        transaction.commit();
                     }
                 });
             }
