@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,11 +19,15 @@ import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.UserDatabase;
+import com.example.greenplate.databinding.FragmentEachRecipeBinding;
+import com.example.greenplate.databinding.FragmentRecipesBinding;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 public class EachRecipeFragment extends Fragment {
+    //private FragmentEachRecipeBinding binding;
 
     private EachRecipeViewModel mViewModel;
 
@@ -37,7 +43,7 @@ public class EachRecipeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_each_recipe, container, false);
-
+        //binding = FragmentEachRecipeBinding.inflate(inflater, container, false);
         if (getArguments() != null) {
             Recipe recipe = getArguments().getParcelable("SELECTED_RECIPE");
             if (recipe != null) {
@@ -54,7 +60,7 @@ public class EachRecipeFragment extends Fragment {
                     TableRow tableRow = new TableRow(getContext());
                     tableRow.setLayoutParams(new TableRow.LayoutParams(
                             TableRow.LayoutParams.MATCH_PARENT,
-                                    TableRow.LayoutParams.WRAP_CONTENT));
+                            TableRow.LayoutParams.WRAP_CONTENT));
 
                     TextView ingredientName = new TextView(getContext());
                     ingredientName.setText(ingredient.getName());
@@ -99,6 +105,46 @@ public class EachRecipeFragment extends Fragment {
 
                     ingredientsTable.addView(tableRow);
                 }
+                Button cook = view.findViewById(R.id.cook);
+                cook.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        boolean make = true;
+                        for (Ingredient ingredient : recipe.getIngredients()) {
+                            if (stringPantry.contains(ingredient.getName())) {
+                                int quantity = userPantry.get(stringPantry.indexOf(ingredient.getName()))
+                                        .getQuantity();
+                                if (quantity < ingredient.getQuantity()) {
+                                    make = false;
+                                }
+                            } else {
+                                make = false;
+                            }
+                        }
+                        if (make) {
+                            Pantry pantry = Pantry.getInstance();
+                            UserDatabase database = UserDatabase.getInstance();
+                            for (Ingredient i : recipe.getIngredients()) {
+                                Ingredient ingredient = pantry.getIngredient(i.getName());
+                                int quantity = ingredient.getQuantity() - i.getQuantity();
+                                if (quantity != 0) {
+                                    ingredient.setQuantity(quantity);
+                                    database.changeQuantity(i.getName(), quantity);
+                                } else {
+                                    pantry.removeIngredient(i.getName());
+                                    database.removeIngredient(i.getName());
+                                }
+                            }
+                            RecipesFragment recipesFragment = new RecipesFragment();
+                            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, recipesFragment);
+
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+
+                    }
+                });
             }
         }
 
