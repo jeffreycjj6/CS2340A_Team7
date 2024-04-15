@@ -6,6 +6,17 @@
     android:theme="@style/ThemeOverlay.AppCompat.navTheme2"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/cook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="596dp"
+        android:text="Cook"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/recipe_name_text_view"
         android:layout_width="wrap_content"
