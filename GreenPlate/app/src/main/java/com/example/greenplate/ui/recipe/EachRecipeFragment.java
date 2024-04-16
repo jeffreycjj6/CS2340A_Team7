@@ -24,6 +24,7 @@ import com.example.greenplate.databinding.FragmentEachRecipeBinding;
 import com.example.greenplate.databinding.FragmentRecipesBinding;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class EachRecipeFragment extends Fragment {
@@ -134,6 +135,11 @@ public class EachRecipeFragment extends Fragment {
                         if (finalMake) {
                             Pantry pantry = Pantry.getInstance();
                             UserDatabase database = UserDatabase.getInstance();
+                            database.writeNewMeal(recipe.getName(), recipe.getCalories());
+                            Calendar date = Calendar.getInstance();
+                            String currentDate = date.getTime().toString()
+                                    .substring(0, date.getTime().toString().length() - 18);
+                            database.trackNewMeal(recipe.getName(), recipe.getCalories(), currentDate);
                             for (Ingredient i : recipe.getIngredients()) {
                                 Ingredient ingredient = pantry.getIngredient(i.getName());
                                 int quantity = ingredient.getQuantity() - i.getQuantity();
