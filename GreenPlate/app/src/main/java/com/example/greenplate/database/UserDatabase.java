@@ -207,4 +207,19 @@ public class UserDatabase {
         database.setValue(String.valueOf(newQuantity));
     }
 
+
+    // ShoppingList Database:
+
+    public void writeNewShoppingList() {
+        ShoppingList shoppingList = ShoppingList.getInstance();
+        DatabaseReference database = mDatabase.getReference();
+        User user = User.getInstance();
+        database.child("Shopping List").child("Test").setValue("shoppingList");
+    }
+
+//    public void addToShoppingList(String ingredientName, int newQuantity) {
+//
+//    }
+//
+//    public void removeFromShoppinglist()
 }

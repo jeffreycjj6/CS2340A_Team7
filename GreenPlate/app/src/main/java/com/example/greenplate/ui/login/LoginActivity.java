@@ -18,6 +18,7 @@ import com.example.greenplate.R;
 import com.example.greenplate.database.Recipe;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
+import com.example.greenplate.database.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -207,6 +208,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.getResult().exists()) {
                         System.out.println("Reloaded Account");
+
+                        //task.getResult().child("Shopping List").setV
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
                         //DataSnapshot pantryPart = task.getResult().child("Pantry");
@@ -215,6 +218,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
+
                         String firstName = String.valueOf(
                                 userPart.child("firstName").getValue());
                         user.setFirstName(firstName);
@@ -327,7 +331,6 @@ public class LoginActivity extends AppCompatActivity {
                             recipeNum++;
                         }
                         theCookBook.printGlobalRecipeList(); // Print the global recipes
-
                     }
                 }
             }
