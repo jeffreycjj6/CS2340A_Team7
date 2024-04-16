@@ -152,7 +152,9 @@ public class EachRecipeFragment extends Fragment {
                                 }
                             }
                         } else {
-                            //add to shopping list
+                            for (Ingredient i: shop) {
+                                //add to shopping list
+                            }
                         }
                         RecipesFragment recipesFragment = new RecipesFragment();
                         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
