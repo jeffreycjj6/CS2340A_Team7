@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.greenplate.observer.Observer;
 import com.example.greenplate.R;
 import com.example.greenplate.database.CookBook;
 import com.example.greenplate.database.Ingredient;
@@ -27,7 +28,7 @@ import com.example.greenplate.sortingStrategy.SortingStrategy;
 
 import java.util.ArrayList;
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements Observer {
 
     private FragmentRecipesBinding binding;
     private ArrayList<Recipe> recipeItems; // A list to hold Recipe objects
@@ -94,7 +95,7 @@ public class RecipesFragment extends Fragment {
                 TextView tvName = (TextView) convertView.findViewById(android.R.id.text1);
                 TextView tvCalories = (TextView) convertView.findViewById(android.R.id.text2);
 
-                createStringPantry();
+                update();
                 String make = "Can make: True";
                 for (Ingredient ingredient : recipe.getIngredients()) {
                     if (stringPantry.contains(ingredient.getName())) {
@@ -108,10 +109,9 @@ public class RecipesFragment extends Fragment {
                     }
                 }
 
-                if (recipe != null) {
-                    tvName.setText(recipe.getName());
-                    tvCalories.setText(recipe.getCalories() + " Calories, " + make);
-                }
+                tvName.setText(recipe.getName());
+                tvCalories.setText(recipe.getCalories() + " Calories, " + make);
+
                 return convertView;
             }
         };
@@ -145,7 +145,9 @@ public class RecipesFragment extends Fragment {
             adapter.notifyDataSetChanged();
         }
     }
-    public void createStringPantry() {
+
+    @Override
+    public void update() {
         for (int i = 0; i < userPantry.size(); i++) {
             stringPantry.add(userPantry.get(i).getName());
         }
