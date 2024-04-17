@@ -22,10 +22,11 @@ public class ShoppingList {
         shopping = null;
     }
 
-    public ArrayList<Ingredient> getPantryList() {
+    public ArrayList<Ingredient> getShoppingList() {
         return shoppingList;
     }
 
+    // This function returns the ingredient if found
     public Ingredient getIngredient(String name) {
         Ingredient ret = null;
         for (int i = 0; i < shoppingList.size(); i++) {
