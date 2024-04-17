@@ -7,7 +7,6 @@
     tools:context=".ui.shoppinglist.ShoppingListFragment"
     android:theme="@style/ThemeOverlay.AppCompat.navTheme2">
 
-
     <TextView
         android:id="@+id/pantryTitle"
         android:layout_width="332dp"
