@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -31,8 +32,6 @@ public class ShoppingListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ShoppingListViewModel shoppingListViewModel =
-                new ViewModelProvider(this).get(ShoppingListViewModel.class);
 
         binding = FragmentShoppingListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -49,36 +48,37 @@ public class ShoppingListFragment extends Fragment {
         ListView shopListView = binding.shopListView;
         Pantry pantry = Pantry.getInstance();
         shopItems = new ArrayList<>();
-        // CookBook.getInstance().getGlobalRecipeList()
-        // .size() --> this returns total number of global recipes
         for (Ingredient i: pantry.getPantryList()) {
             shopItems.add(new Pair<>(i.getName(), i.getQuantity()));
-            // Try populating array just for example
         }
 
-        adapter = new ArrayAdapter<Pair<String, Integer>>(
-                getActivity(), android.R.layout.simple_list_item_2,
-                android.R.id.text1, shopItems) {
+        adapter = new ArrayAdapter<Pair<String, Integer>>(getActivity(), R.layout.item_shopping_list, shopItems) {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-                View view = super.getView(position, convertView, parent);
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shopping_list, parent, false);
+                }
+
+                TextView itemName = convertView.findViewById(R.id.item_name);
+                TextView itemDetails = convertView.findViewById(R.id.item_details);
+                CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
+
                 Pair<String, Integer> item = getItem(position);
                 Ingredient ingredient = pantry.getIngredient(item.first);
-                if (item != null) {
-                    ((TextView) view.findViewById(android.R.id.text1)).setText(item.first);
-                    ((TextView) view.findViewById(android.R.id.text2)).setText("Quantity: "
-                            + item.second + ", Calories: "
-                            + ingredient.getCaloriePerServing()
-                            + ", Expiration Date: "
-                            + ingredient.getExpirationDate());
+                if (item != null && ingredient != null) {
+                    itemName.setText(item.first);
+                    itemDetails.setText("Quantity: " + item.second
+                            + ", Calories: " + ingredient.getCaloriePerServing()
+                            + ", Expiration: " + ingredient.getExpirationDate());
                 }
-                return view;
+
+                return convertView;
             }
         };
 
-        shopListView.setAdapter(adapter);
 
+        shopListView.setAdapter(adapter);
 
         return root;
     }

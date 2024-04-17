@@ -33,9 +33,6 @@ public class AddShopFragment extends Fragment {
         binding = FragmentAddShopBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //final TextView textView = binding.textInputIngredient;
-        //inputIngredientViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         Button submit = binding.addShopListButton;
         submit.setOnClickListener(v -> {
             String ingredientName = binding.ingredientNameShop.getText().toString();
@@ -62,14 +59,6 @@ public class AddShopFragment extends Fragment {
                     userDatabase.writeNewIngredient(ingredientName, quantity, caloriesPerServing,
                             expirationDate);
                 }
-
-                //user.setHeight(Double.parseDouble(userHeight));
-                //user.setWeight(Double.parseDouble(userWeight));
-                //user.setGender(userGender);
-                //
-                //UserDatabase database = UserDatabase.getInstance();
-                //database.writeHeightWeightGender(Double.parseDouble(userHeight),
-                //Double.parseDouble(userWeight), userGender);
 
                 ShoppingListFragment shoppingListFragment = new ShoppingListFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
