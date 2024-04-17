@@ -210,16 +210,32 @@ public class UserDatabase {
 
     // ShoppingList Database:
 
-    public void writeNewShoppingList() {
-        ShoppingList shoppingList = ShoppingList.getInstance();
-        DatabaseReference database = mDatabase.getReference();
+    public void writeNewShoppingListItem(String ingredientName, int quantity, int caloriesPerServing,
+                                         String expirationDate) {
+        DatabaseReference database = mDatabase.getReference("Shopping List");
+        ShoppingList shpl = ShoppingList.getInstance();
         User user = User.getInstance();
-        database.child("Shopping List").child("Test").setValue("shoppingList");
+        Ingredient duplicate = shpl.getIngredient(ingredientName);
+        if (duplicate != null) {
+            // If the ingredient
+            int q = duplicate.getQuantity() + quantity;
+            duplicate.setQuantity(q);
+            database = mDatabase.getReference("Shopping List").child(user.getUsername())
+                    .child(ingredientName).child("quantity");
+            database.setValue(String.valueOf(q));
+        } else {
+            Ingredient ingredient = new Ingredient(ingredientName, quantity,
+                    caloriesPerServing, expirationDate);
+            shpl.getShoppingList().add(ingredient);
+            database.child(user.getUsername()).child(ingredientName);
+            database.child(user.getUsername()).child(ingredientName).setValue(ingredient);
+        }
     }
 
-//    public void addToShoppingList(String ingredientName, int newQuantity) {
-//
-//    }
-//
-//    public void removeFromShoppinglist()
+    public void removeFromShoppinglist(String shoppingListItemName) {
+        User user = User.getInstance();
+        DatabaseReference database = mDatabase.getReference("Pantry").child(user.getUsername())
+                .child(shoppingListItemName);
+        database.removeValue();
+    }
 }
