@@ -16,8 +16,10 @@ import com.example.greenplate.MainActivity;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.R;
 import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
+import com.example.greenplate.database.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -207,14 +209,21 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (task.getResult().exists()) {
                         System.out.println("Reloaded Account");
+
+                        //task.getResult().child("Shopping List").setV
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
                         //DataSnapshot pantryPart = task.getResult().child("Pantry");
                         Iterable<DataSnapshot> pantryList = task.getResult()
                                 .child("Pantry").child(username).getChildren();
+                        // UNTESTED CODE
+                        Iterable<DataSnapshot> shoppingList = task.getResult()
+                                .child("Shopping List").child(username).getChildren();
+                        // UNTESTED CODE
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
+
                         String firstName = String.valueOf(
                                 userPart.child("firstName").getValue());
                         user.setFirstName(firstName);
@@ -283,6 +292,26 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         System.out.println(pantry.getPantryList().size());
 
+                        // RELOAD SHOPPING LIST. NOT TESTED YET
+                        ShoppingList shopping = ShoppingList.getInstance();
+                        for (DataSnapshot i: shoppingList) {
+                            String ingredientName = String.valueOf(
+                                    i.child("name").getValue());
+                            String ingredientQuantity = String.valueOf(
+                                    i.child("quantity").getValue());
+                            String ingredientCalorie = String.valueOf(
+                                    i.child("caloriePerServing").getValue());
+                            String expirationDate = String.valueOf(
+                                    i.child("expirationDate").getValue());
+
+                            shopping.getShoppingList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
+                                    expirationDate));
+                        }
+                        System.out.println(shopping.getShoppingList().size());
+                        // RELOAD SHOPPING LIST. NOT TESTED YET
+
                         CookBook theCookBook = CookBook.getInstance();
                         DataSnapshot cookbook = task.getResult().child("CookBook");
 
@@ -327,7 +356,6 @@ public class LoginActivity extends AppCompatActivity {
                             recipeNum++;
                         }
                         theCookBook.printGlobalRecipeList(); // Print the global recipes
-
                     }
                 }
             }
