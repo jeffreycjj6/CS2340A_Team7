@@ -14,14 +14,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
-import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
-import com.example.greenplate.ui.ingredient.InputIngredientFragment;
 
 import java.util.ArrayList;
 
@@ -47,7 +44,6 @@ public class ShoppingListFragment extends Fragment {
         });
 
         ListView shopListView = binding.shopListView;
-//        Pantry pantry = Pantry.getInstance();
         ShoppingList shop = ShoppingList.getInstance();
         shopItems = new ArrayList<>();
         for (Ingredient i: shop.getShoppingList()) {
