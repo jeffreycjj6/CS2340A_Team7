@@ -22,7 +22,7 @@ public class ShoppingList {
         shopping = null;
     }
 
-    public ArrayList<Ingredient> getPantryList() {
+    public ArrayList<Ingredient> getShoppingList() {
         return shoppingList;
     }
 

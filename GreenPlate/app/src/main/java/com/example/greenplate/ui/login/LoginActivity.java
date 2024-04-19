@@ -16,6 +16,7 @@ import com.example.greenplate.MainActivity;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.R;
 import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
 import com.example.greenplate.database.UserDatabase;
@@ -215,6 +216,10 @@ public class LoginActivity extends AppCompatActivity {
                         //DataSnapshot pantryPart = task.getResult().child("Pantry");
                         Iterable<DataSnapshot> pantryList = task.getResult()
                                 .child("Pantry").child(username).getChildren();
+                        // UNTESTED CODE
+                        Iterable<DataSnapshot> shoppingList = task.getResult()
+                                .child("Shopping List").child(username).getChildren();
+                        // UNTESTED CODE
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
@@ -286,6 +291,25 @@ public class LoginActivity extends AppCompatActivity {
                                     expirationDate));
                         }
                         System.out.println(pantry.getPantryList().size());
+
+                        // RELOAD SHOPPING LIST. NOT TESTED YET
+                        ShoppingList shopping = ShoppingList.getInstance();
+                        for (DataSnapshot i: shoppingList) {
+                            String ingredientName = String.valueOf(
+                                    i.child("name").getValue());
+                            String ingredientQuantity = String.valueOf(
+                                    i.child("quantity").getValue());
+                            String ingredientCalorie = String.valueOf(
+                                    i.child("caloriePerServing").getValue());
+                            String expirationDate = String.valueOf(
+                                    i.child("expirationDate").getValue());
+
+                            shopping.getShoppingList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
+                                    expirationDate));
+                        }
+                        System.out.println(shopping.getShoppingList().size());
 
                         CookBook theCookBook = CookBook.getInstance();
                         DataSnapshot cookbook = task.getResult().child("CookBook");
