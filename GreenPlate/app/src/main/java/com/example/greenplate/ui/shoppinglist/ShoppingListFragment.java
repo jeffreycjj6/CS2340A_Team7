@@ -14,20 +14,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
-import com.example.greenplate.database.Pantry;
+import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
-import com.example.greenplate.ui.ingredient.InputIngredientFragment;
 
 import java.util.ArrayList;
 
 public class ShoppingListFragment extends Fragment {
 
     private FragmentShoppingListBinding binding;
-    private ArrayList<Pair<String, Integer>> shopItems; // Changed to Integer for calories
+    private ArrayList<Pair<String, Integer>> shopItems;
     private ArrayAdapter<Pair<String, Integer>> adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,9 +44,9 @@ public class ShoppingListFragment extends Fragment {
         });
 
         ListView shopListView = binding.shopListView;
-        Pantry pantry = Pantry.getInstance();
+        ShoppingList shop = ShoppingList.getInstance();
         shopItems = new ArrayList<>();
-        for (Ingredient i: pantry.getPantryList()) {
+        for (Ingredient i: shop.getShoppingList()) {
             shopItems.add(new Pair<>(i.getName(), i.getQuantity()));
         }
 
@@ -65,18 +63,14 @@ public class ShoppingListFragment extends Fragment {
                 CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
 
                 Pair<String, Integer> item = getItem(position);
-                Ingredient ingredient = pantry.getIngredient(item.first);
+                Ingredient ingredient = shop.getIngredient(item.first);
                 if (item != null && ingredient != null) {
                     itemName.setText(item.first);
-                    itemDetails.setText("Quantity: " + item.second
-                            + ", Calories: " + ingredient.getCaloriePerServing()
-                            + ", Expiration: " + ingredient.getExpirationDate());
+                    itemDetails.setText("Quantity: " + item.second);
                 }
-
                 return convertView;
             }
         };
-
 
         shopListView.setAdapter(adapter);
 

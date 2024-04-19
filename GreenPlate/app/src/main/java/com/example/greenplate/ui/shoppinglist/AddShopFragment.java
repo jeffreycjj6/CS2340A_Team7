@@ -1,12 +1,13 @@
 package com.example.greenplate.ui.shoppinglist;
 
+import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
+
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,9 +18,6 @@ import android.widget.Button;
 import com.example.greenplate.R;
 import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentAddShopBinding;
-import com.example.greenplate.databinding.FragmentInputIngredientBinding;
-import com.example.greenplate.ui.ingredient.IngredientsFragment;
-import com.example.greenplate.ui.ingredient.InputIngredientViewModel;
 
 public class AddShopFragment extends Fragment {
 
@@ -54,9 +52,9 @@ public class AddShopFragment extends Fragment {
                 UserDatabase userDatabase = UserDatabase.getInstance();
 
                 if (expirationDate.equals("")) {
-                    userDatabase.writeNewIngredient(ingredientName, quantity, caloriesPerServing);
+                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing, NULL);
                 } else {
-                    userDatabase.writeNewIngredient(ingredientName, quantity, caloriesPerServing,
+                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing,
                             expirationDate);
                 }
 
