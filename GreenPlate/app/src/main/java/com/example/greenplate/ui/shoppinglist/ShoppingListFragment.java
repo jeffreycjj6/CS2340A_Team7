@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ public class ShoppingListFragment extends Fragment {
     private ArrayList<Pair<String, Integer>> shopItems;
     private ArrayAdapter<Pair<String, Integer>> adapter;
 
+    private ArrayList<Boolean> selectedToBuy = new ArrayList<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,9 +49,12 @@ public class ShoppingListFragment extends Fragment {
         ListView shopListView = binding.shopListView;
         ShoppingList shop = ShoppingList.getInstance();
         shopItems = new ArrayList<>();
+        selectedToBuy = new ArrayList<Boolean>();
         for (Ingredient i: shop.getShoppingList()) {
             shopItems.add(new Pair<>(i.getName(), i.getQuantity()));
+            selectedToBuy.add((Boolean) false);
         }
+
 
         adapter = new ArrayAdapter<Pair<String, Integer>>(getActivity(), R.layout.item_shopping_list, shopItems) {
             @NonNull
@@ -68,6 +74,25 @@ public class ShoppingListFragment extends Fragment {
                     itemName.setText(item.first);
                     itemDetails.setText("Quantity: " + item.second);
                 }
+
+
+                itemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                                       @Override
+                                                       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                            selectedToBuy.set(position, isChecked);
+                                                       }
+                                                   }
+                );
+//                if (itemCheckbox.isChecked()) {
+//                    selectedToBuy.add(item.first);
+//                    System.out.println("Added " + item.first + " to be removed." );
+//                } else {
+//                    selectedToBuy.remove(item.first);
+//                    System.out.println("Removed " + item.first + " to be removed." );
+//
+//                }
+
                 return convertView;
             }
         };
@@ -79,6 +104,7 @@ public class ShoppingListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        System.out.println(selectedToBuy);
         super.onDestroyView();
         binding = null;
     }
