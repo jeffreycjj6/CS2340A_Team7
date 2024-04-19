@@ -310,6 +310,7 @@ public class LoginActivity extends AppCompatActivity {
                                     expirationDate));
                         }
                         System.out.println(shopping.getShoppingList().size());
+                        // RELOAD SHOPPING LIST. NOT TESTED YET
 
                         CookBook theCookBook = CookBook.getInstance();
                         DataSnapshot cookbook = task.getResult().child("CookBook");
