@@ -125,7 +125,7 @@ public class EachRecipeFragment extends Fragment {
                     }
                 }
                 Button cook = view.findViewById(R.id.cook);
-                if (make == false) {
+                if (!make) {
                     cook.setText("Shop");
                 }
                 boolean finalMake = make;

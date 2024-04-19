@@ -26,6 +26,7 @@ public class ShoppingList {
         return shoppingList;
     }
 
+    // This function returns the ingredient if found
     public Ingredient getIngredient(String name) {
         Ingredient ret = null;
         for (int i = 0; i < shoppingList.size(); i++) {
