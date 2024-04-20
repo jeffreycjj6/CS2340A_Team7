@@ -22,6 +22,7 @@ import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
+import com.example.greenplate.ui.shoppinglist.EditShoppingIngredientFragment;
 import com.example.greenplate.ui.inputmeal.InputMealFragment;
 
 import java.util.ArrayList;
@@ -36,6 +37,7 @@ public class ShoppingListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
 
         binding = FragmentShoppingListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -59,7 +61,9 @@ public class ShoppingListFragment extends Fragment {
         }
 
 
-        adapter = new ArrayAdapter<Pair<String, Integer>>(getActivity(), R.layout.item_shopping_list, shopItems) {
+        adapter = new ArrayAdapter<Pair<String, Integer>>(
+                getActivity(), android.R.layout.simple_list_item_2,
+                android.R.id.text1, shopItems) {
             @NonNull
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
@@ -95,6 +99,28 @@ public class ShoppingListFragment extends Fragment {
 //                    System.out.println("Removed " + item.first + " to be removed." );
 //
 //                }
+
+
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //shopListView.setAdapter(adapter);
+
+                        Fragment selectedFragment = new EditShoppingIngredientFragment();
+
+                            // Pass data to the new fragment
+                        Bundle args = new Bundle();
+                        Pair<String, Integer> ingredient = shopItems.get(position);
+                        args.putString("INGREDIENT", ingredient.first);
+                        args.putInt("QUANTITY", ingredient.second);
+                        selectedFragment.setArguments(args);
+
+                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, selectedFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
+                });
 
                 return convertView;
             }
@@ -170,7 +196,6 @@ public class ShoppingListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        System.out.println(selectedToBuy);
         super.onDestroyView();
         binding = null;
     }
