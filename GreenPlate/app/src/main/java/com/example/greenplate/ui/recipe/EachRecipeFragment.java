@@ -132,9 +132,9 @@ public class EachRecipeFragment extends Fragment {
                 cook.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        UserDatabase database = UserDatabase.getInstance();
                         if (finalMake) {
                             Pantry pantry = Pantry.getInstance();
-                            UserDatabase database = UserDatabase.getInstance();
                             database.writeNewMeal(recipe.getName(), recipe.getCalories());
                             Calendar date = Calendar.getInstance();
                             String currentDate = date.getTime().toString()
@@ -153,7 +153,8 @@ public class EachRecipeFragment extends Fragment {
                             }
                         } else {
                             for (Ingredient i: shop) {
-                                //add to shopping list
+                                database.writeNewShoppingListItem(i.getName(), i.getQuantity(),
+                                        i.getCaloriePerServing(), i.getExpirationDate());
                             }
                         }
                         RecipesFragment recipesFragment = new RecipesFragment();
