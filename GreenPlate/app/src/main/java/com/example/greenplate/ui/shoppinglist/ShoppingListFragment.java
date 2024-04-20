@@ -18,8 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
+import com.example.greenplate.ui.inputmeal.InputMealFragment;
 
 import java.util.ArrayList;
 
@@ -98,6 +101,69 @@ public class ShoppingListFragment extends Fragment {
         };
 
         shopListView.setAdapter(adapter);
+
+        ArrayList<Ingredient> shoppingListItems = ShoppingList.getInstance().getShoppingList();
+
+        Button buyItems = binding.buyButton;
+        UserDatabase udb = UserDatabase.getInstance();
+        Pantry pantry = Pantry.getInstance();
+        buyItems.setOnClickListener(v -> {
+            System.out.println(selectedToBuy);
+            for (int i = 0; i < shoppingListItems.size(); i++) {
+                // Clear out each item in the shopping list:
+                // 1. Remove it from the shopping list array singleton
+                // 2. Remove it from the database shopping list
+                // 3. Remove the flyweight boolean corresponding to it
+
+                // If a given index i was marked for removal, then:
+                if (selectedToBuy.get(i)) {
+                    System.out.println("Removed: " + shoppingListItems.get(i).getName());
+
+                    Ingredient curr = shoppingListItems.get(i);
+                    int indexOfDupeIngredient = pantry.getIngredientIndex(curr.getName());
+
+                    // First add the items into Pantry and database
+                    if (indexOfDupeIngredient >= 0) {
+                        System.out.println("Updated a current ingredient");
+                        // If the index exists, then just need to update the ingredient data
+
+                        // We can do this by pulling out the object and calling a setQuantity function
+                        int oldIngredientQuantity = pantry.getPantryList().
+                                get(indexOfDupeIngredient).getQuantity();
+
+                        System.out.println(oldIngredientQuantity + " + " + curr.getQuantity());
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
+                        //udb.changeEntryShoppingList(curr.getName(), "quantity", Integer.toString((curr.getQuantity() + oldIngredientQuantity)));
+                        //udb.changeEntryShoppingList(curr.getName(), "caloriePerServing", Integer.toString((curr.getCaloriePerServing())));
+
+
+                        pantry.getPantryList().set(indexOfDupeIngredient,
+                                new Ingredient(curr.getName(), curr.getQuantity() + oldIngredientQuantity, curr.getCaloriePerServing()));
+
+                        // Then update the database my going to that child node and set value
+
+                    } else {
+                        System.out.println(curr.getQuantity());
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
+                        //pantry.addIngredient(shoppingListItems.get(i));
+                        System.out.println(curr.getQuantity());
+
+                    }
+
+                    // Then remove them from our shopping lists and database
+                    udb.removeFromShoppinglist(shoppingListItems.get(i).getName());
+                    shoppingListItems.remove(i);
+                    selectedToBuy.remove(i);
+                    i--; // Subtract the index by one so that we don't skip an item
+                }
+            }
+
+            ShoppingListFragment refresh = new ShoppingListFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, refresh);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
 
         return root;
     }

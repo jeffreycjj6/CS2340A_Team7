@@ -52,7 +52,7 @@ public class AddShopFragment extends Fragment {
                 UserDatabase userDatabase = UserDatabase.getInstance();
 
                 if (expirationDate.equals("")) {
-                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing, NULL);
+                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing, "null");
                 } else {
                     userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing,
                             expirationDate);
