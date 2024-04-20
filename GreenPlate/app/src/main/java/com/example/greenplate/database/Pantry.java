@@ -41,6 +41,15 @@ public class Pantry implements Subject {
         return ret;
     }
 
+    public int getIngredientIndex(String name) {
+        for (int i = 0; i < pantryList.size(); i++) {
+            if (pantryList.get(i).getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         pantryList.add(ingredient);
         notifyObservers();

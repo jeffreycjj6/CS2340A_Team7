@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,8 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenplate.R;
 import com.example.greenplate.database.Ingredient;
+import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
+import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
+import com.example.greenplate.ui.inputmeal.InputMealFragment;
 
 import java.util.ArrayList;
 
@@ -27,6 +31,8 @@ public class ShoppingListFragment extends Fragment {
     private FragmentShoppingListBinding binding;
     private ArrayList<Pair<String, Integer>> shopItems;
     private ArrayAdapter<Pair<String, Integer>> adapter;
+
+    private ArrayList<Boolean> selectedToBuy = new ArrayList<>();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,9 +52,12 @@ public class ShoppingListFragment extends Fragment {
         ListView shopListView = binding.shopListView;
         ShoppingList shop = ShoppingList.getInstance();
         shopItems = new ArrayList<>();
+        selectedToBuy = new ArrayList<Boolean>();
         for (Ingredient i: shop.getShoppingList()) {
             shopItems.add(new Pair<>(i.getName(), i.getQuantity()));
+            selectedToBuy.add((Boolean) false);
         }
+
 
         adapter = new ArrayAdapter<Pair<String, Integer>>(getActivity(), R.layout.item_shopping_list, shopItems) {
             @NonNull
@@ -68,17 +77,100 @@ public class ShoppingListFragment extends Fragment {
                     itemName.setText(item.first);
                     itemDetails.setText("Quantity: " + item.second);
                 }
+
+
+                itemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                                       @Override
+                                                       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
+                                                            selectedToBuy.set(position, isChecked);
+                                                       }
+                                                   }
+                );
+//                if (itemCheckbox.isChecked()) {
+//                    selectedToBuy.add(item.first);
+//                    System.out.println("Added " + item.first + " to be removed." );
+//                } else {
+//                    selectedToBuy.remove(item.first);
+//                    System.out.println("Removed " + item.first + " to be removed." );
+//
+//                }
+
                 return convertView;
             }
         };
 
         shopListView.setAdapter(adapter);
 
+        ArrayList<Ingredient> shoppingListItems = ShoppingList.getInstance().getShoppingList();
+
+        Button buyItems = binding.buyButton;
+        UserDatabase udb = UserDatabase.getInstance();
+        Pantry pantry = Pantry.getInstance();
+        buyItems.setOnClickListener(v -> {
+            System.out.println(selectedToBuy);
+            for (int i = 0; i < shoppingListItems.size(); i++) {
+                // Clear out each item in the shopping list:
+                // 1. Remove it from the shopping list array singleton
+                // 2. Remove it from the database shopping list
+                // 3. Remove the flyweight boolean corresponding to it
+
+                // If a given index i was marked for removal, then:
+                if (selectedToBuy.get(i)) {
+                    System.out.println("Removed: " + shoppingListItems.get(i).getName());
+
+                    Ingredient curr = shoppingListItems.get(i);
+                    int indexOfDupeIngredient = pantry.getIngredientIndex(curr.getName());
+
+                    // First add the items into Pantry and database
+                    if (indexOfDupeIngredient >= 0) {
+                        System.out.println("Updated a current ingredient");
+                        // If the index exists, then just need to update the ingredient data
+
+                        // We can do this by pulling out the object and calling a setQuantity function
+                        int oldIngredientQuantity = pantry.getPantryList().
+                                get(indexOfDupeIngredient).getQuantity();
+
+                        System.out.println(oldIngredientQuantity + " + " + curr.getQuantity());
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
+                        //udb.changeEntryShoppingList(curr.getName(), "quantity", Integer.toString((curr.getQuantity() + oldIngredientQuantity)));
+                        //udb.changeEntryShoppingList(curr.getName(), "caloriePerServing", Integer.toString((curr.getCaloriePerServing())));
+
+
+                        pantry.getPantryList().set(indexOfDupeIngredient,
+                                new Ingredient(curr.getName(), curr.getQuantity() + oldIngredientQuantity, curr.getCaloriePerServing()));
+
+                        // Then update the database my going to that child node and set value
+
+                    } else {
+                        System.out.println(curr.getQuantity());
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
+                        //pantry.addIngredient(shoppingListItems.get(i));
+                        System.out.println(curr.getQuantity());
+
+                    }
+
+                    // Then remove them from our shopping lists and database
+                    udb.removeFromShoppinglist(shoppingListItems.get(i).getName());
+                    shoppingListItems.remove(i);
+                    selectedToBuy.remove(i);
+                    i--; // Subtract the index by one so that we don't skip an item
+                }
+            }
+
+            ShoppingListFragment refresh = new ShoppingListFragment();
+            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            transaction.replace(R.id.fragment_container, refresh);
+            transaction.addToBackStack(null);
+            transaction.commit();
+        });
+
         return root;
     }
 
     @Override
     public void onDestroyView() {
+        System.out.println(selectedToBuy);
         super.onDestroyView();
         binding = null;
     }

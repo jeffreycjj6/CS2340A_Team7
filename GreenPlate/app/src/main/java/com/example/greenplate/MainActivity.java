@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.greenplate.database.CookBook;
+import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.ui.home.HomeFragment;
@@ -140,11 +141,14 @@ public class MainActivity extends AppCompatActivity
             System.out.println(User.getInstance().getMonthlyCalories());
             User.resetInstance();
             Pantry.resetInstance();
+            ShoppingList.resetInstance();
 
             //System.out.println(User.getInstance().getMealCalendar().get(29).get(0));
 
             CookBook.getInstance().printGlobalRecipeList();
             CookBook.resetCookBook();
+
+
 
 
             FirebaseAuth.getInstance().signOut();
