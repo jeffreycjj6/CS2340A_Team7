@@ -245,6 +245,13 @@ public class UserDatabase {
         database.removeValue();
     }
 
+    public void changeEntryShoppingList(String shoppingListItemName, String variableToChange, String newValue) {
+        User user = User.getInstance();
+        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
+                .child(shoppingListItemName).child(variableToChange);
+        database.setValue(newValue);
+    }
+
     public void changeShoppingListQuantity(String ingredientName, int newQuantity) {
         User user = User.getInstance();
         DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
