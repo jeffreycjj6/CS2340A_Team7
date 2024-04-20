@@ -210,6 +210,12 @@ public class UserDatabase {
 
     // ShoppingList Database:
 
+    public void writeNewShoppingListItem(String ingredientName, int quantity, int caloriesPerServing) {
+
+        writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing, "null");
+
+    }
+
     public void writeNewShoppingListItem(String ingredientName, int quantity, int caloriesPerServing,
                                          String expirationDate) {
         DatabaseReference database = mDatabase.getReference("Shopping List");
@@ -234,8 +240,15 @@ public class UserDatabase {
 
     public void removeFromShoppinglist(String shoppingListItemName) {
         User user = User.getInstance();
-        DatabaseReference database = mDatabase.getReference("Pantry").child(user.getUsername())
+        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
                 .child(shoppingListItemName);
         database.removeValue();
+    }
+
+    public void changeShoppingListQuantity(String ingredientName, int newQuantity) {
+        User user = User.getInstance();
+        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
+                .child(ingredientName).child("quantity");
+        database.setValue(String.valueOf(newQuantity));
     }
 }
