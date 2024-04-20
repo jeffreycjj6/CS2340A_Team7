@@ -36,6 +36,7 @@ public class ClassTests {
                     '}', testPantry.getPantryList().get(i).toString());
         }
     }
+
     @Test
     public void PantryClassTest2() {
         Pantry testPantry = Pantry.getInstance();
