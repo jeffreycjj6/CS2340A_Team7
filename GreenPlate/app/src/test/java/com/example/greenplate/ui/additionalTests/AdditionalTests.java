@@ -70,6 +70,7 @@ public class AdditionalTests {
                     ", expirationDate='" + "March " + Integer.toString(i * 2) + '\'' +
                     '}', test.getShoppingList().get(i - 1).toString());
         }
+        ShoppingList.resetInstance();
     }
 
     /**
@@ -178,6 +179,7 @@ public class AdditionalTests {
         assertEquals("test1", testFragment.getStringPantry().get(0));
         assertEquals("test2", testFragment.getStringPantry().get(1));
         assertEquals("test3", testFragment.getStringPantry().get(2));
+        testFragment.getPantryList().clear();
     }
 
     @Test
@@ -250,6 +252,7 @@ public class AdditionalTests {
         test.getGlobalRecipeList().clear();
         sortObj.sort(test.getGlobalRecipeList());
         assertEquals(0, test.getGlobalRecipeList().size());
+        test.getGlobalRecipeList().clear();
     }
 
     @Test
