@@ -22,8 +22,6 @@ import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.UserDatabase;
 import com.example.greenplate.databinding.FragmentShoppingListBinding;
-import com.example.greenplate.ui.shoppinglist.EditShoppingIngredientFragment;
-import com.example.greenplate.ui.inputmeal.InputMealFragment;
 
 import java.util.ArrayList;
 
@@ -37,11 +35,8 @@ public class ShoppingListFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-
-
         binding = FragmentShoppingListBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
         Button addShopButton = binding.addShopButton;
         addShopButton.setOnClickListener(v -> {
             AddShopFragment addShopFragment = new AddShopFragment();
@@ -50,7 +45,6 @@ public class ShoppingListFragment extends Fragment {
             transaction.addToBackStack(null);
             transaction.commit();
         });
-
         ListView shopListView = binding.shopListView;
         ShoppingList shop = ShoppingList.getInstance();
         shopItems = new ArrayList<>();
@@ -59,8 +53,6 @@ public class ShoppingListFragment extends Fragment {
             shopItems.add(new Pair<>(i.getName(), i.getQuantity()));
             selectedToBuy.add((Boolean) false);
         }
-
-
         adapter = new ArrayAdapter<Pair<String, Integer>>(
                 getActivity(), android.R.layout.simple_list_item_2,
                 android.R.id.text1, shopItems) {
@@ -68,9 +60,9 @@ public class ShoppingListFragment extends Fragment {
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 if (convertView == null) {
-                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_shopping_list, parent, false);
+                    convertView = LayoutInflater.from(getContext())
+                            .inflate(R.layout.item_shopping_list, parent, false);
                 }
-
                 TextView itemName = convertView.findViewById(R.id.item_name);
                 TextView itemDetails = convertView.findViewById(R.id.item_details);
                 CheckBox itemCheckbox = convertView.findViewById(R.id.item_checkbox);
@@ -83,23 +75,15 @@ public class ShoppingListFragment extends Fragment {
                 }
 
 
-                itemCheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                itemCheckbox.setOnCheckedChangeListener(new CompoundButton
+                        .OnCheckedChangeListener() {
 
-                                                       @Override
-                                                       public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-                                                            selectedToBuy.set(position, isChecked);
-                                                       }
-                                                   }
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        selectedToBuy.set(position, isChecked);
+                    }
+                }
                 );
-//                if (itemCheckbox.isChecked()) {
-//                    selectedToBuy.add(item.first);
-//                    System.out.println("Added " + item.first + " to be removed." );
-//                } else {
-//                    selectedToBuy.remove(item.first);
-//                    System.out.println("Removed " + item.first + " to be removed." );
-//
-//                }
-
 
                 convertView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -108,14 +92,15 @@ public class ShoppingListFragment extends Fragment {
 
                         Fragment selectedFragment = new EditShoppingIngredientFragment();
 
-                            // Pass data to the new fragment
+                        // Pass data to the new fragment
                         Bundle args = new Bundle();
                         Pair<String, Integer> ingredient = shopItems.get(position);
                         args.putString("INGREDIENT", ingredient.first);
                         args.putInt("QUANTITY", ingredient.second);
                         selectedFragment.setArguments(args);
 
-                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        FragmentTransaction transaction = getParentFragmentManager()
+                                .beginTransaction();
                         transaction.replace(R.id.fragment_container, selectedFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
@@ -125,7 +110,6 @@ public class ShoppingListFragment extends Fragment {
                 return convertView;
             }
         };
-
         shopListView.setAdapter(adapter);
 
         ArrayList<Ingredient> shoppingListItems = ShoppingList.getInstance().getShoppingList();
@@ -153,24 +137,31 @@ public class ShoppingListFragment extends Fragment {
                         System.out.println("Updated a current ingredient");
                         // If the index exists, then just need to update the ingredient data
 
-                        // We can do this by pulling out the object and calling a setQuantity function
+                        // We can do this by pulling out the object
+                        // and calling a setQuantity function
                         int oldIngredientQuantity = pantry.getPantryList().
                                 get(indexOfDupeIngredient).getQuantity();
 
                         System.out.println(oldIngredientQuantity + " + " + curr.getQuantity());
-                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
-                        //udb.changeEntryShoppingList(curr.getName(), "quantity", Integer.toString((curr.getQuantity() + oldIngredientQuantity)));
-                        //udb.changeEntryShoppingList(curr.getName(), "caloriePerServing", Integer.toString((curr.getCaloriePerServing())));
+                        udb.writeNewIngredient(curr.getName(),
+                                curr.getQuantity(), curr.getCaloriePerServing());
+                        //udb.changeEntryShoppingList(curr.getName(),
+                        // "quantity", Integer.toString((curr.getQuantity()
+                        // + oldIngredientQuantity)));
+                        //udb.changeEntryShoppingList(curr.getName(),
+                        // "caloriePerServing", Integer.toString((curr.getCaloriePerServing())));
 
 
                         pantry.getPantryList().set(indexOfDupeIngredient,
-                                new Ingredient(curr.getName(), curr.getQuantity() + oldIngredientQuantity, curr.getCaloriePerServing()));
+                                new Ingredient(curr.getName(), curr.getQuantity()
+                                        + oldIngredientQuantity, curr.getCaloriePerServing()));
 
                         // Then update the database my going to that child node and set value
 
                     } else {
                         System.out.println(curr.getQuantity());
-                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(), curr.getCaloriePerServing());
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(),
+                                curr.getCaloriePerServing());
                         //pantry.addIngredient(shoppingListItems.get(i));
                         System.out.println(curr.getQuantity());
 

@@ -210,13 +210,15 @@ public class UserDatabase {
 
     // ShoppingList Database:
 
-    public void writeNewShoppingListItem(String ingredientName, int quantity, int caloriesPerServing) {
+    public void writeNewShoppingListItem(String ingredientName, int quantity,
+                                         int caloriesPerServing) {
 
         writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing, "null");
 
     }
 
-    public void writeNewShoppingListItem(String ingredientName, int quantity, int caloriesPerServing,
+    public void writeNewShoppingListItem(String ingredientName,
+                                         int quantity, int caloriesPerServing,
                                          String expirationDate) {
         DatabaseReference database = mDatabase.getReference("Shopping List");
         ShoppingList shpl = ShoppingList.getInstance();
@@ -240,21 +242,25 @@ public class UserDatabase {
 
     public void removeFromShoppinglist(String shoppingListItemName) {
         User user = User.getInstance();
-        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
+        DatabaseReference database = mDatabase.getReference("Shopping List")
+                .child(user.getUsername())
                 .child(shoppingListItemName);
         database.removeValue();
     }
 
-    public void changeEntryShoppingList(String shoppingListItemName, String variableToChange, String newValue) {
+    public void changeEntryShoppingList(String shoppingListItemName,
+                                        String variableToChange, String newValue) {
         User user = User.getInstance();
-        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
+        DatabaseReference database = mDatabase.getReference("Shopping List")
+                .child(user.getUsername())
                 .child(shoppingListItemName).child(variableToChange);
         database.setValue(newValue);
     }
 
     public void changeShoppingListQuantity(String ingredientName, int newQuantity) {
         User user = User.getInstance();
-        DatabaseReference database = mDatabase.getReference("Shopping List").child(user.getUsername())
+        DatabaseReference database = mDatabase.getReference("Shopping List")
+                .child(user.getUsername())
                 .child(ingredientName).child("quantity");
         database.setValue(String.valueOf(newQuantity));
     }

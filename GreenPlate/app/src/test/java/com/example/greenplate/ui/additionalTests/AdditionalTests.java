@@ -145,10 +145,10 @@ public class AdditionalTests {
         RecipesFragment testFragment = new RecipesFragment();
         test.addObserver(testFragment);
 
-        assertEquals(1, test.observers.size());
+        assertEquals(1, test.getObservers().size());
 
         test.removeObserver(testFragment);
-        assertEquals(0, test.observers.size());
+        assertEquals(0, test.getObservers().size());
     }
 
     @Test
@@ -158,12 +158,12 @@ public class AdditionalTests {
         RecipesFragment fragment2 = new RecipesFragment();
         test.addObserver(fragment1);
         test.addObserver(fragment2);
-        assertEquals(2, test.observers.size());
+        assertEquals(2, test.getObservers().size());
 
         test.removeObserver(new RecipesFragment());
 
-        assertEquals(2, test.observers.size());
-        assertEquals(fragment2, test.observers.get(1));
+        assertEquals(2, test.getObservers().size());
+        assertEquals(fragment2, test.getObservers().get(1));
     }
 
     @Test

@@ -8,7 +8,7 @@ public class Pantry implements Subject {
 
     private static Pantry pantry;
     private ArrayList<Ingredient> pantryList;
-    public ArrayList<Observer> observers = new ArrayList<>();
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     private Pantry() {
         pantryList = new ArrayList<>();
@@ -68,6 +68,10 @@ public class Pantry implements Subject {
     @Override
     public void addObserver(Observer observer) {
         observers.add(observer);
+    }
+
+    public ArrayList<Observer> getObservers() {
+        return observers;
     }
 
     @Override

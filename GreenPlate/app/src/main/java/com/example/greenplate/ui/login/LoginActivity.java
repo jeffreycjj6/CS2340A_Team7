@@ -19,7 +19,6 @@ import com.example.greenplate.database.Recipe;
 import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
-import com.example.greenplate.database.UserDatabase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
@@ -206,24 +205,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
-
                     if (task.getResult().exists()) {
                         System.out.println("Reloaded Account");
-
-                        //task.getResult().child("Shopping List").setV
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
-                        //DataSnapshot pantryPart = task.getResult().child("Pantry");
                         Iterable<DataSnapshot> pantryList = task.getResult()
                                 .child("Pantry").child(username).getChildren();
-                        // UNTESTED CODE
                         Iterable<DataSnapshot> shoppingList = task.getResult()
                                 .child("Shopping List").child(username).getChildren();
-                        // UNTESTED CODE
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
-
                         String firstName = String.valueOf(
                                 userPart.child("firstName").getValue());
                         user.setFirstName(firstName);
@@ -291,8 +283,6 @@ public class LoginActivity extends AppCompatActivity {
                                     expirationDate));
                         }
                         System.out.println(pantry.getPantryList().size());
-
-                        // RELOAD SHOPPING LIST. NOT TESTED YET
                         ShoppingList shopping = ShoppingList.getInstance();
                         for (DataSnapshot i: shoppingList) {
                             String ingredientName = String.valueOf(
@@ -310,11 +300,8 @@ public class LoginActivity extends AppCompatActivity {
                                     expirationDate));
                         }
                         System.out.println(shopping.getShoppingList().size());
-                        // RELOAD SHOPPING LIST. NOT TESTED YET
-
                         CookBook theCookBook = CookBook.getInstance();
                         DataSnapshot cookbook = task.getResult().child("CookBook");
-
                         int recipeNum = 0; // Holds the global recipe id index number
                         while (cookbook.hasChild(String.valueOf(recipeNum))) {
 
@@ -324,13 +311,10 @@ public class LoginActivity extends AppCompatActivity {
                             int totalCalories = Integer.parseInt(String.valueOf(
                                     cookbook.child(String.valueOf(recipeNum)).child(
                                             "totalCalories").getValue()));
-
                             theCookBook.getGlobalRecipeList().add(new Recipe(
                                     currRecipeName, totalCalories));
-
                             ArrayList<Ingredient> currRecipeIngredientsList = theCookBook
                                     .getGlobalRecipeList().get(recipeNum).getIngredients();
-
                             int ingredientNum = 0;
                             while (cookbook.child(String.valueOf(recipeNum))
                                     .hasChild(String.valueOf(ingredientNum))) {
@@ -361,17 +345,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        /*user.setFirstName(database.child("firstName").toString());
-        user.setLastName(database.child("lastName").toString());
-        user.setUsername(database.child("username").toString());
-        user.setEmail(database.child("email").toString());
-        user.setPassword(database.child("password").toString());
-        user.setHeight(Double.parseDouble(height));
-        user.setWeight(Double.parseDouble(weight));
-        user.setGender(database.child("gender").toString());
-        user.setDailyCalories(Integer.parseInt(database.child("dailyCalories").toString()));
-        user.setTotalCalories(Integer.parseInt(database.child("totalCalories").toString()));
-        */
+
     }
 
 }

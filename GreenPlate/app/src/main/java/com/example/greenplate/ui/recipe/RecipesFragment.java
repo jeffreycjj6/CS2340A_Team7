@@ -162,16 +162,16 @@ public class RecipesFragment extends Fragment implements Observer {
         binding = null;
     }
 
-    public ArrayList<Ingredient> getPantryList(){
+    public ArrayList<Ingredient> getPantryList() {
         return pantryList;
     }
 
-    public ArrayList<String> getStringPantry(){
+    public ArrayList<String> getStringPantry() {
         return stringPantry;
     }
 
-    public ArrayList<Recipe> getRecipeItems(){
-        if (recipeItems == null){
+    public ArrayList<Recipe> getRecipeItems() {
+        if (recipeItems == null) {
             recipeItems = new ArrayList<Recipe>();
         }
         return recipeItems;
