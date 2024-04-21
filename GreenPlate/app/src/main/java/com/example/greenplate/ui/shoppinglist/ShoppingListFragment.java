@@ -143,19 +143,14 @@ public class ShoppingListFragment extends Fragment {
                                 get(indexOfDupeIngredient).getQuantity();
 
                         System.out.println(oldIngredientQuantity + " + " + curr.getQuantity());
-                        udb.writeNewIngredient(curr.getName(),
-                                curr.getQuantity(), curr.getCaloriePerServing());
-                        //udb.changeEntryShoppingList(curr.getName(),
-                        // "quantity", Integer.toString((curr.getQuantity()
-                        // + oldIngredientQuantity)));
-                        //udb.changeEntryShoppingList(curr.getName(),
-                        // "caloriePerServing", Integer.toString((curr.getCaloriePerServing())));
+                        udb.writeNewIngredient(curr.getName(), curr.getQuantity(),
+                                curr.getCaloriePerServing());
 
 
                         pantry.getPantryList().set(indexOfDupeIngredient,
-                                new Ingredient(curr.getName(), curr.getQuantity()
-                                        + oldIngredientQuantity, curr.getCaloriePerServing()));
-
+                                new Ingredient(curr.getName(),
+                                        curr.getQuantity() + oldIngredientQuantity,
+                                        curr.getCaloriePerServing()));
                         // Then update the database my going to that child node and set value
 
                     } else {
