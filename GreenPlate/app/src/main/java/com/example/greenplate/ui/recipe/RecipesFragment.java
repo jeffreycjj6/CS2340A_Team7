@@ -141,7 +141,7 @@ public class RecipesFragment extends Fragment implements Observer {
         return root;
     }
 
-    private void sortRecipes(SortingStrategy strategy) {
+    public void sortRecipes(SortingStrategy strategy) {
         if (strategy != null) {
             strategy.sort(recipeItems);
             adapter.notifyDataSetChanged();
@@ -160,5 +160,20 @@ public class RecipesFragment extends Fragment implements Observer {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public ArrayList<Ingredient> getPantryList() {
+        return pantryList;
+    }
+
+    public ArrayList<String> getStringPantry() {
+        return stringPantry;
+    }
+
+    public ArrayList<Recipe> getRecipeItems() {
+        if (recipeItems == null) {
+            recipeItems = new ArrayList<Recipe>();
+        }
+        return recipeItems;
     }
 }

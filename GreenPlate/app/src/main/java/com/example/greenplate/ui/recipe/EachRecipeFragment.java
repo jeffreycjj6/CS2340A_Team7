@@ -20,8 +20,6 @@ import com.example.greenplate.database.Ingredient;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.Recipe;
 import com.example.greenplate.database.UserDatabase;
-import com.example.greenplate.databinding.FragmentEachRecipeBinding;
-import com.example.greenplate.databinding.FragmentRecipesBinding;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -139,7 +137,8 @@ public class EachRecipeFragment extends Fragment {
                             Calendar date = Calendar.getInstance();
                             String currentDate = date.getTime().toString()
                                     .substring(0, date.getTime().toString().length() - 18);
-                            database.trackNewMeal(recipe.getName(), recipe.getCalories(), currentDate);
+                            database.trackNewMeal(recipe.getName(), recipe.getCalories(),
+                                    currentDate);
                             for (Ingredient i : recipe.getIngredients()) {
                                 Ingredient ingredient = pantry.getIngredient(i.getName());
                                 int quantity = ingredient.getQuantity() - i.getQuantity();
@@ -158,7 +157,8 @@ public class EachRecipeFragment extends Fragment {
                             }
                         }
                         RecipesFragment recipesFragment = new RecipesFragment();
-                        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                        FragmentTransaction transaction = getParentFragmentManager()
+                                .beginTransaction();
                         transaction.replace(R.id.fragment_container, recipesFragment);
 
                         transaction.addToBackStack(null);
@@ -177,6 +177,14 @@ public class EachRecipeFragment extends Fragment {
         for (int i = 0; i < userPantry.size(); i++) {
             stringPantry.add(userPantry.get(i).getName());
         }
+    }
+
+    public ArrayList<String> getStringPantry() {
+        return stringPantry;
+    }
+
+    public ArrayList<Ingredient> getUserPantry() {
+        return userPantry;
     }
 
 }

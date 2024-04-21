@@ -1,7 +1,5 @@
 package com.example.greenplate.ui.shoppinglist;
 
-import static com.google.android.gms.common.internal.safeparcel.SafeParcelable.NULL;
-
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -52,10 +50,11 @@ public class AddShopFragment extends Fragment {
                 UserDatabase userDatabase = UserDatabase.getInstance();
 
                 if (expirationDate.equals("")) {
-                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing);
+                    userDatabase.writeNewShoppingListItem(ingredientName, quantity,
+                            caloriesPerServing);
                 } else {
-                    userDatabase.writeNewShoppingListItem(ingredientName, quantity, caloriesPerServing,
-                            expirationDate);
+                    userDatabase.writeNewShoppingListItem(ingredientName, quantity,
+                            caloriesPerServing, expirationDate);
                 }
 
                 ShoppingListFragment shoppingListFragment = new ShoppingListFragment();

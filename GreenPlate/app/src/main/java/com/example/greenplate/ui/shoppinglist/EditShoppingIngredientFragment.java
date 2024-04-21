@@ -11,14 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.greenplate.R;
-import com.example.greenplate.database.Pantry;
 import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.UserDatabase;
-import com.example.greenplate.databinding.FragmentEditIngredientBinding;
 import com.example.greenplate.databinding.FragmentEditShoppingIngredientBinding;
-import com.example.greenplate.ui.ingredient.EditIngredientFragment;
-import com.example.greenplate.ui.ingredient.EditIngredientViewModel;
-import com.example.greenplate.ui.ingredient.IngredientsFragment;
+
 
 import java.util.Locale;
 
@@ -72,11 +68,11 @@ public class EditShoppingIngredientFragment extends Fragment {
             transaction.addToBackStack(null);
             transaction.commit();
 
-//            IngredientsFragment ingredientsFragment = new IngredientsFragment();
-//            FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-//            transaction.replace(R.id.fragment_container, ingredientsFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
+            //  IngredientsFragment ingredientsFragment = new IngredientsFragment();
+            //  FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+            //  transaction.replace(R.id.fragment_container, ingredientsFragment);
+            //  transaction.addToBackStack(null);
+            //  transaction.commit();
         });
 
         Button remove = binding.removeIngredient;
