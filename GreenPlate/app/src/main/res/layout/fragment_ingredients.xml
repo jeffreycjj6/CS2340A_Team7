@@ -27,19 +27,17 @@
         android:id="@+id/input_ingredient_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="156dp"
         android:text="Input Ingredient"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.313" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pantryTitle"
-        android:layout_width="332dp"
-        android:layout_height="92dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="254dp"
+        android:layout_height="68dp"
+        android:layout_marginTop="76dp"
         android:fontFamily="sans-serif-condensed-light"
         android:text="Ingredients"
         android:textAlignment="center"
@@ -54,7 +52,7 @@
         android:id="@+id/pantryListView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="55dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pantry_title"
         tools:layout_editor_absoluteX="-16dp" />

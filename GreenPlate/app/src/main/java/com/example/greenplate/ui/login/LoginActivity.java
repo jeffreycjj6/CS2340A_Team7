@@ -16,6 +16,7 @@ import com.example.greenplate.MainActivity;
 import com.example.greenplate.database.Pantry;
 import com.example.greenplate.R;
 import com.example.greenplate.database.Recipe;
+import com.example.greenplate.database.ShoppingList;
 import com.example.greenplate.database.User;
 import com.example.greenplate.database.Meal;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -204,14 +205,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
-
                     if (task.getResult().exists()) {
                         System.out.println("Reloaded Account");
                         DataSnapshot userPart = task.getResult().child("Users").child(username);
                         DataSnapshot mealDict = task.getResult().child("Meals");
-                        //DataSnapshot pantryPart = task.getResult().child("Pantry");
                         Iterable<DataSnapshot> pantryList = task.getResult()
                                 .child("Pantry").child(username).getChildren();
+                        Iterable<DataSnapshot> shoppingList = task.getResult()
+                                .child("Shopping List").child(username).getChildren();
                         Toast.makeText(LoginActivity.this,
                                 "Successfully Read", Toast.LENGTH_SHORT).show();
                         User user = User.getInstance();
@@ -282,10 +283,25 @@ public class LoginActivity extends AppCompatActivity {
                                     expirationDate));
                         }
                         System.out.println(pantry.getPantryList().size());
+                        ShoppingList shopping = ShoppingList.getInstance();
+                        for (DataSnapshot i: shoppingList) {
+                            String ingredientName = String.valueOf(
+                                    i.child("name").getValue());
+                            String ingredientQuantity = String.valueOf(
+                                    i.child("quantity").getValue());
+                            String ingredientCalorie = String.valueOf(
+                                    i.child("caloriePerServing").getValue());
+                            String expirationDate = String.valueOf(
+                                    i.child("expirationDate").getValue());
 
+                            shopping.getShoppingList().add(new Ingredient(ingredientName,
+                                    Integer.parseInt(ingredientQuantity),
+                                    Integer.parseInt(ingredientCalorie),
+                                    expirationDate));
+                        }
+                        System.out.println(shopping.getShoppingList().size());
                         CookBook theCookBook = CookBook.getInstance();
                         DataSnapshot cookbook = task.getResult().child("CookBook");
-
                         int recipeNum = 0; // Holds the global recipe id index number
                         while (cookbook.hasChild(String.valueOf(recipeNum))) {
 
@@ -295,13 +311,10 @@ public class LoginActivity extends AppCompatActivity {
                             int totalCalories = Integer.parseInt(String.valueOf(
                                     cookbook.child(String.valueOf(recipeNum)).child(
                                             "totalCalories").getValue()));
-
                             theCookBook.getGlobalRecipeList().add(new Recipe(
                                     currRecipeName, totalCalories));
-
                             ArrayList<Ingredient> currRecipeIngredientsList = theCookBook
                                     .getGlobalRecipeList().get(recipeNum).getIngredients();
-
                             int ingredientNum = 0;
                             while (cookbook.child(String.valueOf(recipeNum))
                                     .hasChild(String.valueOf(ingredientNum))) {
@@ -327,23 +340,12 @@ public class LoginActivity extends AppCompatActivity {
                             recipeNum++;
                         }
                         theCookBook.printGlobalRecipeList(); // Print the global recipes
-
                     }
                 }
             }
         });
 
-        /*user.setFirstName(database.child("firstName").toString());
-        user.setLastName(database.child("lastName").toString());
-        user.setUsername(database.child("username").toString());
-        user.setEmail(database.child("email").toString());
-        user.setPassword(database.child("password").toString());
-        user.setHeight(Double.parseDouble(height));
-        user.setWeight(Double.parseDouble(weight));
-        user.setGender(database.child("gender").toString());
-        user.setDailyCalories(Integer.parseInt(database.child("dailyCalories").toString()));
-        user.setTotalCalories(Integer.parseInt(database.child("totalCalories").toString()));
-        */
+
     }
 
 }

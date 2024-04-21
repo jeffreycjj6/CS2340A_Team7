@@ -13,6 +13,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.greenplate.observer.Observer;
 import com.example.greenplate.R;
 import com.example.greenplate.database.CookBook;
 import com.example.greenplate.database.Ingredient;
@@ -27,13 +28,13 @@ import com.example.greenplate.sortingStrategy.SortingStrategy;
 
 import java.util.ArrayList;
 
-public class RecipesFragment extends Fragment {
+public class RecipesFragment extends Fragment implements Observer {
 
     private FragmentRecipesBinding binding;
     private ArrayList<Recipe> recipeItems; // A list to hold Recipe objects
     private ArrayAdapter<Recipe> adapter; // An adapter for Recipe objects
     private ArrayList<String> stringPantry = new ArrayList<String>();
-    private ArrayList<Ingredient> userPantry = Pantry.getInstance().getPantryList();
+    private ArrayList<Ingredient> pantryList = Pantry.getInstance().getPantryList();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -91,10 +92,11 @@ public class RecipesFragment extends Fragment {
 
                 Recipe recipe = getItem(position);
 
-                TextView tvName = (TextView) convertView.findViewById(android.R.id.text1);
-                TextView tvCalories = (TextView) convertView.findViewById(android.R.id.text2);
+                TextView tvName = convertView.findViewById(android.R.id.text1);
+                TextView tvCalories = convertView.findViewById(android.R.id.text2);
 
-                createStringPantry();
+                Pantry.getInstance().addObserver(RecipesFragment.this);
+                ArrayList<Ingredient> userPantry = Pantry.getInstance().getPantryList();
                 String make = "Can make: True";
                 for (Ingredient ingredient : recipe.getIngredients()) {
                     if (stringPantry.contains(ingredient.getName())) {
@@ -107,11 +109,11 @@ public class RecipesFragment extends Fragment {
                         make = "Can make: False";
                     }
                 }
+                Pantry.getInstance().removeObserver(RecipesFragment.this);
 
-                if (recipe != null) {
-                    tvName.setText(recipe.getName());
-                    tvCalories.setText(recipe.getCalories() + " Calories, " + make);
-                }
+                tvName.setText(recipe.getName());
+                tvCalories.setText(recipe.getCalories() + " Calories, " + make);
+
                 return convertView;
             }
         };
@@ -139,15 +141,18 @@ public class RecipesFragment extends Fragment {
         return root;
     }
 
-    private void sortRecipes(SortingStrategy strategy) {
+    public void sortRecipes(SortingStrategy strategy) {
         if (strategy != null) {
             strategy.sort(recipeItems);
             adapter.notifyDataSetChanged();
         }
     }
-    public void createStringPantry() {
-        for (int i = 0; i < userPantry.size(); i++) {
-            stringPantry.add(userPantry.get(i).getName());
+
+    @Override
+    public void update() {
+        stringPantry.clear();
+        for (Ingredient ingredient : pantryList) {
+            stringPantry.add(ingredient.getName());
         }
     }
 
@@ -155,5 +160,20 @@ public class RecipesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public ArrayList<Ingredient> getPantryList() {
+        return pantryList;
+    }
+
+    public ArrayList<String> getStringPantry() {
+        return stringPantry;
+    }
+
+    public ArrayList<Recipe> getRecipeItems() {
+        if (recipeItems == null) {
+            recipeItems = new ArrayList<Recipe>();
+        }
+        return recipeItems;
     }
 }

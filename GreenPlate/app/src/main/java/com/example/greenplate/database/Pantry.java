@@ -1,12 +1,14 @@
 package com.example.greenplate.database;
 
-
+import com.example.greenplate.observer.Observer;
+import com.example.greenplate.observer.Subject;
 import java.util.ArrayList;
 
-public class Pantry {
+public class Pantry implements Subject {
 
     private static Pantry pantry;
     private ArrayList<Ingredient> pantryList;
+    private ArrayList<Observer> observers = new ArrayList<>();
 
     private Pantry() {
         pantryList = new ArrayList<>();
@@ -24,6 +26,7 @@ public class Pantry {
     }
 
     public ArrayList<Ingredient> getPantryList() {
+        notifyObservers();
         return pantryList;
     }
 
@@ -38,8 +41,18 @@ public class Pantry {
         return ret;
     }
 
+    public int getIngredientIndex(String name) {
+        for (int i = 0; i < pantryList.size(); i++) {
+            if (pantryList.get(i).getName().equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         pantryList.add(ingredient);
+        notifyObservers();
     }
 
     public void removeIngredient(String name) {
@@ -47,6 +60,33 @@ public class Pantry {
             Ingredient currIngredient = pantryList.get(i);
             if (currIngredient.getName().equals(name)) {
                 pantryList.remove(currIngredient);
+            }
+        }
+        notifyObservers();
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    public ArrayList<Observer> getObservers() {
+        return observers;
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        for (int i = 0; i < observers.size(); i++) {
+            if (observers.get(i).equals(observer)) {
+                observers.remove(i);
+                break;
             }
         }
     }

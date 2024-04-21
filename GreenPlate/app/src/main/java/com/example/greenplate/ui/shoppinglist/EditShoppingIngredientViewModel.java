@@ -1,16 +1,14 @@
-package com.example.greenplate.ui.home;
+package com.example.greenplate.ui.shoppinglist;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class HomeViewModel extends ViewModel {
-
+public class EditShoppingIngredientViewModel {
     private final MutableLiveData<String> mText;
 
-    public HomeViewModel() {
+    public EditShoppingIngredientViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Welcome to GreenPlate!");
+        mText.setValue("This is ingredient fragment");
     }
 
     public LiveData<String> getText() {
