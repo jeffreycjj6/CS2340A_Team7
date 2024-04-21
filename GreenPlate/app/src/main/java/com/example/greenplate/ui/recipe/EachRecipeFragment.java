@@ -179,4 +179,12 @@ public class EachRecipeFragment extends Fragment {
         }
     }
 
+    public ArrayList<String> getStringPantry(){
+        return stringPantry;
+    }
+
+    public ArrayList<Ingredient> getUserPantry(){
+        return userPantry;
+    }
+
 }
